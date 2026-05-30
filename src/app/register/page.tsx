@@ -7,7 +7,7 @@ import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Sparkles, ArrowRight, Loader2, Mail, Lock, User as UserIcon } from "lucide-react"
+import { Sparkles, Wand2, ArrowRight, Loader2, Mail, Lock, User as UserIcon } from "lucide-react"
 
 export default function RegisterPage() {
   const router = useRouter()
@@ -53,7 +53,7 @@ export default function RegisterPage() {
         {/* Mobile Header */}
         <div className="absolute top-8 left-8 lg:hidden">
           <Link href="/" className="flex items-center gap-2">
-            <Sparkles className="w-6 h-6 text-violet-500" />
+            <Wand2 className="w-6 h-6 text-violet-500" />
             <span className="font-bold tracking-tight">WriteFlow</span>
           </Link>
         </div>
@@ -165,7 +165,7 @@ export default function RegisterPage() {
         <div className="relative z-10 flex justify-end">
           <Link href="/" className="flex items-center gap-2 inline-flex transition-transform hover:scale-105">
             <span className="text-2xl font-bold tracking-tight">WriteFlow</span>
-            <Sparkles className="w-8 h-8 text-violet-500" />
+            <Wand2 className="w-8 h-8 text-violet-500" />
           </Link>
         </div>
 

@@ -1,256 +1,531 @@
 "use client"
 
-import { motion } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { Sparkles, ArrowRight, CheckCircle2, Zap, LayoutTemplate, PenTool, MessageSquare, Menu } from "lucide-react"
+import { Input } from "@/components/ui/input"
+import { Sparkles, ArrowRight, CheckCircle2, Zap, PenTool, MessageSquare, Plus, ChevronDown, Mail, LayoutTemplate, Rocket, Bot, Wand2, RefreshCw, Star, Users, Activity } from "lucide-react"
+import { Navbar } from "@/components/navbar"
+import { Footer } from "@/components/footer"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { useState } from "react"
+import { toast } from "sonner"
 
 export default function LandingPage() {
+  const [openFaq, setOpenFaq] = useState<number | null>(0)
+  const [email, setEmail] = useState("")
+  const [isLoading, setIsLoading] = useState(false)
+  const [activeTemplateCategory, setActiveTemplateCategory] = useState("All")
+
+  const handleSubscribe = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!email) return
+    setIsLoading(true)
+    setTimeout(() => {
+      setIsLoading(false)
+      setEmail("")
+      toast.success("Thanks for subscribing! Check your inbox soon.")
+    }, 1000)
+  }
+
   return (
-    <div className="min-h-screen bg-[#050505] text-white overflow-hidden selection:bg-violet-500/30">
+    <div className="min-h-screen bg-[#050505] text-white overflow-x-hidden selection:bg-violet-500/30">
       {/* Background gradients */}
-      <div className="absolute top-0 inset-x-0 h-screen overflow-hidden pointer-events-none">
-        <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] rounded-full bg-violet-600/20 blur-[120px]" />
-        <div className="absolute top-[20%] right-[-10%] w-[50%] h-[50%] rounded-full bg-blue-600/20 blur-[120px]" />
+      <div className="absolute top-0 inset-x-0 h-[120vh] overflow-hidden pointer-events-none z-0">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-violet-900/20 via-[#050505] to-[#050505]" />
+        <div className="absolute top-[-20%] left-[-10%] w-[60%] h-[60%] rounded-full bg-violet-600/20 blur-[140px]" />
+        <div className="absolute top-[10%] right-[-15%] w-[60%] h-[60%] rounded-full bg-blue-600/15 blur-[140px]" />
+        <div className="absolute top-[30%] left-[20%] w-[40%] h-[40%] rounded-full bg-fuchsia-600/10 blur-[120px]" />
       </div>
 
-      {/* Navbar */}
-      <nav className="fixed top-0 inset-x-0 z-50 border-b border-white/5 bg-black/50 backdrop-blur-md">
-        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Sparkles className="w-6 h-6 text-violet-500" />
-            <span className="text-xl font-bold tracking-tight">WriteFlow</span>
-          </div>
-          <div className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">
-            <Link href="#features" className="hover:text-white transition-colors">Features</Link>
-            <Link href="#how-it-works" className="hover:text-white transition-colors">How it Works</Link>
-            <Link href="#pricing" className="hover:text-white transition-colors">Pricing</Link>
-          </div>
-          <div className="flex items-center gap-4">
-            <Link href="/login" className="hidden md:block text-sm font-medium text-gray-300 hover:text-white transition-colors">
-              Sign In
-            </Link>
-            <Link href="/login">
-              <Button className="bg-white text-black hover:bg-gray-200">
-                Get Started
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </nav>
+      <Navbar />
 
-      <main className="relative pt-32 pb-16">
+      <main className="relative z-10">
         {/* Hero Section */}
-        <section className="max-w-7xl mx-auto px-6 pt-16 md:pt-32 pb-24 text-center">
+        <section className="w-full px-6 sm:px-6 lg:px-8 pt-32 sm:pt-40 pb-20 sm:pb-32 flex flex-col items-center text-center">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="flex flex-col items-center"
+            transition={{ duration: 0.7, ease: "easeOut" }}
+            className="flex flex-col items-center w-full"
           >
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-sm text-violet-300 mb-8">
-              <Sparkles className="w-4 h-4" />
-              <span>WriteFlow AI 2.0 is now available</span>
-            </div>
-            
-            <h1 className="text-5xl md:text-7xl font-bold tracking-tighter mb-8 leading-tight">
-              Create content that <br className="hidden md:block" />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-blue-400">
-                converts effortlessly
+            {/* Announcement badge */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.2, type: "spring" }}
+              className="group inline-flex items-center gap-3 px-5 py-2 rounded-full bg-[#111] border border-white/10 text-sm text-gray-300 mb-8 cursor-pointer hover:bg-white/5 hover:border-violet-500/50 transition-all shadow-xl shadow-black/50 mx-auto"
+            >
+              <span className="relative flex h-2.5 w-2.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-violet-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-violet-500 shadow-[0_0_10px_rgba(139,92,246,0.8)]"></span>
               </span>
-            </h1>
-            
-            <p className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mb-12">
-              The all-in-one AI platform for content creators, marketers, and businesses. Generate, rewrite, and optimize content 10x faster.
-            </p>
-            
-            <div className="flex flex-col sm:flex-row items-center gap-4">
-              <Link href="/login">
-                <Button size="lg" className="h-14 px-8 bg-violet-600 hover:bg-violet-700 text-lg rounded-full">
-                  Start creating for free
-                  <ArrowRight className="ml-2 w-5 h-5" />
+              <span className="font-medium">WriteFlow AI 2.0 is live</span>
+              <ArrowRight className="w-4 h-4 text-gray-500 group-hover:text-violet-400 group-hover:translate-x-1 transition-all" />
+            </motion.div>
+
+            {/* Headline */}
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 0.7 }}
+              className="text-5xl sm:text-7xl md:text-8xl lg:text-[6rem] font-extrabold tracking-tighter mb-6 leading-[1.1] max-w-5xl mx-auto"
+            >
+              The AI Workspace for{" "}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 via-fuchsia-400 to-blue-500 pb-2">
+                Limitless Creation
+              </span>
+            </motion.h1>
+
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4, duration: 0.7 }}
+              className="text-lg sm:text-xl md:text-2xl text-gray-400 max-w-5xl mx-auto mb-10 leading-relaxed font-light"
+            >
+              Generate, refine, and organize your highest-performing content. Experience the next generation of AI-assisted writing engineered for professionals.
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5 }}
+              className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-20 w-full sm:w-auto mx-auto"
+            >
+              <Link href="/register" className="w-full sm:w-auto group relative">
+                <div className="absolute -inset-0.5 bg-gradient-to-r from-violet-600 to-fuchsia-600 rounded-full blur opacity-30 group-hover:opacity-60 transition duration-300"></div>
+                <Button size="lg" className="relative w-full sm:w-auto h-14 px-8 bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:from-violet-500 hover:to-fuchsia-500 text-white text-base font-bold rounded-full shadow-lg hover:shadow-xl hover:shadow-violet-500/5 transition-all duration-300 border-0">
+                  Start Writing Free
+                  <Sparkles className="ml-2 w-5 h-5 text-white/80 group-hover:rotate-12 transition-transform duration-300" />
                 </Button>
               </Link>
-              <Button size="lg" variant="outline" className="h-14 px-8 border-white/10 hover:bg-white/5 text-lg rounded-full">
-                View Templates
-              </Button>
-            </div>
-            
-            <div className="mt-16 text-sm text-gray-500 flex items-center gap-4">
-              <span className="flex items-center gap-1"><CheckCircle2 className="w-4 h-4 text-emerald-500"/> No credit card required</span>
-              <span className="flex items-center gap-1"><CheckCircle2 className="w-4 h-4 text-emerald-500"/> 14-day free trial</span>
-            </div>
+              <Link href="/explore" className="w-full sm:w-auto">
+                <Button size="lg" variant="outline" className="w-full sm:w-auto h-14 px-8 text-white border-white/20 bg-white/5 hover:bg-white/10 hover:border-white/40 rounded-full font-medium transition-all">
+                  Explore Templates
+                </Button>
+              </Link>
+            </motion.div>
+
+            {/* Premium Floating Dashboard Preview */}
+            <motion.div
+              initial={{ opacity: 0, y: 60 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.7, duration: 1, type: "spring", bounce: 0.2 }}
+              className="relative w-full max-w-5xl mx-auto hidden md:block"
+            >
+              <div className="absolute -inset-1 bg-gradient-to-t from-violet-900/50 via-transparent to-transparent blur-3xl" />
+              <motion.div 
+                animate={{ y: [0, -15, 0] }}
+                transition={{ repeat: Infinity, duration: 8, ease: "easeInOut" }}
+                className="relative rounded-3xl border border-white/10 bg-[#0c0c0e]/80 backdrop-blur-2xl overflow-hidden shadow-[0_20px_60px_-15px_rgba(0,0,0,0.8)]"
+              >
+                {/* MacOS style header */}
+                <div className="flex items-center justify-between px-4 py-3 border-b border-white/5 bg-black/40">
+                  <div className="flex items-center gap-2">
+                    <div className="w-3 h-3 rounded-full bg-[#ff5f56]" />
+                    <div className="w-3 h-3 rounded-full bg-[#ffbd2e]" />
+                    <div className="w-3 h-3 rounded-full bg-[#27c93f]" />
+                  </div>
+                  <div className="flex items-center gap-2 px-3 py-1 bg-white/5 rounded-md border border-white/5 text-xs text-gray-400 font-mono">
+                    <Wand2 className="w-3 h-3 text-violet-400" />
+                    app.writeflow.ai/draft
+                  </div>
+                  <div className="w-16" /> {/* Spacer for balance */}
+                </div>
+                
+                {/* Fake Dashboard Content */}
+                <div className="grid grid-cols-12 h-[350px]">
+                  {/* Fake Sidebar */}
+                  <div className="col-span-3 border-r border-white/5 bg-black/20 p-4 space-y-4">
+                    <div className="h-8 bg-white/5 rounded-lg w-full flex items-center px-3 gap-2 border border-white/5">
+                      <LayoutTemplate className="w-4 h-4 text-violet-400" />
+                      <div className="h-2 w-16 bg-white/20 rounded-full" />
+                    </div>
+                    <div className="space-y-2 pl-2">
+                      <div className="h-6 w-full flex items-center gap-2 opacity-50"><div className="w-3 h-3 rounded-full border border-white/20" /><div className="h-2 w-20 bg-white/10 rounded-full" /></div>
+                      <div className="h-6 w-full flex items-center gap-2 opacity-50"><div className="w-3 h-3 rounded-full border border-white/20" /><div className="h-2 w-16 bg-white/10 rounded-full" /></div>
+                      <div className="h-6 w-full flex items-center gap-2 text-violet-400"><div className="w-3 h-3 rounded-full border border-violet-400 bg-violet-400/20" /><div className="h-2 w-24 bg-violet-400/40 rounded-full" /></div>
+                    </div>
+                  </div>
+                  
+                  {/* Fake Editor */}
+                  <div className="col-span-9 p-8 flex flex-col relative overflow-hidden">
+                    <div className="absolute top-0 right-0 w-64 h-64 bg-violet-600/10 blur-[80px] rounded-full pointer-events-none" />
+                    <div className="flex items-center justify-between mb-8">
+                      <div className="h-6 w-48 bg-white/10 rounded-lg" />
+                      <div className="h-8 w-24 bg-violet-600/20 border border-violet-500/30 rounded-lg flex items-center justify-center gap-2">
+                        <Sparkles className="w-3 h-3 text-violet-400" />
+                        <div className="h-2 w-10 bg-violet-400/60 rounded-full" />
+                      </div>
+                    </div>
+                    
+                    <div className="space-y-4 flex-1">
+                      <motion.div initial={{ width: "0%" }} animate={{ width: "100%" }} transition={{ duration: 1.5, delay: 1 }} className="h-3 bg-white/10 rounded-full" />
+                      <motion.div initial={{ width: "0%" }} animate={{ width: "90%" }} transition={{ duration: 1.5, delay: 1.5 }} className="h-3 bg-white/10 rounded-full" />
+                      <motion.div initial={{ width: "0%" }} animate={{ width: "95%" }} transition={{ duration: 1.5, delay: 2 }} className="h-3 bg-white/10 rounded-full" />
+                      <motion.div initial={{ width: "0%" }} animate={{ width: "70%" }} transition={{ duration: 1.5, delay: 2.5 }} className="h-3 bg-white/10 rounded-full" />
+                      
+                      <div className="pt-6 space-y-4">
+                        <motion.div initial={{ width: "0%" }} animate={{ width: "100%" }} transition={{ duration: 1.5, delay: 3 }} className="h-3 bg-white/5 rounded-full" />
+                        <motion.div initial={{ width: "0%" }} animate={{ width: "85%" }} transition={{ duration: 1.5, delay: 3.5 }} className="h-3 bg-white/5 rounded-full" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            </motion.div>
           </motion.div>
         </section>
 
         {/* Features Section */}
-        <section id="features" className="max-w-7xl mx-auto px-6 py-24 border-t border-white/5">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-4">Everything you need to write better</h2>
-            <p className="text-gray-400 max-w-2xl mx-auto text-lg">Powerful AI agents designed specifically for different content workflows.</p>
+        <section id="features" className="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-24">
+          <div className="text-center mb-10 sm:mb-16">
+            <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-4">Powerful Features</h2>
+            <p className="text-gray-400 max-w-2xl mx-auto text-lg">Agents designed specifically for different content workflows.</p>
           </div>
           
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8">
             <FeatureCard 
               icon={<Zap className="w-6 h-6 text-yellow-400" />}
-              title="Content Generation"
+              title="AI Drafting"
               description="Generate high-converting blog posts, emails, and ad copy in seconds using proven frameworks."
             />
             <FeatureCard 
               icon={<PenTool className="w-6 h-6 text-violet-400" />}
-              title="Smart Rewriter"
+              title="Tone Rewriting"
               description="Adjust the tone, expand, summarize, or completely rewrite existing text to match your brand voice."
             />
             <FeatureCard 
               icon={<MessageSquare className="w-6 h-6 text-blue-400" />}
-              title="AI Chat Assistant"
-              description="Brainstorm ideas, research topics, and outline content with a conversational AI agent."
+              title="Team Collaboration"
+              description="Work together with your team, share templates, and maintain a consistent brand voice across all users."
             />
           </div>
         </section>
 
+        {/* How It Works Section */}
+        <section id="how-it-works" className="relative py-24 sm:py-32 overflow-hidden border-y border-white/5">
+          <div className="absolute inset-0 bg-gradient-to-b from-[#050505] via-[#0a0a0c] to-[#050505] pointer-events-none" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-violet-600/10 blur-[120px] rounded-full pointer-events-none" />
+          
+          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
+            <div className="text-center mb-20">
+              <span className="text-violet-400 font-bold tracking-wider uppercase text-sm mb-4 block">Workflow</span>
+              <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight mb-4">How WriteFlow Works</h2>
+              <p className="text-gray-400 max-w-2xl mx-auto text-lg">Four intelligent steps to perfect content. Zero friction.</p>
+            </div>
+            
+            <div className="relative">
+              {/* Connection Line */}
+              <div className="hidden md:block absolute top-1/2 left-0 w-full h-[2px] bg-white/5 -translate-y-1/2">
+                <motion.div 
+                  initial={{ width: 0 }}
+                  whileInView={{ width: "100%" }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 1.5, ease: "easeInOut" }}
+                  className="h-full bg-gradient-to-r from-violet-600 via-fuchsia-500 to-blue-500 shadow-[0_0_15px_rgba(139,92,246,0.5)]"
+                />
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+                {[
+                  { step: "1", title: "Select Template", desc: "Choose from 50+ optimized presets.", icon: LayoutTemplate, color: "text-violet-400", bg: "bg-violet-400/10", border: "border-violet-500/20" },
+                  { step: "2", title: "Define Context", desc: "Provide a brief prompt or keywords.", icon: MessageSquare, color: "text-fuchsia-400", bg: "bg-fuchsia-400/10", border: "border-fuchsia-500/20" },
+                  { step: "3", title: "AI Generation", desc: "Watch the AI craft your content instantly.", icon: Bot, color: "text-blue-400", bg: "bg-blue-400/10", border: "border-blue-500/20" },
+                  { step: "4", title: "Refine & Export", desc: "Polish in the editor and deploy.", icon: Rocket, color: "text-emerald-400", bg: "bg-emerald-400/10", border: "border-emerald-500/20" },
+                ].map((item, i) => (
+                  <motion.div 
+                    key={i}
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: i * 0.2 }}
+                    className="relative group h-full"
+                  >
+                    <div className="bg-[#0c0c0e]/80 backdrop-blur-xl border border-white/5 p-6 rounded-2xl text-center hover:border-white/10 transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_10px_40px_rgba(0,0,0,0.5)] relative z-10 h-full flex flex-col items-center">
+                      <div className={`w-16 h-16 rounded-2xl ${item.bg} ${item.border} border flex items-center justify-center mx-auto mb-6 transform group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-lg`}>
+                        <item.icon className={`w-8 h-8 ${item.color}`} />
+                      </div>
+                      <div className="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-[#111] border border-white/10 flex items-center justify-center text-xs font-bold text-gray-400 group-hover:text-white group-hover:bg-violet-600 transition-colors shadow-lg">
+                        {item.step}
+                      </div>
+                      <h3 className="text-xl font-bold mb-3 text-white group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-gray-400 transition-all">{item.title}</h3>
+                      <p className="text-gray-400 text-sm leading-relaxed">{item.desc}</p>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Popular Templates Section */}
+        <section className="relative py-24 sm:py-32">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6">
+            <div className="flex flex-col items-center text-center mb-12 gap-8">
+              <div>
+                <span className="text-fuchsia-400 font-bold tracking-wider uppercase text-sm mb-4 block">Templates</span>
+                <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight mb-4">Start Instantly</h2>
+                <p className="text-gray-400 text-lg max-w-xl mx-auto">Our most loved AI frameworks, ready to deploy. Optimized for high conversion and engagement.</p>
+              </div>
+              <div className="flex flex-wrap justify-center gap-2 bg-white/5 p-1 rounded-xl border border-white/10 backdrop-blur-md">
+                {["All", "Blog", "Social", "Email"].map(cat => (
+                  <button 
+                    key={cat}
+                    onClick={() => setActiveTemplateCategory(cat)}
+                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${activeTemplateCategory === cat ? 'bg-violet-600 text-white shadow-lg' : 'text-gray-400 hover:text-white hover:bg-white/5'}`}
+                  >
+                    {cat}
+                  </button>
+                ))}
+              </div>
+            </div>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              <AnimatePresence mode="popLayout">
+                {[
+                  { category: "Blog", title: "SEO Long-form Post", users: "12.5k", rating: "4.9", icon: LayoutTemplate, color: "text-blue-400", border: "hover:border-blue-500/50" },
+                  { category: "Social", title: "Viral Twitter Thread", users: "8.2k", rating: "4.8", icon: MessageSquare, color: "text-sky-400", border: "hover:border-sky-500/50" },
+                  { category: "Email", title: "Cold Outreach Sequence", users: "15k", rating: "4.7", icon: Mail, color: "text-emerald-400", border: "hover:border-emerald-500/50" },
+                ]
+                .filter(t => activeTemplateCategory === "All" || t.category === activeTemplateCategory)
+                .map((t, i) => (
+                  <motion.div 
+                    key={t.title}
+                    layout
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.9 }}
+                    transition={{ duration: 0.2 }}
+                    className={`group rounded-2xl border border-white/10 bg-[#0c0c0e] p-6 hover:bg-[#111115] transition-all duration-300 flex flex-col h-full ${t.border} relative overflow-hidden`}
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <div className="relative z-10 flex justify-between items-start mb-6">
+                      <div className="p-2 rounded-xl bg-white/5 border border-white/10 group-hover:scale-110 transition-transform">
+                        <t.icon className={`w-5 h-5 ${t.color}`} />
+                      </div>
+                      <div className="flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 bg-yellow-500/10 text-yellow-500 rounded-full border border-yellow-500/20">
+                        <Star className="w-3 h-3 fill-yellow-500" /> {t.rating}
+                      </div>
+                    </div>
+                    <div className="relative z-10">
+                      <span className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2 block">{t.category}</span>
+                      <h3 className="font-bold text-xl mb-2 text-white group-hover:text-violet-200 transition-colors">{t.title}</h3>
+                    </div>
+                    <div className="flex-1" />
+                    <div className="relative z-10 flex items-center justify-between mt-6 pt-4 border-t border-white/5">
+                      <span className="text-sm font-medium text-gray-500 flex items-center gap-1.5">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                        {t.users}
+                      </span>
+                      <Link href="/login">
+                        <Button size="sm" className="h-8 text-xs font-semibold bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:from-violet-500 hover:to-fuchsia-500 text-white rounded-2xl transition-all group-hover:shadow-[0_0_15px_rgba(139,92,246,0.5)] group border-0">
+                          Start Instantly <ArrowRight className="w-3 h-3 ml-1.5 group-hover:translate-x-0.5 transition-transform" />
+                        </Button>
+                      </Link>
+                    </div>
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+            </div>
+          </div>
+        </section>
+
         {/* Stats Section */}
-        <section className="bg-white/5 border-y border-white/10 py-20">
-          <div className="max-w-7xl mx-auto px-6">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-              <div>
-                <div className="text-4xl md:text-5xl font-bold text-white mb-2">10M+</div>
-                <div className="text-gray-400">Words Generated</div>
-              </div>
-              <div>
-                <div className="text-4xl md:text-5xl font-bold text-white mb-2">50k+</div>
-                <div className="text-gray-400">Active Users</div>
-              </div>
-              <div>
-                <div className="text-4xl md:text-5xl font-bold text-white mb-2">4.9/5</div>
-                <div className="text-gray-400">Average Rating</div>
-              </div>
-              <div>
-                <div className="text-4xl md:text-5xl font-bold text-white mb-2">99%</div>
-                <div className="text-gray-400">Uptime</div>
-              </div>
+        <section className="relative py-20 sm:py-28 overflow-hidden border-y border-white/5">
+          <div className="absolute inset-0 bg-[#050505]" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-[500px] bg-gradient-to-r from-violet-600/10 via-fuchsia-600/10 to-blue-600/10 blur-[100px] rounded-full pointer-events-none" />
+          
+          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+              {[
+                { value: "10,000+", label: "Active Users", icon: Users, color: "text-violet-400", border: "hover:border-violet-500/50" },
+                { value: "500,000+", label: "Words Generated", icon: PenTool, color: "text-fuchsia-400", border: "hover:border-fuchsia-500/50" },
+                { value: "50+", label: "AI Templates", icon: LayoutTemplate, color: "text-blue-400", border: "hover:border-blue-500/50" },
+                { value: "99.9%", label: "Uptime Guarantee", icon: Activity, color: "text-emerald-400", border: "hover:border-emerald-500/50" },
+              ].map((stat, i) => (
+                <motion.div 
+                  key={i}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: i * 0.1 }}
+                  className={`group bg-white/[0.02] backdrop-blur-md border border-white/5 p-8 rounded-3xl text-center transition-all duration-300 hover:-translate-y-2 hover:bg-white/[0.04] ${stat.border}`}
+                >
+                  <div className={`w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center mx-auto mb-6 group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300 shadow-lg`}>
+                    <stat.icon className={`w-6 h-6 ${stat.color}`} />
+                  </div>
+                  <div className="text-4xl md:text-5xl font-extrabold text-white mb-2 tracking-tight group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-gray-400 transition-colors">
+                    {stat.value}
+                  </div>
+                  <div className="text-gray-400 font-medium uppercase tracking-wider text-xs">
+                    {stat.label}
+                  </div>
+                </motion.div>
+              ))}
             </div>
           </div>
         </section>
 
         {/* Pricing Section */}
-        <section id="pricing" className="max-w-7xl mx-auto px-6 py-24">
-          <div className="text-center mb-16">
+        <section id="pricing" className="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-24">
+          <div className="text-center mb-10 sm:mb-16">
             <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-4">Simple, transparent pricing</h2>
             <p className="text-gray-400 max-w-2xl mx-auto text-lg">Choose the perfect plan for your content needs. No hidden fees.</p>
           </div>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            {/* Starter Plan */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            {/* Free Plan */}
             <div className="p-8 rounded-3xl bg-white/[0.02] border border-white/5 flex flex-col">
-              <h3 className="text-xl font-bold mb-2">Starter</h3>
+              <h3 className="text-xl font-bold mb-2">Free</h3>
               <div className="flex items-baseline gap-2 mb-6">
                 <span className="text-4xl font-bold">$0</span>
                 <span className="text-gray-400">/month</span>
               </div>
-              <p className="text-gray-400 mb-8">Perfect for individuals just getting started with AI.</p>
-              
+              <p className="text-gray-400 mb-8 text-sm">Perfect for individuals just getting started with AI.</p>
               <ul className="space-y-4 mb-8 flex-1">
-                <li className="flex items-center gap-3 text-gray-300">
-                  <CheckCircle2 className="w-5 h-5 text-violet-500" />
-                  <span>10,000 words per month</span>
-                </li>
-                <li className="flex items-center gap-3 text-gray-300">
-                  <CheckCircle2 className="w-5 h-5 text-violet-500" />
-                  <span>Basic templates</span>
-                </li>
-                <li className="flex items-center gap-3 text-gray-300">
-                  <CheckCircle2 className="w-5 h-5 text-violet-500" />
-                  <span>Standard support</span>
-                </li>
+                <li className="flex items-center gap-3 text-gray-300 text-sm"><CheckCircle2 className="w-5 h-5 text-violet-500 shrink-0" /><span>10,000 words per month</span></li>
+                <li className="flex items-center gap-3 text-gray-300 text-sm"><CheckCircle2 className="w-5 h-5 text-violet-500 shrink-0" /><span>Basic templates</span></li>
+                <li className="flex items-center gap-3 text-gray-300 text-sm"><CheckCircle2 className="w-5 h-5 text-violet-500 shrink-0" /><span>Standard support</span></li>
               </ul>
-              
-              <Link href="/login">
-                <Button className="w-full bg-white/10 hover:bg-white/20 text-white rounded-full h-12">
-                  Start Free
-                </Button>
+              <Link href="/register">
+                <Button className="w-full bg-white/10 hover:bg-white/20 text-white rounded-full h-12">Start Free</Button>
               </Link>
             </div>
             
             {/* Pro Plan */}
-            <div className="p-8 rounded-3xl bg-gradient-to-b from-violet-900/20 to-black border border-violet-500/50 relative shadow-[0_0_40px_rgba(139,92,246,0.1)] flex flex-col">
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-violet-600 text-white text-xs font-bold uppercase tracking-wider py-1 px-3 rounded-full">
-                Most Popular
-              </div>
-              <h3 className="text-xl font-bold mb-2">Pro</h3>
+            <div className="p-8 rounded-3xl bg-gradient-to-b from-violet-900/30 to-[#0a0a0a] border border-violet-500/50 relative shadow-[0_0_40px_rgba(139,92,246,0.15)] flex flex-col scale-105 z-10">
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-violet-600 text-white text-xs font-bold uppercase tracking-wider py-1 px-4 rounded-full shadow-lg">Most Popular</div>
+              <h3 className="text-xl font-bold mb-2 text-violet-300">Pro</h3>
               <div className="flex items-baseline gap-2 mb-6">
                 <span className="text-4xl font-bold">$29</span>
                 <span className="text-gray-400">/month</span>
               </div>
-              <p className="text-gray-400 mb-8">For professional creators needing high-volume output.</p>
-              
+              <p className="text-gray-400 mb-8 text-sm">For professional creators needing high-volume output.</p>
               <ul className="space-y-4 mb-8 flex-1">
-                <li className="flex items-center gap-3 text-gray-300">
-                  <CheckCircle2 className="w-5 h-5 text-violet-500" />
-                  <span>Unlimited words</span>
-                </li>
-                <li className="flex items-center gap-3 text-gray-300">
-                  <CheckCircle2 className="w-5 h-5 text-violet-500" />
-                  <span>All premium templates</span>
-                </li>
-                <li className="flex items-center gap-3 text-gray-300">
-                  <CheckCircle2 className="w-5 h-5 text-violet-500" />
-                  <span>Priority support</span>
-                </li>
-                <li className="flex items-center gap-3 text-gray-300">
-                  <CheckCircle2 className="w-5 h-5 text-violet-500" />
-                  <span>Custom brand voices</span>
-                </li>
+                <li className="flex items-center gap-3 text-white text-sm"><CheckCircle2 className="w-5 h-5 text-violet-400 shrink-0" /><span>Unlimited words</span></li>
+                <li className="flex items-center gap-3 text-white text-sm"><CheckCircle2 className="w-5 h-5 text-violet-400 shrink-0" /><span>All premium templates</span></li>
+                <li className="flex items-center gap-3 text-white text-sm"><CheckCircle2 className="w-5 h-5 text-violet-400 shrink-0" /><span>Priority support</span></li>
+                <li className="flex items-center gap-3 text-white text-sm"><CheckCircle2 className="w-5 h-5 text-violet-400 shrink-0" /><span>Tone matching</span></li>
               </ul>
-              
-              <Link href="/login">
-                <Button className="w-full bg-violet-600 hover:bg-violet-700 text-white rounded-full h-12">
-                  Get Pro
-                </Button>
+              <Link href="/register">
+                <Button className="w-full bg-violet-600 hover:bg-violet-500 text-white rounded-full h-12 font-medium shadow-lg">Get Pro</Button>
               </Link>
             </div>
             
             {/* Team Plan */}
-            <div className="p-8 rounded-3xl bg-white/[0.02] border border-white/5 flex flex-col md:col-span-2 lg:col-span-1 md:w-1/2 lg:w-full md:mx-auto lg:mx-0">
+            <div className="p-8 rounded-3xl bg-white/[0.02] border border-white/5 flex flex-col">
               <h3 className="text-xl font-bold mb-2">Team</h3>
               <div className="flex items-baseline gap-2 mb-6">
                 <span className="text-4xl font-bold">$99</span>
                 <span className="text-gray-400">/month</span>
               </div>
-              <p className="text-gray-400 mb-8">For teams and agencies managing multiple brands.</p>
-              
+              <p className="text-gray-400 mb-8 text-sm">For teams and agencies managing multiple brands.</p>
               <ul className="space-y-4 mb-8 flex-1">
-                <li className="flex items-center gap-3 text-gray-300">
-                  <CheckCircle2 className="w-5 h-5 text-violet-500" />
-                  <span>Everything in Pro</span>
-                </li>
-                <li className="flex items-center gap-3 text-gray-300">
-                  <CheckCircle2 className="w-5 h-5 text-violet-500" />
-                  <span>Up to 5 team members</span>
-                </li>
-                <li className="flex items-center gap-3 text-gray-300">
-                  <CheckCircle2 className="w-5 h-5 text-violet-500" />
-                  <span>API access</span>
-                </li>
+                <li className="flex items-center gap-3 text-gray-300 text-sm"><CheckCircle2 className="w-5 h-5 text-violet-500 shrink-0" /><span>Everything in Pro</span></li>
+                <li className="flex items-center gap-3 text-gray-300 text-sm"><CheckCircle2 className="w-5 h-5 text-violet-500 shrink-0" /><span>Up to 5 team members</span></li>
+                <li className="flex items-center gap-3 text-gray-300 text-sm"><CheckCircle2 className="w-5 h-5 text-violet-500 shrink-0" /><span>Collaboration tools</span></li>
               </ul>
-              
-              <Link href="/login">
-                <Button className="w-full bg-white/10 hover:bg-white/20 text-white rounded-full h-12">
-                  Contact Sales
-                </Button>
+              <Link href="/contact">
+                <Button className="w-full bg-white/10 hover:bg-white/20 text-white rounded-full h-12">Contact Sales</Button>
               </Link>
             </div>
           </div>
         </section>
 
-        {/* CTA Section */}
-        <section className="max-w-4xl mx-auto px-6 py-32 text-center">
-          <div className="p-12 rounded-3xl bg-gradient-to-b from-violet-900/20 to-black border border-violet-500/20 shadow-[0_0_80px_rgba(139,92,246,0.1)]">
-            <h2 className="text-3xl md:text-5xl font-bold mb-6">Ready to transform your workflow?</h2>
-            <p className="text-xl text-gray-400 mb-8">Join thousands of creators who are already using WriteFlow AI.</p>
-            <Link href="/login">
-              <Button size="lg" className="h-14 px-8 bg-white text-black hover:bg-gray-200 text-lg rounded-full">
-                Get Started for Free
+        {/* Testimonials */}
+        <section className="bg-white/[0.01] border-y border-white/5 py-16 sm:py-24">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 text-center">
+            <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-12">Loved by creators</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
+              {[
+                { name: "Sarah Jenkins", role: "Content Marketer", review: "WriteFlow completely changed how our team produces content. We went from publishing 2 blogs a week to 10, without dropping quality." },
+                { name: "David Chen", role: "Indie Hacker", review: "The SEO blog generator is literal magic. It writes exactly in my tone of voice and perfectly optimizes for my target keywords." },
+                { name: "Elena Rossi", role: "Social Media Manager", review: "I manage 5 different brands. The tone rewriting tool saves me hours every single day. Highly recommended for any agency." },
+              ].map((t, i) => (
+                <div key={i} className="p-8 rounded-2xl bg-[#0a0a0a] border border-white/5 shadow-xl">
+                  <div className="flex text-yellow-400 text-sm mb-4">★★★★★</div>
+                  <p className="text-gray-300 text-sm leading-relaxed mb-6">"{t.review}"</p>
+                  <div className="flex items-center gap-3">
+                    <Avatar className="w-10 h-10 border border-white/10">
+                      <AvatarFallback className="bg-violet-900 text-white text-xs">{t.name.charAt(0)}</AvatarFallback>
+                    </Avatar>
+                    <div>
+                      <div className="text-sm font-bold text-white">{t.name}</div>
+                      <div className="text-xs text-gray-500">{t.role}</div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* FAQ Section */}
+        <section className="max-w-3xl mx-auto px-4 sm:px-6 py-16 sm:py-24">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-4">Frequently Asked Questions</h2>
+          </div>
+          <div className="space-y-4">
+            {[
+              { q: "Is there a free trial?", a: "Yes! You can use our Free plan forever, which gives you 10,000 words per month to test out our basic templates." },
+              { q: "Can I cancel my subscription?", a: "Absolutely. You can cancel your subscription at any time from your billing dashboard. No questions asked." },
+              { q: "Does the AI plagiarize?", a: "No, WriteFlow AI generates unique, original content on the fly based on the massive datasets it was trained on." },
+              { q: "Can I invite my team?", a: "Yes, our Team plan allows you to invite up to 5 members to collaborate, share templates, and manage documents together." },
+            ].map((faq, i) => (
+              <div key={i} className="border border-white/10 rounded-xl bg-white/[0.02] overflow-hidden">
+                <button 
+                  className="w-full text-left px-6 py-4 flex items-center justify-between font-medium hover:bg-white/[0.02] transition-colors"
+                  onClick={() => setOpenFaq(openFaq === i ? null : i)}
+                >
+                  {faq.q}
+                  <ChevronDown className={`w-5 h-5 text-gray-400 transition-transform ${openFaq === i ? "rotate-180" : ""}`} />
+                </button>
+                <AnimatePresence>
+                  {openFaq === i && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      className="overflow-hidden"
+                    >
+                      <div className="px-6 pb-4 pt-0 text-gray-400 text-sm leading-relaxed border-t border-white/5 mt-2 pt-4">
+                        {faq.a}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Newsletter & CTA Section */}
+        <section className="max-w-5xl mx-auto px-4 sm:px-6 py-16 mb-16 text-center">
+          <div className="p-8 sm:p-16 rounded-3xl bg-gradient-to-b from-violet-900/20 to-[#050505] border border-violet-500/20 shadow-[0_0_80px_rgba(139,92,246,0.1)]">
+            <h2 className="text-3xl md:text-5xl font-bold mb-6">Stay ahead of the curve</h2>
+            <p className="text-lg text-gray-400 mb-8 max-w-xl mx-auto">Subscribe to our newsletter for the latest AI writing tips, prompts, and WriteFlow updates.</p>
+            
+            <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row items-center gap-3 max-w-md mx-auto mb-12">
+              <Input 
+                type="email" 
+                placeholder="Enter your email" 
+                className="bg-black/50 border-white/20 h-12 rounded-full px-6 focus-visible:ring-violet-500" 
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+              <Button type="submit" disabled={isLoading} className="w-full sm:w-auto h-12 px-8 bg-white text-black hover:bg-gray-200 rounded-full font-medium">
+                {isLoading ? "Subscribing..." : "Subscribe"}
+              </Button>
+            </form>
+
+            <div className="h-px w-full max-w-xs mx-auto bg-gradient-to-r from-transparent via-white/20 to-transparent mb-12" />
+
+            <h3 className="text-2xl font-bold mb-6">Ready to transform your workflow?</h3>
+            <Link href="/register">
+              <Button size="lg" className="h-14 px-10 bg-violet-600 text-white hover:bg-violet-700 text-lg rounded-full shadow-lg">
+                Start Writing Free
                 <ArrowRight className="ml-2 w-5 h-5" />
               </Button>
             </Link>
@@ -258,35 +533,22 @@ export default function LandingPage() {
         </section>
       </main>
 
-      {/* Footer */}
-      <footer className="border-t border-white/5 bg-black">
-        <div className="max-w-7xl mx-auto px-6 py-12 flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="flex items-center gap-2">
-            <Sparkles className="w-5 h-5 text-violet-500" />
-            <span className="font-bold">WriteFlow AI</span>
-          </div>
-          <div className="text-sm text-gray-500">
-            © {new Date().getFullYear()} WriteFlow AI. All rights reserved.
-          </div>
-          <div className="flex gap-6 text-sm text-gray-500">
-            <Link href="#" className="hover:text-white transition-colors">Privacy</Link>
-            <Link href="#" className="hover:text-white transition-colors">Terms</Link>
-            <Link href="#" className="hover:text-white transition-colors">Contact</Link>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   )
 }
 
 function FeatureCard({ icon, title, description }: { icon: React.ReactNode, title: string, description: string }) {
   return (
-    <div className="p-8 rounded-2xl bg-white/[0.02] border border-white/5 hover:bg-white/[0.04] transition-colors">
-      <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center mb-6 border border-white/10">
+    <div className="p-6 sm:p-8 rounded-2xl bg-white/[0.02] border border-white/5 hover:bg-white/[0.04] transition-colors relative overflow-hidden group">
+      <div className="absolute top-0 right-0 p-8 opacity-0 group-hover:opacity-5 transition-opacity duration-500 pointer-events-none scale-150 transform translate-x-4 -translate-y-4">
         {icon}
       </div>
-      <h3 className="text-xl font-bold mb-3">{title}</h3>
-      <p className="text-gray-400 leading-relaxed">
+      <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center mb-4 sm:mb-6 border border-white/10 relative z-10 text-violet-400">
+        {icon}
+      </div>
+      <h3 className="text-xl font-bold mb-3 relative z-10">{title}</h3>
+      <p className="text-gray-400 leading-relaxed text-sm sm:text-base relative z-10">
         {description}
       </p>
     </div>
