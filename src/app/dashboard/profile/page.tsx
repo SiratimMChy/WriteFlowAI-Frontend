@@ -12,7 +12,7 @@ export default async function ProfilePage() {
     redirect("/login")
   }
 
-  const user = await prisma.user.findUnique({
+  const dbUser = await prisma.user.findUnique({
     where: { id: session.user.id },
     select: {
       id: true,
@@ -23,6 +23,16 @@ export default async function ProfilePage() {
       plan: true,
     }
   })
+
+  // Fallback to session data if user is not in DB (e.g. legacy Google login without adapter)
+  const user = dbUser || {
+    id: session.user.id,
+    name: session.user.name,
+    email: session.user.email,
+    image: session.user.image,
+    bio: "",
+    plan: "free",
+  }
 
   // Calculate usage stats
   // Documents created this month

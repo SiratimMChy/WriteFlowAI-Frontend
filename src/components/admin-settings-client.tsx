@@ -40,6 +40,10 @@ export function AdminSettingsClient({ settings }: { settings: any }) {
             <Label className="text-gray-300">Site Name</Label>
             <Input name="siteName" defaultValue={settings?.siteName || "WriteFlow AI"} className="bg-black/50 border-white/10 text-white" />
           </div>
+          <div className="space-y-2">
+            <Label className="text-gray-300">Logo URL</Label>
+            <Input name="logoUrl" defaultValue={settings?.logoUrl || ""} placeholder="https://example.com/logo.png" className="bg-black/50 border-white/10 text-white" />
+          </div>
           <div className="flex items-center justify-between p-4 bg-black/50 rounded-xl border border-white/5">
             <div>
               <Label className="text-gray-300 font-medium text-base mb-1 block">Maintenance Mode</Label>

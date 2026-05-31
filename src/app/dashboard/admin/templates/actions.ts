@@ -51,7 +51,7 @@ export async function saveTemplate(formData: FormData, templateId?: string) {
       tone: tone || "Professional",
       aiModel: aiModel || "GPT-4",
       sampleOutput: sampleOutput || "Sample text...",
-      systemPrompt: `You are an expert ${category} writer. Write a ${wordCount} text in a ${tone} tone.`
+      prompt: `You are an expert ${category} writer. Write a ${wordCount} text in a ${tone} tone.`
     }
 
     if (templateId) {

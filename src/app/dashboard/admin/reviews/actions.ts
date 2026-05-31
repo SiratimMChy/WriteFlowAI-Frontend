@@ -15,13 +15,34 @@ export async function updateReviewStatus(reviewId: string, status: string) {
   }
 
   try {
-    await prisma.review.update({
+    const updatedReview = await prisma.review.update({
       where: { id: reviewId },
       data: { status }
     })
+
+    // If a review is approved, recalculate the average rating and count for the template
+    if (status === "approved") {
+      const approvedReviews = await prisma.review.findMany({
+        where: { templateId: updatedReview.templateId, status: "approved" }
+      })
+
+      const ratingCount = approvedReviews.length
+      const avgRating = approvedReviews.reduce((sum, r) => sum + r.rating, 0) / (ratingCount || 1)
+
+      await prisma.template.update({
+        where: { id: updatedReview.templateId },
+        data: {
+          rating: avgRating,
+          ratingCount: ratingCount
+        }
+      })
+    }
+
     revalidatePath("/dashboard/admin/reviews")
+    revalidatePath(`/templates/${updatedReview.templateId}`)
     return { success: true }
   } catch (error) {
+    console.error("Failed to update review status:", error)
     return { error: "Failed to update review status" }
   }
 }
@@ -49,11 +70,21 @@ export async function summarizeReviews() {
       messages: [
         {
           role: "system",
-          content: "You are an expert product analyst. Summarize the following user reviews into a concise list of Pros and Cons. Be brief but informative."
+          content: `You are an expert product analyst. Your task is to analyze user reviews and:
+1. Detect overall sentiment (Positive, Neutral, or Negative).
+2. Return a concise, high-level 3-bullet summary of the reviews.
+
+Format your response exactly like this:
+Sentiment: [Positive / Neutral / Negative]
+
+Summary:
+- [Bullet point 1]
+- [Bullet point 2]
+- [Bullet point 3]`
         },
         {
           role: "user",
-          content: `Here are the user reviews:\n\n${reviewTexts}\n\nPlease summarize them into Pros and Cons.`
+          content: `Here are the user reviews:\n\n${reviewTexts}\n\nPlease analyze sentiment and return the 3-bullet summary.`
         }
       ]
     })

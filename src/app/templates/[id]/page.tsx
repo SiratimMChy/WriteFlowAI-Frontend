@@ -7,6 +7,7 @@ import { PrismaClient } from "@prisma/client"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { WriteReviewForm } from "@/components/write-review-form"
 
 const prisma = new PrismaClient()
 
@@ -19,6 +20,7 @@ export default async function TemplateDetailsPage({
     where: { id: params.id },
     include: {
       reviews: {
+        where: { status: "approved" },
         include: { user: true },
         orderBy: { createdAt: "desc" },
         take: 5
@@ -126,10 +128,7 @@ export default async function TemplateDetailsPage({
 
             {/* Reviews */}
             <section>
-              <div className="flex items-center justify-between mb-6 border-b border-white/10 pb-4">
-                <h2 className="text-2xl font-bold">Reviews</h2>
-                <Button variant="outline" className="h-9 border-white/10">Write a Review</Button>
-              </div>
+              <WriteReviewForm templateId={template.id} />
               
               {template.reviews.length > 0 ? (
                 <div className="space-y-6">

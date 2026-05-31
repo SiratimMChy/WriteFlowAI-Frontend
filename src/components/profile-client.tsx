@@ -45,14 +45,14 @@ export function ProfileClient({
           <div className="flex flex-col sm:flex-row gap-6">
             <div className="flex-shrink-0">
               <Avatar className="w-24 h-24 border border-white/10 text-xl">
-                <AvatarImage src={user.image || ""} />
-                <AvatarFallback className="bg-violet-900">{user.name?.charAt(0) || "U"}</AvatarFallback>
+                <AvatarImage src={user?.image || ""} />
+                <AvatarFallback className="bg-violet-900">{user?.name?.charAt(0) || "U"}</AvatarFallback>
               </Avatar>
             </div>
             <div className="flex-1 space-y-4">
               <div className="space-y-2">
                 <Label className="text-gray-300">Avatar URL</Label>
-                <Input name="avatarUrl" defaultValue={user.image || ""} placeholder="https://example.com/avatar.jpg" className="bg-black/50 border-white/10 text-white" />
+                <Input name="avatarUrl" defaultValue={user?.image || ""} placeholder="https://example.com/avatar.jpg" className="bg-black/50 border-white/10 text-white" />
               </div>
             </div>
           </div>
@@ -60,17 +60,17 @@ export function ProfileClient({
           <div className="grid sm:grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label className="text-gray-300">Full Name</Label>
-              <Input name="name" defaultValue={user.name || ""} className="bg-black/50 border-white/10 text-white" />
+              <Input name="name" defaultValue={user?.name || ""} className="bg-black/50 border-white/10 text-white" />
             </div>
             <div className="space-y-2">
               <Label className="text-gray-300">Email Address</Label>
-              <Input defaultValue={user.email || ""} disabled className="bg-black/30 border-white/5 text-gray-500 cursor-not-allowed" />
+              <Input defaultValue={user?.email || ""} disabled className="bg-black/30 border-white/5 text-gray-500 cursor-not-allowed" />
             </div>
           </div>
           
           <div className="space-y-2">
             <Label className="text-gray-300">Bio</Label>
-            <Textarea name="bio" defaultValue={user.bio || ""} placeholder="Tell us about yourself..." className="bg-black/50 border-white/10 text-white min-h-[100px]" />
+            <Textarea name="bio" defaultValue={user?.bio || ""} placeholder="Tell us about yourself..." className="bg-black/50 border-white/10 text-white min-h-[100px]" />
           </div>
           
           <Button type="submit" disabled={isPending} className="bg-violet-600 hover:bg-violet-700 text-white">
@@ -87,7 +87,7 @@ export function ProfileClient({
             Subscription & Usage
           </h2>
           <span className="px-3 py-1 bg-violet-600/20 text-violet-400 border border-violet-500/30 rounded-full text-xs font-semibold uppercase tracking-wider">
-            {user.plan} Plan
+            {user?.plan || "FREE"} Plan
           </span>
         </div>
         

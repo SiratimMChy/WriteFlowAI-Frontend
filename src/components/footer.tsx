@@ -1,9 +1,23 @@
+"use client"
+
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import { Wand2, Globe, MessageSquare, Mail, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 
 export function Footer() {
+  const [siteName, setSiteName] = useState("WriteFlow")
+
+  useEffect(() => {
+    fetch("/api/settings")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.siteName) setSiteName(data.siteName)
+      })
+      .catch((err) => console.error(err))
+  }, [])
+
   return (
     <footer className="relative border-t border-white/5 bg-[#050505] overflow-hidden pt-24 pb-12 mt-20">
       <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-violet-500/50 to-transparent" />
@@ -16,7 +30,7 @@ export function Footer() {
               <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-violet-600 to-fuchsia-600 flex items-center justify-center shadow-[0_0_20px_rgba(139,92,246,0.3)] group-hover:shadow-[0_0_30px_rgba(139,92,246,0.5)] transition-shadow">
                 <Wand2 className="w-4 h-4 text-white" />
               </div>
-              <span className="text-2xl font-bold text-white tracking-tight">WriteFlow AI</span>
+              <span className="text-2xl font-bold text-white tracking-tight">{siteName} AI</span>
             </Link>
             <p className="text-gray-400 text-sm max-w-sm mb-8 leading-relaxed">
               The ultimate AI writing workspace. Generate, refine, and organize your highest-performing content at lightspeed.
@@ -72,7 +86,7 @@ export function Footer() {
         </div>
         
         <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-gray-500">
-          <p>© {new Date().getFullYear()} WriteFlow AI. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} {siteName} AI. All rights reserved.</p>
           <div className="flex items-center gap-2">
             <span>Designed with</span>
             <div className="w-1.5 h-1.5 rounded-full bg-violet-500 animate-pulse" />

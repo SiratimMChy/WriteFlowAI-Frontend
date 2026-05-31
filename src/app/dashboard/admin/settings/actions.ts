@@ -14,6 +14,7 @@ export async function updateSiteSettings(formData: FormData) {
   }
 
   const siteName = formData.get("siteName") as string
+  const logoUrl = formData.get("logoUrl") as string
   const maintenanceMode = formData.get("maintenanceMode") === "true"
   const draftAgent = formData.get("draftAgent") === "true"
   const rewriteAgent = formData.get("rewriteAgent") === "true"
@@ -27,6 +28,7 @@ export async function updateSiteSettings(formData: FormData) {
         where: { id: settings.id },
         data: {
           siteName,
+          logoUrl,
           maintenanceMode,
           draftAgent,
           rewriteAgent,
@@ -37,6 +39,7 @@ export async function updateSiteSettings(formData: FormData) {
       await prisma.siteSettings.create({
         data: {
           siteName,
+          logoUrl,
           maintenanceMode,
           draftAgent,
           rewriteAgent,
