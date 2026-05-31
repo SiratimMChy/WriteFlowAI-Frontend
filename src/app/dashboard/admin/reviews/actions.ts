@@ -4,8 +4,7 @@ import { getServerSession } from "next-auth/next"
 import { authOptions } from "@/lib/auth"
 import { PrismaClient } from "@prisma/client"
 import { revalidatePath } from "next/cache"
-import { generateText } from "ai"
-import { openai } from "@ai-sdk/openai"
+import { groq, DEFAULT_MODEL } from "@/lib/groq"
 
 const prisma = new PrismaClient()
 
@@ -45,15 +44,25 @@ export async function summarizeReviews() {
 
     const reviewTexts = reviews.map(r => `Rating: ${r.rating}/5 - ${r.content}`).join("\n")
 
-    const { text } = await generateText({
-      model: openai("gpt-4o"),
-      system: "You are an expert product analyst. Summarize the following user reviews into a concise list of Pros and Cons. Be brief but informative.",
-      prompt: `Here are the user reviews:\n\n${reviewTexts}\n\nPlease summarize them into Pros and Cons.`
+    const completion = await groq.chat.completions.create({
+      model: DEFAULT_MODEL,
+      messages: [
+        {
+          role: "system",
+          content: "You are an expert product analyst. Summarize the following user reviews into a concise list of Pros and Cons. Be brief but informative."
+        },
+        {
+          role: "user",
+          content: `Here are the user reviews:\n\n${reviewTexts}\n\nPlease summarize them into Pros and Cons.`
+        }
+      ]
     })
+
+    const text = completion.choices[0]?.message?.content || "Unable to generate summary."
 
     return { summary: text }
   } catch (error) {
     console.error(error)
-    return { error: "Failed to summarize reviews. Make sure OPENAI_API_KEY is configured." }
+    return { error: "Failed to summarize reviews. Make sure GROQ_API_KEY is configured." }
   }
 }

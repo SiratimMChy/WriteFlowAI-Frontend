@@ -1,5 +1,4 @@
-import { streamText } from "ai"
-import { openai } from "@ai-sdk/openai"
+import { groq, DEFAULT_MODEL } from "@/lib/groq"
 import { getServerSession } from "next-auth/next"
 import { authOptions } from "@/lib/auth"
 import { PrismaClient } from "@prisma/client"
@@ -29,11 +28,40 @@ export async function POST(req: Request) {
     }).catch(console.error)
   }
 
-  const result = await streamText({
-    model: openai("gpt-4o"),
-    system: "You are a helpful and expert AI writing assistant named WriteFlow AI. You help users brainstorm, outline, and refine their content. Be concise and friendly.",
-    messages: messages,
+  const systemMessage = "You are a helpful and expert AI writing assistant named WriteFlow AI. You help users brainstorm, outline, and refine their content. Be concise and friendly."
+  
+  const chatMessages = [
+    { role: "system" as const, content: systemMessage },
+    ...messages
+  ]
+
+  const completion = await groq.chat.completions.create({
+    model: DEFAULT_MODEL,
+    messages: chatMessages,
+    stream: true,
   })
 
-  return result.toTextStreamResponse()
+  const encoder = new TextEncoder()
+  const stream = new ReadableStream({
+    async start(controller) {
+      try {
+        for await (const chunk of completion) {
+          const content = chunk.choices[0]?.delta?.content || ""
+          if (content) {
+            controller.enqueue(encoder.encode(content))
+          }
+        }
+        controller.close()
+      } catch (error) {
+        controller.error(error)
+      }
+    },
+  })
+
+  return new Response(stream, {
+    headers: {
+      "Content-Type": "text/plain; charset=utf-8",
+      "Transfer-Encoding": "chunked",
+    },
+  })
 }

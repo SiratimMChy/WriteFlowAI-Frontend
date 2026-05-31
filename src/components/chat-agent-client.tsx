@@ -7,13 +7,29 @@ import { Input } from "@/components/ui/input"
 import { useEffect, useRef } from "react"
 import { toast } from "sonner"
 
+import { useState } from "react"
+
 export function ChatAgentClient() {
-  const { messages, input, handleInputChange, handleSubmit, isLoading } = useChat({
-    api: "/api/chat",
+  const [input, setInput] = useState("")
+
+  const { messages, sendMessage, status } = useChat({
     onError: (err) => {
       toast.error(err.message || "Failed to connect to chat assistant.")
     }
   })
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInput(e.target.value)
+  }
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!input.trim()) return
+    sendMessage({ role: 'user', content: [{ type: 'text', text: input }] } as any)
+    setInput("")
+  }
+
+  const isLoading = status === 'submitted' || status === 'streaming'
 
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
@@ -60,7 +76,8 @@ export function ChatAgentClient() {
                     : 'bg-white/[0.05] border border-white/10 text-gray-200 rounded-tl-sm'
                 }`}>
                   <div className="prose prose-invert prose-sm max-w-none whitespace-pre-wrap">
-                    {m.content}
+                    {/* @ts-ignore - type mismatch due to SDK versions */}
+                    {m.parts ? m.parts.map((p, i) => p.type === 'text' ? p.text : null).join('') : m.content}
                   </div>
                 </div>
 
