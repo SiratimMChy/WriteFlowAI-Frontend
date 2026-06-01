@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
-import { deleteTemplate, saveTemplate } from "@/app/dashboard/admin/templates/actions"
+import { api } from "@/lib/api"
 import { toast } from "sonner"
 
 export function AdminTemplatesClient({ templates, totalPages }: { templates: any[], totalPages: number }) {
@@ -36,22 +36,50 @@ export function AdminTemplatesClient({ templates, totalPages }: { templates: any
   const handleDelete = async (id: string) => {
     if (!confirm("Are you sure you want to delete this template?")) return
     startTransition(async () => {
-      const res = await deleteTemplate(id)
-      if (res.error) toast.error(res.error)
-      else toast.success("Template deleted")
+      try {
+        const res = await api.delete(`/items/${id}`)
+        if (res.data.success) {
+          toast.success("Template deleted")
+          router.refresh()
+        } else {
+          toast.error(res.data.message || "Failed to delete template")
+        }
+      } catch (err: any) {
+        toast.error(err.response?.data?.message || "Failed to delete template")
+      }
     })
   }
 
   const handleSave = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const formData = new FormData(e.currentTarget)
+    const data = {
+      title: formData.get("title"),
+      category: formData.get("category"),
+      wordCount: formData.get("wordCount") || "500 words",
+      tone: formData.get("tone") || "Professional",
+      aiModel: formData.get("aiModel") || "GPT-4",
+      description: formData.get("description"),
+      sampleOutput: formData.get("sampleOutput") || "Sample text...",
+      prompt: `You are an expert ${formData.get("category")} writer. Write a ${formData.get("wordCount") || "500 words"} text in a ${formData.get("tone") || "Professional"} tone.`
+    }
+
     startTransition(async () => {
-      const res = await saveTemplate(formData, editingTemplate?.id)
-      if (res.error) toast.error(res.error)
-      else {
-        toast.success(editingTemplate ? "Template updated" : "Template created")
-        setEditingTemplate(null)
-        setIsCreating(false)
+      try {
+        const res = editingTemplate?.id
+          ? await api.patch(`/items/${editingTemplate.id}`, data)
+          : await api.post("/items", data)
+        
+        if (res.data.success) {
+          toast.success(editingTemplate ? "Template updated" : "Template created")
+          setEditingTemplate(null)
+          setIsCreating(false)
+          router.refresh()
+        } else {
+          toast.error(res.data.message || "Failed to save template")
+        }
+      } catch (err: any) {
+        toast.error(err.response?.data?.message || "Failed to save template")
       }
     })
   }

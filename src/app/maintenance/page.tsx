@@ -9,12 +9,15 @@ export default function MaintenancePage() {
   const [siteName, setSiteName] = useState("WriteFlow")
 
   useEffect(() => {
-    fetch("/api/settings")
-      .then((res) => res.json())
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/settings`)
+      .then((res) => {
+        if (!res.ok) throw new Error("Settings not available")
+        return res.json()
+      })
       .then((data) => {
         if (data.siteName) setSiteName(data.siteName)
       })
-      .catch((err) => console.error(err))
+      .catch((err) => console.warn("Maintenance settings fetch skipped: ", err.message))
   }, [])
 
   return (

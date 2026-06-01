@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import { signIn } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { motion } from "framer-motion"
@@ -9,33 +8,50 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Sparkles, Wand2, ArrowRight, Loader2, User, ShieldCheck, Mail, Lock } from "lucide-react"
+import { useAuth } from "@/components/auth-provider"
+import { api } from "@/lib/api"
+
+declare global {
+  interface Window {
+    google: any
+  }
+}
 
 export default function LoginPage() {
   const router = useRouter()
+  const { login } = useAuth()
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState("")
 
+  const loginWithGoogle = () => {
+    const backendUrl = process.env.NEXT_PUBLIC_API_URL?.replace('/api', '') || 'http://localhost:5000'
+    window.location.href = `${backendUrl}/api/auth/google`
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
     setError("")
-    
     try {
-      const res = await signIn("credentials", {
-        redirect: false,
-        email,
-        password
-      })
+      const res = await api.post("/auth/login", { email, password })
 
-      if (res?.error) {
-        setError("Invalid email or password")
-      } else {
+      if (res.data.success && res.data.data.token) {
+        const userData = {
+          id: res.data.data._id,
+          name: res.data.data.name,
+          email: res.data.data.email,
+          role: res.data.data.role,
+          image: res.data.data.image,
+        }
+        login(res.data.data.token, userData)
         router.push("/dashboard")
+      } else {
+        setError(res.data.message || "Invalid email or password")
       }
-    } catch (err) {
-      setError("An unexpected error occurred")
+    } catch (err: any) {
+      setError(err.response?.data?.message || "An unexpected error occurred")
     } finally {
       setIsLoading(false)
     }
@@ -47,29 +63,29 @@ export default function LoginPage() {
     setPassword("123456")
     
     setIsLoading(true)
-    setError("")
     try {
-      const res = await signIn("credentials", {
-        redirect: false,
-        email: demoEmail,
-        password: "123456"
-      })
-      if (res?.error) {
-        setError("Invalid email or password")
-      } else {
+      const res = await api.post("/auth/login", { email: demoEmail, password: "123456" })
+
+      if (res.data.success && res.data.data.token) {
+        const userData = {
+          id: res.data.data._id,
+          name: res.data.data.name,
+          email: res.data.data.email,
+          role: res.data.data.role,
+          image: res.data.data.image,
+        }
+        login(res.data.data.token, userData)
         router.push("/dashboard")
+      } else {
+        setError(res.data.message || "Invalid email or password")
       }
-    } catch (err) {
-      setError("An unexpected error occurred")
+    } catch (err: any) {
+      setError(err.response?.data?.message || "An unexpected error occurred")
     } finally {
       setIsLoading(false)
     }
   }
 
-  const loginWithGoogle = () => {
-    setIsLoading(true)
-    signIn("google", { callbackUrl: "/dashboard" })
-  }
 
   return (
     <div className="min-h-screen w-full flex bg-[#050505] text-white selection:bg-violet-500/30">
@@ -234,8 +250,8 @@ export default function LoginPage() {
 
           <div className="space-y-4">
             {/* Google Sign In */}
-            <Button 
-              variant="outline" 
+            <Button
+              variant="outline"
               className="w-full h-12 bg-white/[0.02] border-white/10 text-gray-300 hover:bg-white/[0.05] hover:text-white rounded-xl transition-all"
               onClick={loginWithGoogle}
               type="button"
@@ -248,7 +264,7 @@ export default function LoginPage() {
               </svg>
               Sign in with Google
             </Button>
-            
+
             <div className="grid grid-cols-2 gap-4">
               <Button 
                 variant="outline" 

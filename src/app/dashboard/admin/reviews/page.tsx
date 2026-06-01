@@ -1,48 +1,45 @@
-import { getServerSession } from "next-auth/next"
-import { authOptions } from "@/lib/auth"
-import { PrismaClient } from "@prisma/client"
-import { redirect } from "next/navigation"
+"use client"
+
+import { useEffect, useState } from "react"
+import { useAuth } from "@/components/auth-provider"
+import { useRouter } from "next/navigation"
+import { api } from "@/lib/api"
 import { AdminReviewsClient } from "@/components/admin-reviews-client"
 import { Star } from "lucide-react"
 
-const prisma = new PrismaClient()
+export default function AdminReviewsPage() {
+  const { user } = useAuth()
+  const router = useRouter()
+  const [reviews, setReviews] = useState<any[]>([])
+  const [totalPages, setTotalPages] = useState(1)
+  const [loading, setLoading] = useState(true)
 
-export default async function AdminReviewsPage({
-  searchParams,
-}: {
-  searchParams: { [key: string]: string | string[] | undefined }
-}) {
-  const session = await getServerSession(authOptions)
-  if (!session?.user || session.user.role !== "admin") {
-    redirect("/dashboard")
-  }
-
-  const q = typeof searchParams.q === "string" ? searchParams.q : ""
-  const page = typeof searchParams.page === "string" ? parseInt(searchParams.page) : 1
-  
-  const ITEMS_PER_PAGE = 20
-
-  const where: any = {}
-  
-  if (q) {
-    where.content = { contains: q }
-  }
-
-  const [totalCount, reviews] = await Promise.all([
-    prisma.review.count({ where }),
-    prisma.review.findMany({
-      where,
-      orderBy: { createdAt: "desc" },
-      skip: (page - 1) * ITEMS_PER_PAGE,
-      take: ITEMS_PER_PAGE,
-      include: {
-        user: { select: { name: true, email: true } },
-        template: { select: { title: true } }
+  useEffect(() => {
+    if (user && user.role !== "ADMIN" && user.role !== "admin") {
+      router.push("/dashboard")
+      return
+    }
+    const fetchReviews = async () => {
+      try {
+        // Fetch all items first, then get reviews for each — or use a dedicated admin reviews endpoint
+        const res = await api.get("/reviews", { params: { limit: 20 } }).catch(() =>
+          api.get("/reviews/all", { params: { limit: 20 } })
+        )
+        if (res.data.success) {
+          setReviews(res.data.data || [])
+          if (res.data.meta) {
+            setTotalPages(Math.ceil(res.data.meta.total / (res.data.meta.limit || 20)))
+          }
+        }
+      } catch (err) {
+        console.error("Reviews fetch error", err)
+        setReviews([])
+      } finally {
+        setLoading(false)
       }
-    })
-  ])
-
-  const totalPages = Math.ceil(totalCount / ITEMS_PER_PAGE)
+    }
+    fetchReviews()
+  }, [user, router])
 
   return (
     <div className="p-8 max-w-7xl mx-auto space-y-8 h-full">
@@ -53,11 +50,7 @@ export default async function AdminReviewsPage({
         </h1>
         <p className="text-gray-400 mt-1">Moderate user reviews and generate AI summaries.</p>
       </div>
-
-      <AdminReviewsClient 
-        reviews={reviews} 
-        totalPages={totalPages} 
-      />
+      <AdminReviewsClient reviews={reviews} totalPages={totalPages} />
     </div>
   )
 }

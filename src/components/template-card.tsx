@@ -48,9 +48,9 @@ export function TemplateCard({ template }: { template: Template }) {
             <Users className="w-3.5 h-3.5" />
             {template.usageCount.toLocaleString()} uses
           </div>
-          <Link href={`/templates/${template.id}`}>
+          <Link href={`/dashboard/draft?templateId=${template.id}`}>
             <Button size="sm" className="h-8 text-xs bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:from-violet-500 hover:to-fuchsia-500 text-white rounded-lg transition-all group border-0">
-              Details
+              Use Template
               <ArrowRight className="ml-1.5 w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
             </Button>
           </Link>

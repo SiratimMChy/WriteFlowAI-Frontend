@@ -6,7 +6,7 @@ import { Footer } from "@/components/footer"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { motion, AnimatePresence } from "framer-motion"
-import { requestPasswordReset } from "./actions"
+import { api } from "@/lib/api"
 import { Loader2, Mail, ArrowRight, CheckCircle2, AlertCircle } from "lucide-react"
 import Link from "next/link"
 
@@ -30,15 +30,15 @@ export default function ForgotPasswordPage() {
     }
 
     try {
-      const res = await requestPasswordReset(email)
-      if (res.error) {
-        setError(res.error)
-      } else {
-        setSuccess(res.message || "A reset link has been sent to your email.")
+      const res = await api.post("/auth/forgot-password", { email })
+      if (res.data.success) {
+        setSuccess(res.data.message || "A reset link has been sent to your email.")
         setEmail("")
+      } else {
+        setError(res.data.message || "Failed to request password reset.")
       }
-    } catch (err) {
-      setError("An unexpected error occurred. Please try again.")
+    } catch (err: any) {
+      setError(err.response?.data?.message || "An unexpected error occurred. Please try again.")
     } finally {
       setIsLoading(false)
     }

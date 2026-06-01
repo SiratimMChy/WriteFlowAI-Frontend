@@ -1,11 +1,11 @@
 "use client"
 
-import { useSession } from "next-auth/react"
+import { useAuth } from "@/components/auth-provider"
 import { usePathname, useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 
 export function MaintenanceGuard({ children }: { children: React.ReactNode }) {
-  const { data: session, status } = useSession()
+  const { user } = useAuth()
   const router = useRouter()
   const pathname = usePathname()
   const [maintenanceMode, setMaintenanceMode] = useState<boolean | null>(null)
@@ -21,10 +21,16 @@ export function MaintenanceGuard({ children }: { children: React.ReactNode }) {
       return
     }
 
-    fetch("/api/settings")
-      .then((res) => res.json())
+    // Default to false or fetch from settings endpoint if supported
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/settings`)
+      .then((res) => {
+        if (!res.ok) throw new Error("Settings not available")
+        return res.json()
+      })
       .then((data) => {
-        setMaintenanceMode(data.maintenanceMode || false)
+        // Support both nested data.data.maintenanceMode (Express standard) and flat data.maintenanceMode
+        const mode = data.data !== undefined ? data.data.maintenanceMode : data.maintenanceMode;
+        setMaintenanceMode(mode || false)
       })
       .catch((err) => {
         console.error("Error fetching settings:", err)
@@ -33,9 +39,9 @@ export function MaintenanceGuard({ children }: { children: React.ReactNode }) {
   }, [pathname])
 
   useEffect(() => {
-    if (maintenanceMode === null || status === "loading") return
+    if (maintenanceMode === null) return
 
-    const isAdmin = session?.user?.role === "admin"
+    const isAdmin = user?.role === "admin" || user?.role === "ADMIN"
     const isLoginPage = pathname === "/login"
     const isMaintenancePage = pathname === "/maintenance"
 
@@ -44,9 +50,9 @@ export function MaintenanceGuard({ children }: { children: React.ReactNode }) {
     } else if ((!maintenanceMode || isAdmin) && isMaintenancePage) {
       router.push("/")
     }
-  }, [maintenanceMode, session, status, pathname, router])
+  }, [maintenanceMode, user, pathname, router])
 
-  const isAdmin = session?.user?.role === "admin"
+  const isAdmin = user?.role === "admin" || user?.role === "ADMIN"
   const isLoginPage = pathname === "/login"
   const isMaintenancePage = pathname === "/maintenance"
   const isExcluded =

@@ -9,6 +9,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import { cn } from "@/lib/utils"
+import { getCookie } from "cookies-next"
 
 const rewriteActions = [
   { id: "grammar", label: "Fix Grammar", icon: CheckCircle },
@@ -25,7 +26,7 @@ export function RewriteAgentClient() {
   const [title, setTitle] = useState("Rewritten Document")
 
   const { completion, input, handleInputChange, handleSubmit, isLoading } = useCompletion({
-    api: "/api/rewrite",
+    api: `${process.env.NEXT_PUBLIC_API_URL}/rewrite`,
     body: {
       action,
       format
@@ -44,9 +45,17 @@ export function RewriteAgentClient() {
   const handleSave = async () => {
     if (!completion) return
     
-    const res = await fetch("/api/documents/save", {
+    let token = getCookie("token")
+    if (!token && typeof window !== "undefined") {
+      token = localStorage.getItem("token")
+    }
+
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/documents/save`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { 
+        "Content-Type": "application/json",
+        ...(token ? { "Authorization": `Bearer ${token}` } : {})
+      },
       body: JSON.stringify({
         title,
         content: completion,

@@ -1,9 +1,7 @@
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import { ExploreClient } from "@/components/explore-client"
-import { PrismaClient } from "@prisma/client"
-
-const prisma = new PrismaClient()
+import { api } from "@/lib/api"
 
 export default async function ExplorePage({
   searchParams,
@@ -18,54 +16,24 @@ export default async function ExplorePage({
   
   const ITEMS_PER_PAGE = 12
 
-  // Build where clause
-  const where: any = {
-    isActive: true,
-  }
-  
-  if (q) {
-    where.OR = [
-      { title: { contains: q } }, // SQLite contains is case-insensitive in Prisma mostly depending on DB, but SQLite uses nocase
-      { description: { contains: q } }
-    ]
-  }
-  
-  if (category) {
-    where.category = category
-  }
-  
-  if (rating) {
-    where.rating = { gte: parseFloat(rating) }
-  }
-
-  // Build orderBy
-  let orderBy: any = { usageCount: "desc" }
-  if (sort === "newest") orderBy = { createdAt: "desc" }
-  if (sort === "rated") orderBy = { rating: "desc" }
-
-  // Fetch data
-  const [totalCount, templates] = await Promise.all([
-    prisma.template.count({ where }),
-    prisma.template.findMany({
-      where,
-      orderBy,
-      skip: (page - 1) * ITEMS_PER_PAGE,
-      take: ITEMS_PER_PAGE,
-      select: {
-        id: true,
-        title: true,
-        description: true,
-        category: true,
-        rating: true,
-        usageCount: true,
-        thumbnail: true,
+  try {
+    const res = await api.get('/items', {
+      params: {
+        search: q,
+        category,
+        rating,
+        sort,
+        page,
+        limit: ITEMS_PER_PAGE
       }
     })
-  ])
 
-  const totalPages = Math.ceil(totalCount / ITEMS_PER_PAGE)
+    const templates = res.data.data || []
+    const meta = res.data.meta || { total: 0 }
+    const totalCount = meta.total || 0
+    const totalPages = Math.ceil(totalCount / ITEMS_PER_PAGE)
 
-  return (
+    return (
     <div className="min-h-screen bg-[#050505] text-white flex flex-col">
       <Navbar />
       
@@ -86,4 +54,19 @@ export default async function ExplorePage({
       <Footer />
     </div>
   )
+} catch (error) {
+  // Return fallback if API is down
+  return (
+    <div className="min-h-screen bg-[#050505] text-white flex flex-col">
+      <Navbar />
+      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-24 sm:py-32 flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold mb-4 text-red-400">Failed to load templates</h1>
+          <p className="text-gray-400">Please make sure the backend is running.</p>
+        </div>
+      </main>
+      <Footer />
+    </div>
+  )
+}
 }

@@ -1,15 +1,15 @@
 "use client"
 
 import { useState, useTransition } from "react"
-import { useSession } from "next-auth/react"
+import { useAuth } from "@/components/auth-provider"
 import { Star, Loader2, Sparkles, AlertCircle, CheckCircle2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
-import { submitReview } from "@/app/templates/[id]/actions"
+import { api } from "@/lib/api"
 import { motion, AnimatePresence } from "framer-motion"
 
 export function WriteReviewForm({ templateId }: { templateId: string }) {
-  const { data: session } = useSession()
+  const { user } = useAuth()
   const [isOpen, setIsOpen] = useState(false)
   const [rating, setRating] = useState(5)
   const [hoverRating, setHoverRating] = useState<number | null>(null)
@@ -19,7 +19,7 @@ export function WriteReviewForm({ templateId }: { templateId: string }) {
   const [success, setSuccess] = useState("")
 
   const handleOpen = () => {
-    if (!session) {
+    if (!user) {
       window.location.href = "/login?callbackUrl=" + encodeURIComponent(window.location.pathname)
       return
     }
@@ -37,14 +37,24 @@ export function WriteReviewForm({ templateId }: { templateId: string }) {
     }
 
     startTransition(async () => {
-      const res = await submitReview(templateId, rating, content)
-      if (res.error) {
-        setError(res.error)
-      } else {
-        setSuccess(res.message || "Review submitted successfully!")
-        setContent("")
-        setRating(5)
-        setTimeout(() => setIsOpen(false), 3000)
+      try {
+        const res = await api.post("/reviews", {
+          templateId,
+          itemId: templateId,
+          rating,
+          content: content.trim()
+        })
+
+        if (res.data.success) {
+          setSuccess(res.data.message || "Your review has been submitted and is pending admin approval.")
+          setContent("")
+          setRating(5)
+          setTimeout(() => setIsOpen(false), 3000)
+        } else {
+          setError(res.data.message || "Failed to submit review.")
+        }
+      } catch (err: any) {
+        setError(err.response?.data?.message || "Failed to submit review.")
       }
     })
   }

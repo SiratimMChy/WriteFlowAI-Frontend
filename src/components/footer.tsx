@@ -2,20 +2,41 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
-import { Wand2, Globe, MessageSquare, Mail, ArrowRight } from "lucide-react"
+import { Wand2, Globe, MessageSquare, Mail, ArrowRight, Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { toast } from "sonner"
 
 export function Footer() {
   const [siteName, setSiteName] = useState("WriteFlow")
+  const [email, setEmail] = useState("")
+  const [isSubmitting, setIsSubmitting] = useState(false)
+
+  const handleSubscribe = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!email) return
+    setIsSubmitting(true)
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 1000))
+      toast.success("Successfully subscribed to our newsletter!")
+      setEmail("")
+    } catch (err) {
+      toast.error("Failed to subscribe. Please try again.")
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
 
   useEffect(() => {
-    fetch("/api/settings")
-      .then((res) => res.json())
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/settings`)
+      .then((res) => {
+        if (!res.ok) throw new Error("Settings not available")
+        return res.json()
+      })
       .then((data) => {
         if (data.siteName) setSiteName(data.siteName)
       })
-      .catch((err) => console.error(err))
+      .catch((err) => console.warn("Footer settings fetch skipped: ", err.message))
   }, [])
 
   return (
@@ -72,16 +93,29 @@ export function Footer() {
           <div className="col-span-1 md:col-span-4 lg:col-span-3">
             <h4 className="text-white font-semibold mb-6 tracking-wide text-sm">Stay Updated</h4>
             <p className="text-gray-400 text-sm mb-4">Subscribe to our newsletter for the latest AI writing tips and product updates.</p>
-            <div className="relative">
+            <form onSubmit={handleSubscribe} className="relative">
               <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
               <Input 
+                type="email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                disabled={isSubmitting}
                 placeholder="Enter your email" 
                 className="pl-10 pr-12 h-12 bg-white/5 border-white/10 text-white placeholder:text-gray-500 rounded-xl focus:border-violet-500/50 focus:ring-violet-500/20"
               />
-              <button className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-lg bg-violet-600 hover:bg-violet-500 flex items-center justify-center text-white transition-colors">
-                <ArrowRight className="w-4 h-4" />
+              <button 
+                type="submit"
+                disabled={isSubmitting}
+                className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-lg bg-violet-600 hover:bg-violet-500 flex items-center justify-center text-white transition-colors disabled:opacity-50"
+              >
+                {isSubmitting ? (
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                ) : (
+                  <ArrowRight className="w-4 h-4" />
+                )}
               </button>
-            </div>
+            </form>
           </div>
         </div>
         

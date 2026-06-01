@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { signOut, useSession } from "next-auth/react"
+import { useAuth } from "@/components/auth-provider"
 import { cn } from "@/lib/utils"
 import {
   LayoutDashboard,
@@ -21,7 +21,8 @@ import {
   Star,
   ShieldAlert
 } from "lucide-react"
-import { Avatar, AvatarFallback } from "@/components/ui/avatar"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { getAvatarUrl } from "@/lib/avatar"
 import { Button } from "@/components/ui/button"
 
 const navItems = [
@@ -90,23 +91,26 @@ const adminItems = [
   },
 ]
 
-export function DashboardSidebar() {
+export function DashboardSidebar({ isOpen, onClose }: { isOpen?: boolean; onClose?: () => void }) {
   const pathname = usePathname()
-  const { data: session } = useSession()
+  const { user, logout } = useAuth()
 
-  const initials = session?.user?.name
-    ? session.user.name.split(" ").map((n) => n[0]).join("").toUpperCase()
+  const initials = user?.name
+    ? user.name.split(" ").map((n: string) => n[0]).join("").toUpperCase()
     : "U"
 
-  const isAdmin = session?.user?.role === "admin"
+  const isAdmin = user?.role === "admin" || user?.role === "ADMIN"
 
   return (
-    <aside className="fixed inset-y-0 left-0 z-40 w-64 flex flex-col bg-[#0a0a0a] border-r border-white/5">
+    <aside className={cn(
+      "fixed inset-y-0 left-0 z-40 w-64 flex flex-col bg-[#0a0a0a] border-r border-white/5 transition-transform duration-300 md:translate-x-0",
+      isOpen ? "translate-x-0" : "-translate-x-full"
+    )}>
       {/* Logo */}
-      <div className="h-16 flex items-center gap-2 px-6 border-b border-white/5">
+      <Link href="/" className="h-16 flex items-center gap-2 px-6 border-b border-white/5 hover:opacity-80 transition-opacity">
         <Wand2 className="w-5 h-5 text-violet-500" />
         <span className="font-bold text-white">WriteFlow AI</span>
-      </div>
+      </Link>
 
       {/* Nav */}
       <nav className="flex-1 overflow-y-auto py-6 px-3 space-y-6">
@@ -117,6 +121,7 @@ export function DashboardSidebar() {
               <Link
                 key={item.href}
                 href={item.href}
+                onClick={onClose}
                 className={cn(
                   "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all",
                   isActive
@@ -144,6 +149,7 @@ export function DashboardSidebar() {
                   <Link
                     key={item.href}
                     href={item.href}
+                    onClick={onClose}
                     className={cn(
                       "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all",
                       isActive
@@ -165,17 +171,18 @@ export function DashboardSidebar() {
       {/* User Footer */}
       <div className="p-4 border-t border-white/5">
         <div className="flex items-center gap-3 mb-3">
-          <Avatar className="w-8 h-8">
+          <Avatar className="w-8 h-8 border border-white/10">
+            <AvatarImage src={getAvatarUrl(user?.email, user?.image)} alt={user?.name || "User"} />
             <AvatarFallback className="bg-violet-600 text-white text-xs">
               {initials}
             </AvatarFallback>
           </Avatar>
           <div className="flex-1 min-w-0">
             <p className="text-sm font-medium text-white truncate">
-              {session?.user?.name ?? "User"}
+              {user?.name ?? "User"}
             </p>
             <p className="text-xs text-gray-500 truncate">
-              {session?.user?.email}
+              {user?.email}
             </p>
           </div>
         </div>
@@ -183,7 +190,7 @@ export function DashboardSidebar() {
           variant="ghost"
           size="sm"
           className="w-full justify-start text-red-400 hover:text-red-300 hover:bg-red-400/10 gap-2"
-          onClick={() => signOut({ callbackUrl: "/login" })}
+          onClick={logout}
         >
           <LogOut className="w-4 h-4" />
           Sign out

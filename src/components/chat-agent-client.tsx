@@ -1,6 +1,7 @@
 "use client"
 
 import { useChat } from "@ai-sdk/react"
+import { DefaultChatTransport } from "ai"
 import { MessageSquare, Send, User, Bot, Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -13,6 +14,9 @@ export function ChatAgentClient() {
   const [input, setInput] = useState("")
 
   const { messages, sendMessage, status } = useChat({
+    transport: new DefaultChatTransport({
+      api: `${process.env.NEXT_PUBLIC_API_URL || 'https://writeflowai-backend.onrender.com/api'}/ai/chat`,
+    }),
     onError: (err) => {
       toast.error(err.message || "Failed to connect to chat assistant.")
     }

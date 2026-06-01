@@ -9,6 +9,7 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { toast } from "sonner"
 import { useRouter, useSearchParams } from "next/navigation"
+import { getCookie } from "cookies-next"
 
 export function DraftAgentClient() {
   const router = useRouter()
@@ -20,7 +21,7 @@ export function DraftAgentClient() {
   const [title, setTitle] = useState("Untitled Document")
 
   const { completion, input, handleInputChange, handleSubmit, isLoading } = useCompletion({
-    api: "/api/draft",
+    api: `${process.env.NEXT_PUBLIC_API_URL}/draft`,
     body: {
       tone,
       keywords,
@@ -40,10 +41,18 @@ export function DraftAgentClient() {
   const handleSave = async () => {
     if (!completion) return
     
+    let token = getCookie("token")
+    if (!token && typeof window !== "undefined") {
+      token = localStorage.getItem("token")
+    }
+
     // Server action to save document
-    const res = await fetch("/api/documents/save", {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/documents/save`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { 
+        "Content-Type": "application/json",
+        ...(token ? { "Authorization": `Bearer ${token}` } : {})
+      },
       body: JSON.stringify({
         title,
         content: completion,

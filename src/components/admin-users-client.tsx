@@ -5,7 +5,7 @@ import { useRouter, useSearchParams, usePathname } from "next/navigation"
 import { Search, Shield, Ban, CheckCircle2, User } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { updateUserRole, toggleUserStatus } from "@/app/dashboard/admin/users/actions"
+import { api } from "@/lib/api"
 import { toast } from "sonner"
 
 export function AdminUsersClient({ users, totalPages }: { users: any[], totalPages: number }) {
@@ -48,17 +48,34 @@ export function AdminUsersClient({ users, totalPages }: { users: any[], totalPag
 
   const handleRoleChange = async (userId: string, newRole: string) => {
     startTransition(async () => {
-      const res = await updateUserRole(userId, newRole)
-      if (res.error) toast.error(res.error)
-      else toast.success("Role updated")
+      try {
+        const res = await api.patch(`/users/${userId}`, { role: newRole })
+        if (res.data.success) {
+          toast.success("Role updated")
+          router.refresh()
+        } else {
+          toast.error(res.data.message || "Failed to update role")
+        }
+      } catch (err: any) {
+        toast.error(err.response?.data?.message || "Failed to update role")
+      }
     })
   }
 
   const handleToggleStatus = async (userId: string, currentStatus: string) => {
+    const newStatus = currentStatus === "active" ? "banned" : "active"
     startTransition(async () => {
-      const res = await toggleUserStatus(userId, currentStatus)
-      if (res.error) toast.error(res.error)
-      else toast.success(`User ${res.newStatus === "banned" ? "banned" : "activated"}`)
+      try {
+        const res = await api.patch(`/users/${userId}`, { status: newStatus })
+        if (res.data.success) {
+          toast.success(`User ${newStatus === "banned" ? "banned" : "activated"}`)
+          router.refresh()
+        } else {
+          toast.error(res.data.message || "Failed to update status")
+        }
+      } catch (err: any) {
+        toast.error(err.response?.data?.message || "Failed to update status")
+      }
     })
   }
 

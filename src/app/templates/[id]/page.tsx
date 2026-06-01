@@ -3,52 +3,55 @@ import { Footer } from "@/components/footer"
 import { TemplateCard } from "@/components/template-card"
 import { Button } from "@/components/ui/button"
 import { Star, Users, ArrowRight, CheckCircle2, MessageSquare, Sparkles } from "lucide-react"
-import { PrismaClient } from "@prisma/client"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { WriteReviewForm } from "@/components/write-review-form"
-
-const prisma = new PrismaClient()
+import { api } from "@/lib/api"
 
 export default async function TemplateDetailsPage({
   params,
 }: {
   params: { id: string }
 }) {
-  const template = await prisma.template.findUnique({
-    where: { id: params.id },
-    include: {
-      reviews: {
-        where: { status: "approved" },
-        include: { user: true },
-        orderBy: { createdAt: "desc" },
-        take: 5
-      }
+  let template: any = null
+  let reviews: any[] = []
+  let relatedTemplates: any[] = []
+
+  try {
+    const templateRes = await api.get(`/items/${params.id}`)
+    if (templateRes.data.success && templateRes.data.data) {
+      template = templateRes.data.data
     }
-  })
+  } catch (err) {
+    console.error("Failed to fetch template detail", err)
+  }
 
   if (!template) {
     notFound()
   }
 
-  // Fetch 4 related templates from the same category
-  const relatedTemplates = await prisma.template.findMany({
-    where: {
-      category: template.category,
-      id: { not: template.id } // Exclude current template
-    },
-    take: 4,
-    select: {
-      id: true,
-      title: true,
-      description: true,
-      category: true,
-      rating: true,
-      usageCount: true,
-      thumbnail: true,
+  try {
+    const reviewsRes = await api.get(`/reviews/item/${params.id}`).catch(() =>
+      api.get(`/reviews/item-reviews/${params.id}`).catch(() => ({ data: { success: false, data: [] } }))
+    )
+    if (reviewsRes.data.success) {
+      reviews = (reviewsRes.data.data || []).filter((r: any) => r.status === "approved" || r.status === "Approved")
     }
-  })
+  } catch (err) {
+    console.error("Failed to fetch reviews", err)
+  }
+
+  try {
+    const relatedRes = await api.get("/items", {
+      params: { category: template.category, limit: 5 }
+    })
+    if (relatedRes.data.success) {
+      relatedTemplates = (relatedRes.data.data || []).filter((t: any) => t.id !== template.id).slice(0, 4)
+    }
+  } catch (err) {
+    console.error("Failed to fetch related templates", err)
+  }
 
   return (
     <div className="min-h-screen bg-[#050505] text-white flex flex-col">
@@ -64,11 +67,11 @@ export default async function TemplateDetailsPage({
             </span>
             <div className="flex items-center gap-1.5 text-sm text-yellow-400 font-medium">
               <Star className="w-4 h-4 fill-yellow-400" />
-              {template.rating.toFixed(1)} ({template.ratingCount} reviews)
+              {(template.rating || 0).toFixed(1)} ({(template.ratingCount || 0)} reviews)
             </div>
             <div className="flex items-center gap-1.5 text-sm text-gray-400">
               <Users className="w-4 h-4" />
-              {template.usageCount.toLocaleString()} uses
+              {(template.usageCount || 0).toLocaleString()} uses
             </div>
           </div>
           
@@ -130,18 +133,18 @@ export default async function TemplateDetailsPage({
             <section>
               <WriteReviewForm templateId={template.id} />
               
-              {template.reviews.length > 0 ? (
+              {reviews.length > 0 ? (
                 <div className="space-y-6">
-                  {template.reviews.map((review) => (
+                  {reviews.map((review: any) => (
                     <div key={review.id} className="bg-white/[0.02] border border-white/5 rounded-xl p-6">
                       <div className="flex items-center justify-between mb-4">
                         <div className="flex items-center gap-3">
                           <Avatar className="w-10 h-10 border border-white/10">
-                            <AvatarImage src={review.user.image || ""} />
-                            <AvatarFallback className="bg-violet-900 text-xs">{review.user.name?.charAt(0) || "U"}</AvatarFallback>
+                            <AvatarImage src={review.user?.image || ""} />
+                            <AvatarFallback className="bg-violet-900 text-xs">{review.user?.name?.charAt(0) || "U"}</AvatarFallback>
                           </Avatar>
                           <div>
-                            <div className="font-medium">{review.user.name || "Anonymous"}</div>
+                            <div className="font-medium">{review.user?.name || "Anonymous"}</div>
                             <div className="text-xs text-gray-500">{new Date(review.createdAt).toLocaleDateString()}</div>
                           </div>
                         </div>
@@ -219,8 +222,8 @@ export default async function TemplateDetailsPage({
           <div className="max-w-7xl mx-auto px-4 sm:px-6 mt-24 border-t border-white/10 pt-16">
             <h2 className="text-2xl font-bold mb-8">Related Templates</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {relatedTemplates.map(t => (
-                <TemplateCard key={t.id} template={t as any} />
+              {relatedTemplates.map((t: any) => (
+                <TemplateCard key={t.id} template={t} />
               ))}
             </div>
           </div>

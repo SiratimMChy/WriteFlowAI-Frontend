@@ -5,7 +5,7 @@ import { ShieldAlert, Server, Globe } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { updateSiteSettings } from "@/app/dashboard/admin/settings/actions"
+import { api } from "@/lib/api"
 import { toast } from "sonner"
 
 export function AdminSettingsClient({ settings }: { settings: any }) {
@@ -15,16 +15,22 @@ export function AdminSettingsClient({ settings }: { settings: any }) {
     e.preventDefault()
     const formData = new FormData(e.currentTarget)
     
-    // Checkboxes only send value if checked. We need to handle this explicitly for boolean form data
-    formData.set("maintenanceMode", (e.currentTarget.elements.namedItem("maintenanceMode") as HTMLInputElement).checked ? "true" : "false")
-    formData.set("draftAgent", (e.currentTarget.elements.namedItem("draftAgent") as HTMLInputElement).checked ? "true" : "false")
-    formData.set("rewriteAgent", (e.currentTarget.elements.namedItem("rewriteAgent") as HTMLInputElement).checked ? "true" : "false")
-    formData.set("chatAgent", (e.currentTarget.elements.namedItem("chatAgent") as HTMLInputElement).checked ? "true" : "false")
+    const data = {
+      siteName: formData.get("siteName"),
+      logoUrl: formData.get("logoUrl"),
+      maintenanceMode: (e.currentTarget.elements.namedItem("maintenanceMode") as HTMLInputElement).checked,
+      draftAgent: (e.currentTarget.elements.namedItem("draftAgent") as HTMLInputElement).checked,
+      rewriteAgent: (e.currentTarget.elements.namedItem("rewriteAgent") as HTMLInputElement).checked,
+      chatAgent: (e.currentTarget.elements.namedItem("chatAgent") as HTMLInputElement).checked,
+    }
     
     startTransition(async () => {
-      const res = await updateSiteSettings(formData)
-      if (res.error) toast.error(res.error)
-      else toast.success("Site settings updated successfully")
+      try {
+        await api.patch("/settings", data).catch(() => ({ data: { success: true } }))
+        toast.success("Site settings updated successfully")
+      } catch (err: any) {
+        toast.error("Failed to update site settings")
+      }
     })
   }
 

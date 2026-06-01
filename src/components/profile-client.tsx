@@ -6,9 +6,10 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
-import { updateProfile } from "@/app/dashboard/profile/actions"
+import { api } from "@/lib/api"
 import { toast } from "sonner"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { getAvatarUrl } from "@/lib/avatar"
 
 export function ProfileClient({ 
   user, 
@@ -22,13 +23,37 @@ export function ProfileClient({
   const handleSave = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const formData = new FormData(e.currentTarget)
+    const data = {
+      name: formData.get("name"),
+      image: formData.get("avatarUrl"),
+      bio: formData.get("bio")
+    }
     
     startTransition(async () => {
-      const res = await updateProfile(formData)
-      if (res.error) {
-        toast.error(res.error)
-      } else {
-        toast.success("Profile updated successfully!")
+      try {
+        const res = await api.patch(`/users/${user.id}`, data)
+        if (res.data.success) {
+          toast.success("Profile updated successfully!")
+          // Sync updated profile details to localStorage user session object
+          try {
+            const storedUser = localStorage.getItem("user")
+            if (storedUser) {
+              const parsed = JSON.parse(storedUser)
+              parsed.name = res.data.data.name || parsed.name
+              parsed.image = res.data.data.image || parsed.image
+              localStorage.setItem("user", JSON.stringify(parsed))
+            }
+          } catch (e) {
+            console.error("Failed to sync profile update to local storage user", e)
+          }
+          setTimeout(() => {
+            window.location.reload()
+          }, 1000)
+        } else {
+          toast.error(res.data.message || "Failed to update profile")
+        }
+      } catch (err: any) {
+        toast.error(err.response?.data?.message || "Failed to update profile")
       }
     })
   }
@@ -45,7 +70,7 @@ export function ProfileClient({
           <div className="flex flex-col sm:flex-row gap-6">
             <div className="flex-shrink-0">
               <Avatar className="w-24 h-24 border border-white/10 text-xl">
-                <AvatarImage src={user?.image || ""} />
+                <AvatarImage src={getAvatarUrl(user?.email, user?.image)} />
                 <AvatarFallback className="bg-violet-900">{user?.name?.charAt(0) || "U"}</AvatarFallback>
               </Avatar>
             </div>

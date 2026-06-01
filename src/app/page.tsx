@@ -8,14 +8,189 @@ import { Sparkles, ArrowRight, CheckCircle2, Zap, PenTool, MessageSquare, Plus, 
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { useState } from "react"
+import { useState, useEffect, useRef } from "react"
 import { toast } from "sonner"
+import { TemplateCard, TemplateCardSkeleton } from "@/components/template-card"
+
+function AnimatedCounter({ targetValue, suffix = "", decimals = 0 }: { targetValue: number, suffix?: string, decimals?: number }) {
+  const [count, setCount] = useState(0)
+  const [hasStarted, setHasStarted] = useState(false)
+  const elementRef = useRef<HTMLSpanElement>(null)
+
+  useEffect(() => {
+    const currentRef = elementRef.current;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setHasStarted(true)
+        }
+      },
+      { threshold: 0.1 }
+    )
+
+    if (currentRef) {
+      observer.observe(currentRef)
+    }
+
+    return () => {
+      if (currentRef) {
+        observer.unobserve(currentRef)
+      }
+    }
+  }, [])
+
+  useEffect(() => {
+    if (!hasStarted) return
+
+    const duration = 2000 // 2 seconds
+    const startTime = Date.now()
+
+    const timer = setInterval(() => {
+      const timePassed = Date.now() - startTime
+      const progress = Math.min(timePassed / duration, 1)
+      const easeProgress = progress * (2 - progress)
+      const nextValue = easeProgress * targetValue
+      
+      if (progress >= 1) {
+        setCount(targetValue)
+        clearInterval(timer)
+      } else {
+        setCount(nextValue)
+      }
+    }, 16)
+
+    return () => clearInterval(timer)
+  }, [hasStarted, targetValue])
+
+  const formatted = count.toFixed(decimals)
+
+  return (
+    <span ref={elementRef}>
+      {decimals === 0 ? parseInt(formatted).toLocaleString() : parseFloat(formatted).toLocaleString(undefined, { minimumFractionDigits: decimals, maximumFractionDigits: decimals })}
+      {suffix}
+    </span>
+  )
+}
 
 export default function LandingPage() {
   const [openFaq, setOpenFaq] = useState<number | null>(0)
   const [email, setEmail] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   const [activeTemplateCategory, setActiveTemplateCategory] = useState("All")
+  
+  const [templates, setTemplates] = useState<any[]>([])
+  const [isLoadingTemplates, setIsLoadingTemplates] = useState(true)
+
+  const [publicStats, setPublicStats] = useState({
+    totalUsers: 10000,
+    totalTemplates: 50,
+    wordsGenerated: 500000,
+    uptimeGuarantee: 99.9,
+  })
+
+  const [fakeInput, setFakeInput] = useState("")
+  const [fakeOutput, setFakeOutput] = useState("")
+  const [fakeStep, setFakeStep] = useState(0) // 0: typing prompt, 1: generating state, 2: typing response, 3: completed
+
+  useEffect(() => {
+    let timer: any
+    const promptText = "Create a catchy social media post introducing WriteFlow AI."
+    const responseText = "🚀 Say hello to WriteFlow AI — your new content powerhouse!\n\nStruggling to write blogs, ads, or emails that convert? Let our tailored AI writing agents do the heavy lifting for you.\n\n✨ Adjust tone & brand voice\n✨ Rewrite & expand copies instantly\n✨ Maintain team workspaces\n\nStart writing for free today! ✍️"
+
+    let promptIndex = 0
+    let responseIndex = 0
+
+    const runLoop = () => {
+      setFakeStep(0)
+      setFakeInput("")
+      setFakeOutput("")
+      promptIndex = 0
+      responseIndex = 0
+
+      const typePrompt = () => {
+        if (promptIndex < promptText.length) {
+          setFakeInput((prev) => prev + promptText.charAt(promptIndex))
+          promptIndex++
+          timer = setTimeout(typePrompt, 30)
+        } else {
+          setFakeStep(1)
+          timer = setTimeout(typeResponse, 1200)
+        }
+      }
+
+      const typeResponse = () => {
+        setFakeStep(2)
+        if (responseIndex < responseText.length) {
+          setFakeOutput((prev) => prev + responseText.charAt(responseIndex))
+          responseIndex++
+          timer = setTimeout(typeResponse, 12)
+        } else {
+          setFakeStep(3)
+          timer = setTimeout(runLoop, 6000)
+        }
+      }
+
+      typePrompt()
+    }
+
+    timer = setTimeout(runLoop, 1500)
+    return () => clearTimeout(timer)
+  }, [])
+
+  const fallbackTemplates = [
+    { id: "seo-long-form", category: "Blog", title: "SEO Long-form Post", usageCount: 12500, rating: 4.9, thumbnail: null, description: "Generate structured, SEO-optimized blog posts complete with headers, keywords, and intro." },
+    { id: "viral-twitter", category: "Social Media", title: "Viral Twitter Thread", usageCount: 8200, rating: 4.8, thumbnail: null, description: "Create highly engaging Twitter/X threads that drive clicks, retweets, and followers." },
+    { id: "cold-outreach", category: "Email", title: "Cold Outreach Sequence", usageCount: 15000, rating: 4.7, thumbnail: null, description: "Write professional email sequences that get high response rates and conversions." },
+    { id: "insta-caption", category: "Social Media", title: "Instagram Caption Maker", usageCount: 10400, rating: 4.8, thumbnail: null, description: "Generate witty, engaging Instagram captions with targeted hashtags." },
+  ]
+
+  useEffect(() => {
+    setIsLoadingTemplates(true)
+    fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://writeflowai-backend.onrender.com/api'}/items?limit=4&sort=popular`)
+      .then((res) => {
+        if (!res.ok) throw new Error("API failed")
+        return res.json()
+      })
+      .then((data) => {
+        if (data && Array.isArray(data.data)) {
+          setTemplates(data.data)
+        } else {
+          setTemplates(fallbackTemplates)
+        }
+      })
+      .catch((err) => {
+        console.error("Failed to fetch templates, using fallback", err)
+        setTemplates(fallbackTemplates)
+      })
+      .finally(() => {
+        setTimeout(() => {
+          setIsLoadingTemplates(false)
+        }, 800)
+      })
+  }, [])
+
+  // Fetch public platform stats
+  useEffect(() => {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://writeflowai-backend.onrender.com/api'}/dashboard/public-stats`)
+      .then((res) => {
+        if (!res.ok) throw new Error('Failed')
+        return res.json()
+      })
+      .then((data) => {
+        if (data?.success && data?.data) {
+          const d = data.data
+          setPublicStats({
+            totalUsers: d.totalUsers ?? 10000,
+            totalTemplates: d.totalTemplates ?? 50,
+            wordsGenerated: d.wordsGenerated ?? 500000,
+            uptimeGuarantee: d.uptimeGuarantee ?? 99.9,
+          })
+        }
+      })
+      .catch(() => {
+        // Silently fall back to default values
+      })
+  }, [])
 
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault()
@@ -42,7 +217,7 @@ export default function LandingPage() {
 
       <main className="relative z-10">
         {/* Hero Section */}
-        <section className="w-full px-6 sm:px-6 lg:px-8 pt-32 sm:pt-40 pb-20 sm:pb-32 flex flex-col items-center text-center">
+        <section className="w-full min-h-[65vh] px-6 sm:px-6 lg:px-8 pt-32 sm:pt-40 pb-20 sm:pb-32 flex flex-col items-center justify-center text-center" style={{ minHeight: "65vh" }}>
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -134,41 +309,120 @@ export default function LandingPage() {
                 </div>
                 
                 {/* Fake Dashboard Content */}
-                <div className="grid grid-cols-12 h-[350px]">
+                <div className="grid grid-cols-12 h-[400px]">
                   {/* Fake Sidebar */}
-                  <div className="col-span-3 border-r border-white/5 bg-black/20 p-4 space-y-4">
-                    <div className="h-8 bg-white/5 rounded-lg w-full flex items-center px-3 gap-2 border border-white/5">
-                      <LayoutTemplate className="w-4 h-4 text-violet-400" />
-                      <div className="h-2 w-16 bg-white/20 rounded-full" />
+                  <div className="col-span-3 border-r border-white/5 bg-[#0a0a0c]/60 p-4 flex flex-col justify-between select-none">
+                    <div className="space-y-4 font-sans">
+                      {/* Brand Title / Header */}
+                      <div className="flex items-center gap-2 px-2 py-1.5 rounded-lg bg-white/[0.03] border border-white/5">
+                        <Wand2 className="w-4 h-4 text-violet-400" />
+                        <span className="text-xs font-bold text-white tracking-wider">WriteFlow AI</span>
+                      </div>
+                      
+                      {/* Sidebar Tabs */}
+                      <div className="space-y-1.5">
+                        <div className="flex items-center gap-2.5 px-2 py-2 rounded-lg text-[10px] font-medium text-gray-500 hover:text-gray-300">
+                          <LayoutTemplate className="w-3.5 h-3.5" />
+                          Overview
+                        </div>
+                        <div className="flex items-center gap-2.5 px-2 py-2 rounded-lg text-[10px] font-medium text-violet-400 bg-violet-500/10 border-l-2 border-violet-500">
+                          <Wand2 className="w-3.5 h-3.5" />
+                          Draft Agent
+                        </div>
+                        <div className="flex items-center gap-2.5 px-2 py-2 rounded-lg text-[10px] font-medium text-gray-500 hover:text-gray-300">
+                          <Sparkles className="w-3.5 h-3.5" />
+                          Rewrite Agent
+                        </div>
+                        <div className="flex items-center gap-2.5 px-2 py-2 rounded-lg text-[10px] font-medium text-gray-500 hover:text-gray-300">
+                          <MessageSquare className="w-3.5 h-3.5" />
+                          Chat Assistant
+                        </div>
+                        <div className="flex items-center gap-2.5 px-2 py-2 rounded-lg text-[10px] font-medium text-gray-500 hover:text-gray-300">
+                          <Rocket className="w-3.5 h-3.5" />
+                          AI History
+                        </div>
+                      </div>
                     </div>
-                    <div className="space-y-2 pl-2">
-                      <div className="h-6 w-full flex items-center gap-2 opacity-50"><div className="w-3 h-3 rounded-full border border-white/20" /><div className="h-2 w-20 bg-white/10 rounded-full" /></div>
-                      <div className="h-6 w-full flex items-center gap-2 opacity-50"><div className="w-3 h-3 rounded-full border border-white/20" /><div className="h-2 w-16 bg-white/10 rounded-full" /></div>
-                      <div className="h-6 w-full flex items-center gap-2 text-violet-400"><div className="w-3 h-3 rounded-full border border-violet-400 bg-violet-400/20" /><div className="h-2 w-24 bg-violet-400/40 rounded-full" /></div>
+
+                    <div className="flex items-center gap-2 px-2 py-1 border-t border-white/5 pt-3 font-sans">
+                      <div className="w-6 h-6 rounded-full bg-violet-600 flex items-center justify-center text-[10px] font-bold">U</div>
+                      <div className="flex flex-col min-w-0">
+                        <span className="text-[10px] font-medium text-white truncate">Demo Creator</span>
+                        <span className="text-[8px] text-gray-500 truncate">free plan</span>
+                      </div>
                     </div>
                   </div>
                   
                   {/* Fake Editor */}
-                  <div className="col-span-9 p-8 flex flex-col relative overflow-hidden">
-                    <div className="absolute top-0 right-0 w-64 h-64 bg-violet-600/10 blur-[80px] rounded-full pointer-events-none" />
-                    <div className="flex items-center justify-between mb-8">
-                      <div className="h-6 w-48 bg-white/10 rounded-lg" />
-                      <div className="h-8 w-24 bg-violet-600/20 border border-violet-500/30 rounded-lg flex items-center justify-center gap-2">
-                        <Sparkles className="w-3 h-3 text-violet-400" />
-                        <div className="h-2 w-10 bg-violet-400/60 rounded-full" />
+                  <div className="col-span-9 p-6 flex flex-col relative overflow-hidden bg-black/40">
+                    <div className="absolute top-0 right-0 w-64 h-64 bg-violet-600/5 blur-[80px] rounded-full pointer-events-none" />
+                    
+                    {/* Fake Editor Tabs Bar */}
+                    <div className="flex items-center justify-between mb-4 border-b border-white/5 pb-3 font-sans">
+                      <div className="flex items-center gap-2 text-[10px] text-gray-400">
+                        <span className="px-2.5 py-1 bg-white/[0.03] border border-white/5 rounded-md text-white">
+                          📄 intro_post_draft.md
+                        </span>
+                      </div>
+                      
+                      {/* Generation Status Badge */}
+                      <div className="flex items-center gap-2">
+                        {fakeStep === 0 && (
+                          <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[9px] font-medium bg-blue-500/10 text-blue-400 border border-blue-500/20 animate-pulse">
+                            <span className="w-1.5 h-1.5 rounded-full bg-blue-500" />
+                            Typing Prompt...
+                          </span>
+                        )}
+                        {fakeStep === 1 && (
+                          <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[9px] font-medium bg-amber-500/10 text-amber-400 border border-amber-500/20">
+                            <RefreshCw className="w-2.5 h-2.5 animate-spin" />
+                            Thinking...
+                          </span>
+                        )}
+                        {fakeStep === 2 && (
+                          <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[9px] font-medium bg-violet-500/10 text-violet-400 border border-violet-500/20">
+                            <span className="w-1.5 h-1.5 rounded-full bg-violet-500 animate-ping" />
+                            Writing draft...
+                          </span>
+                        )}
+                        {fakeStep === 3 && (
+                          <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[9px] font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                            <CheckCircle2 className="w-2.5 h-2.5 text-emerald-400" />
+                            Ready
+                          </span>
+                        )}
                       </div>
                     </div>
                     
-                    <div className="space-y-4 flex-1">
-                      <motion.div initial={{ width: "0%" }} animate={{ width: "100%" }} transition={{ duration: 1.5, delay: 1 }} className="h-3 bg-white/10 rounded-full" />
-                      <motion.div initial={{ width: "0%" }} animate={{ width: "90%" }} transition={{ duration: 1.5, delay: 1.5 }} className="h-3 bg-white/10 rounded-full" />
-                      <motion.div initial={{ width: "0%" }} animate={{ width: "95%" }} transition={{ duration: 1.5, delay: 2 }} className="h-3 bg-white/10 rounded-full" />
-                      <motion.div initial={{ width: "0%" }} animate={{ width: "70%" }} transition={{ duration: 1.5, delay: 2.5 }} className="h-3 bg-white/10 rounded-full" />
-                      
-                      <div className="pt-6 space-y-4">
-                        <motion.div initial={{ width: "0%" }} animate={{ width: "100%" }} transition={{ duration: 1.5, delay: 3 }} className="h-3 bg-white/5 rounded-full" />
-                        <motion.div initial={{ width: "0%" }} animate={{ width: "85%" }} transition={{ duration: 1.5, delay: 3.5 }} className="h-3 bg-white/5 rounded-full" />
+                    {/* Prompt Box */}
+                    <div className="mb-4 p-3 rounded-xl bg-white/[0.02] border border-white/5 text-[11px] space-y-1 font-sans">
+                      <div className="flex items-center justify-between text-[9px] text-gray-500">
+                        <span>PROMPT</span>
+                        <span>DRAFT AGENT</span>
                       </div>
+                      <div className="text-gray-300 font-mono">
+                        {fakeInput}
+                        {fakeStep === 0 && <span className="animate-pulse">|</span>}
+                      </div>
+                    </div>
+
+                    {/* Output Rich Text View */}
+                    <div className="flex-1 p-4 rounded-xl bg-[#030303]/60 border border-white/5 overflow-y-auto font-mono text-[11px] text-gray-400 leading-relaxed min-h-0 select-none">
+                      {fakeStep === 1 ? (
+                        <div className="h-full flex flex-col items-center justify-center gap-2 text-gray-600">
+                          <Bot className="w-8 h-8 text-violet-500/40 animate-bounce" />
+                          <span className="text-[10px] animate-pulse">Formulating creative copy...</span>
+                        </div>
+                      ) : fakeOutput ? (
+                        <div className="whitespace-pre-wrap text-left text-gray-300">
+                          {fakeOutput}
+                          {fakeStep === 2 && <span className="animate-ping text-violet-400">█</span>}
+                        </div>
+                      ) : (
+                        <div className="h-full flex items-center justify-center text-gray-600 text-[10px]">
+                          Waiting for prompt input...
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -281,52 +535,28 @@ export default function LandingPage() {
               </div>
             </div>
             
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              <AnimatePresence mode="popLayout">
-                {[
-                  { category: "Blog", title: "SEO Long-form Post", users: "12.5k", rating: "4.9", icon: LayoutTemplate, color: "text-blue-400", border: "hover:border-blue-500/50" },
-                  { category: "Social", title: "Viral Twitter Thread", users: "8.2k", rating: "4.8", icon: MessageSquare, color: "text-sky-400", border: "hover:border-sky-500/50" },
-                  { category: "Email", title: "Cold Outreach Sequence", users: "15k", rating: "4.7", icon: Mail, color: "text-emerald-400", border: "hover:border-emerald-500/50" },
-                ]
-                .filter(t => activeTemplateCategory === "All" || t.category === activeTemplateCategory)
-                .map((t, i) => (
-                  <motion.div 
-                    key={t.title}
-                    layout
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.9 }}
-                    transition={{ duration: 0.2 }}
-                    className={`group rounded-2xl border border-white/10 bg-[#0c0c0e] p-6 hover:bg-[#111115] transition-all duration-300 flex flex-col h-full ${t.border} relative overflow-hidden`}
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                    <div className="relative z-10 flex justify-between items-start mb-6">
-                      <div className="p-2 rounded-xl bg-white/5 border border-white/10 group-hover:scale-110 transition-transform">
-                        <t.icon className={`w-5 h-5 ${t.color}`} />
-                      </div>
-                      <div className="flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 bg-yellow-500/10 text-yellow-500 rounded-full border border-yellow-500/20">
-                        <Star className="w-3 h-3 fill-yellow-500" /> {t.rating}
-                      </div>
-                    </div>
-                    <div className="relative z-10">
-                      <span className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2 block">{t.category}</span>
-                      <h3 className="font-bold text-xl mb-2 text-white group-hover:text-violet-200 transition-colors">{t.title}</h3>
-                    </div>
-                    <div className="flex-1" />
-                    <div className="relative z-10 flex items-center justify-between mt-6 pt-4 border-t border-white/5">
-                      <span className="text-sm font-medium text-gray-500 flex items-center gap-1.5">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                        {t.users}
-                      </span>
-                      <Link href="/login">
-                        <Button size="sm" className="h-8 text-xs font-semibold bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:from-violet-500 hover:to-fuchsia-500 text-white rounded-2xl transition-all group-hover:shadow-[0_0_15px_rgba(139,92,246,0.5)] group border-0">
-                          Start Instantly <ArrowRight className="w-3 h-3 ml-1.5 group-hover:translate-x-0.5 transition-transform" />
-                        </Button>
-                      </Link>
-                    </div>
-                  </motion.div>
-                ))}
-              </AnimatePresence>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {isLoadingTemplates ? (
+                Array(4).fill(0).map((_, i) => <TemplateCardSkeleton key={i} />)
+              ) : (
+                <AnimatePresence mode="popLayout">
+                  {templates
+                    .filter(t => activeTemplateCategory === "All" || t.category.toLowerCase().includes(activeTemplateCategory.toLowerCase()))
+                    .map((t) => (
+                      <motion.div 
+                        key={t.id || t.title}
+                        layout
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.9 }}
+                        transition={{ duration: 0.2 }}
+                        className="h-full"
+                      >
+                        <TemplateCard template={t} />
+                      </motion.div>
+                    ))}
+                </AnimatePresence>
+              )}
             </div>
           </div>
         </section>
@@ -339,10 +569,10 @@ export default function LandingPage() {
           <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
               {[
-                { value: "10,000+", label: "Active Users", icon: Users, color: "text-violet-400", border: "hover:border-violet-500/50" },
-                { value: "500,000+", label: "Words Generated", icon: PenTool, color: "text-fuchsia-400", border: "hover:border-fuchsia-500/50" },
-                { value: "50+", label: "AI Templates", icon: LayoutTemplate, color: "text-blue-400", border: "hover:border-blue-500/50" },
-                { value: "99.9%", label: "Uptime Guarantee", icon: Activity, color: "text-emerald-400", border: "hover:border-emerald-500/50" },
+                { target: publicStats.totalUsers || 10000, suffix: "+", decimals: 0, label: "Active Users", icon: Users, color: "text-violet-400", border: "hover:border-violet-500/50" },
+                { target: publicStats.wordsGenerated || 500000, suffix: "+", decimals: 0, label: "Words Generated", icon: PenTool, color: "text-fuchsia-400", border: "hover:border-fuchsia-500/50" },
+                { target: publicStats.totalTemplates || 50, suffix: "+", decimals: 0, label: "AI Templates", icon: LayoutTemplate, color: "text-blue-400", border: "hover:border-blue-500/50" },
+                { target: publicStats.uptimeGuarantee || 99.9, suffix: "%", decimals: 1, label: "Uptime Guarantee", icon: Activity, color: "text-emerald-400", border: "hover:border-emerald-500/50" },
               ].map((stat, i) => (
                 <motion.div 
                   key={i}
@@ -356,7 +586,7 @@ export default function LandingPage() {
                     <stat.icon className={`w-6 h-6 ${stat.color}`} />
                   </div>
                   <div className="text-4xl md:text-5xl font-extrabold text-white mb-2 tracking-tight group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-gray-400 transition-colors">
-                    {stat.value}
+                    <AnimatedCounter targetValue={stat.target} suffix={stat.suffix} decimals={stat.decimals} />
                   </div>
                   <div className="text-gray-400 font-medium uppercase tracking-wider text-xs">
                     {stat.label}

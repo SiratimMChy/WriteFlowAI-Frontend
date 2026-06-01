@@ -1,44 +1,41 @@
-import { getServerSession } from "next-auth/next"
-import { authOptions } from "@/lib/auth"
-import { PrismaClient } from "@prisma/client"
-import { redirect } from "next/navigation"
+"use client"
+
+import { useEffect, useState } from "react"
+import { useAuth } from "@/components/auth-provider"
+import { useRouter } from "next/navigation"
+import { api } from "@/lib/api"
 import { AdminTemplatesClient } from "@/components/admin-templates-client"
 import { Grid } from "lucide-react"
 
-const prisma = new PrismaClient()
+export default function AdminTemplatesPage() {
+  const { user } = useAuth()
+  const router = useRouter()
+  const [templates, setTemplates] = useState<any[]>([])
+  const [totalPages, setTotalPages] = useState(1)
+  const [loading, setLoading] = useState(true)
 
-export default async function AdminTemplatesPage({
-  searchParams,
-}: {
-  searchParams: { [key: string]: string | string[] | undefined }
-}) {
-  const session = await getServerSession(authOptions)
-  if (!session?.user || session.user.role !== "admin") {
-    redirect("/dashboard")
-  }
-
-  const q = typeof searchParams.q === "string" ? searchParams.q : ""
-  const page = typeof searchParams.page === "string" ? parseInt(searchParams.page) : 1
-  
-  const ITEMS_PER_PAGE = 20
-
-  const where: any = {}
-  
-  if (q) {
-    where.title = { contains: q }
-  }
-
-  const [totalCount, templates] = await Promise.all([
-    prisma.template.count({ where }),
-    prisma.template.findMany({
-      where,
-      orderBy: { createdAt: "desc" },
-      skip: (page - 1) * ITEMS_PER_PAGE,
-      take: ITEMS_PER_PAGE,
-    })
-  ])
-
-  const totalPages = Math.ceil(totalCount / ITEMS_PER_PAGE)
+  useEffect(() => {
+    if (user && user.role !== "ADMIN" && user.role !== "admin") {
+      router.push("/dashboard")
+      return
+    }
+    const fetchTemplates = async () => {
+      try {
+        const res = await api.get("/items", { params: { limit: 20 } })
+        if (res.data.success) {
+          setTemplates(res.data.data || [])
+          if (res.data.meta) {
+            setTotalPages(Math.ceil(res.data.meta.total / (res.data.meta.limit || 20)))
+          }
+        }
+      } catch (err) {
+        console.error("Templates fetch error", err)
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchTemplates()
+  }, [user, router])
 
   return (
     <div className="p-8 max-w-7xl mx-auto space-y-8 h-full">
@@ -49,11 +46,7 @@ export default async function AdminTemplatesPage({
         </h1>
         <p className="text-gray-400 mt-1">Create, edit, and remove AI templates from the library.</p>
       </div>
-
-      <AdminTemplatesClient 
-        templates={templates} 
-        totalPages={totalPages} 
-      />
+      <AdminTemplatesClient templates={templates} totalPages={totalPages} />
     </div>
   )
 }
