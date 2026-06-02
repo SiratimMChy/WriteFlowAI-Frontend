@@ -36,6 +36,7 @@ export function DraftAgentClient() {
       keywords,
       templateId
     },
+    streamProtocol: 'text',
     onError: (err) => {
       toast.error(err.message || "Failed to generate content. Please check OPENAI_API_KEY")
     }

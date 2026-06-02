@@ -31,21 +31,20 @@ export function ChatAgentClient() {
   }
   
   const chat = useChat({
-    messages: [],
     transport: new DefaultChatTransport({
       api: `${process.env.NEXT_PUBLIC_API_URL || 'https://writeflowai-backend.onrender.com/api'}/ai/chat`,
       headers: getHeaders,
       // Prepare the request to match backend expectations
       prepareSendMessagesRequest: ({ messages }) => {
-        // Convert UI messages to backend format
         const formattedMessages = messages.map(msg => {
-          // Extract text content from parts
           let content = ''
           if (msg.parts && msg.parts.length > 0) {
             content = msg.parts
               .filter(part => part.type === 'text')
               .map(part => (part as any).text)
               .join('')
+          } else {
+            content = (msg as any).content || ''
           }
           
           return {
@@ -53,8 +52,6 @@ export function ChatAgentClient() {
             content: content
           }
         })
-        
-        console.log('Sending messages:', formattedMessages) // Debug log
         
         return {
           body: {
@@ -142,12 +139,12 @@ export function ChatAgentClient() {
                     : 'bg-white/[0.05] border border-white/10 text-gray-200 rounded-tl-sm'
                 }`}>
                   <div className="prose prose-invert prose-sm max-w-none whitespace-pre-wrap">
-                    {m.parts?.map((part, idx) => {
+                    {m.parts ? m.parts.map((part, idx) => {
                       if (part.type === 'text') {
                         return <span key={idx}>{part.text}</span>
                       }
                       return null
-                    })}
+                    }) : <span>{(m as any).content}</span>}
                   </div>
                 </div>
 
