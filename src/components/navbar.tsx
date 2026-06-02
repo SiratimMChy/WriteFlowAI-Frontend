@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import { usePathname } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
 import Link from "next/link"
+import Image from "next/image"
 import { useAuth } from "@/components/auth-provider"
 import { Button } from "@/components/ui/button"
 import { Wand2, Menu, X, User, Settings, LogOut, LayoutDashboard, FileText, PieChart, Sparkles, FolderHeart, HelpCircle } from "lucide-react"
@@ -38,12 +39,13 @@ export function Navbar() {
   ]
 
   const authLinks = [
-    { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-    { name: "My Documents", href: "/dashboard/documents", icon: FileText },
-    { name: "Templates", href: "/dashboard/templates", icon: FolderHeart },
-    { name: "AI Chat", href: "/dashboard/chat", icon: Sparkles },
-    { name: "Analytics", href: "/dashboard/analytics", icon: PieChart },
-    { name: "Help", href: "/dashboard/support", icon: HelpCircle },
+     { name: "Home", href: "/" },
+    { name: "Explore", href: "/explore" },
+    { name: "Blog", href: "/blog" },
+    { name: "About", href: "/about" },
+    { name: "Contact", href: "/contact" },
+    { name: "Dashboard", href: "/dashboard"},
+    { name: "My Documents", href: "/dashboard/documents"},
   ]
 
   return (
@@ -52,7 +54,13 @@ export function Navbar() {
         <div className="flex items-center gap-2">
           <Link href="/" className="flex items-center gap-2 transition-transform hover:scale-105">
             {logoUrl ? (
-              <img src={logoUrl} alt={siteName} className="w-6 h-6 object-contain" />
+              <Image 
+                src={logoUrl} 
+                alt={siteName} 
+                width={24} 
+                height={24} 
+                className="object-contain" 
+              />
             ) : (
               <Wand2 className="w-6 h-6 text-violet-500" />
             )}
@@ -77,7 +85,7 @@ export function Navbar() {
                       : "hover:text-foreground"
                   }`}
                 >
-                  <link.icon className="w-4 h-4" />
+                  <link className="w-4 h-4" />
                   {link.name}
                   {isActive && (
                     <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-violet-500 to-purple-400 rounded-full" />
@@ -211,7 +219,7 @@ export function Navbar() {
                             : "text-muted-foreground hover:text-foreground hover:bg-accent"
                         }`}
                       >
-                        <link.icon className={`w-4 h-4 ${isActive ? "text-violet-500" : ""}`} />
+                        <link className={`w-4 h-4 ${isActive ? "text-violet-500" : ""}`} />
                         {link.name}
                       </Link>
                     )

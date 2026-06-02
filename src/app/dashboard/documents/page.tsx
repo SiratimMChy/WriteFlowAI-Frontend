@@ -16,7 +16,7 @@ export default function DocumentsPage() {
     const fetchDocs = async () => {
       try {
         // Mocked response to prevent 404 console errors since documents module is not built
-        const res = await Promise.resolve({ data: { success: true, data: [] } })
+        const res = await Promise.resolve({ data: { success: true, data: [] } }) as any
         if (res.data.success) {
           setDocuments(res.data.data || [])
           if (res.data.meta) {

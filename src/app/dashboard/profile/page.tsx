@@ -36,7 +36,7 @@ export default function ProfilePage() {
       try {
         const [userRes, statsRes] = await Promise.all([
           api.get(`/users/${userId}`),
-          Promise.resolve({ data: { data: {} } }) // Mocked to prevent 403 console errors
+          Promise.resolve({ data: { data: {} } }) as any // Mocked to prevent 403 console errors
         ])
         if (userRes.data.success) setProfileUser(userRes.data.data)
         const s = statsRes.data.data || {}

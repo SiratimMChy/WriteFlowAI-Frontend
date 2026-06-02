@@ -25,8 +25,17 @@ export function RewriteAgentClient() {
   const [format, setFormat] = useState("auto")
   const [title, setTitle] = useState("Rewritten Document")
 
+  const [token] = useState<string | undefined>(() => {
+    let t = getCookie("token") as string | undefined
+    if (!t && typeof window !== "undefined") {
+      t = localStorage.getItem("token") || undefined
+    }
+    return t
+  })
+
   const { completion, input, handleInputChange, handleSubmit, isLoading } = useCompletion({
-    api: `${process.env.NEXT_PUBLIC_API_URL}/rewrite`,
+    api: `${process.env.NEXT_PUBLIC_API_URL}/ai/rewrite`,
+    headers: token ? { Authorization: `Bearer ${token}` } : {},
     body: {
       action,
       format
@@ -45,9 +54,9 @@ export function RewriteAgentClient() {
   const handleSave = async () => {
     if (!completion) return
     
-    let token = getCookie("token")
+    let token = getCookie("token") as string | undefined
     if (!token && typeof window !== "undefined") {
-      token = localStorage.getItem("token")
+      token = localStorage.getItem("token") || undefined
     }
 
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/documents/save`, {

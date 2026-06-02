@@ -20,8 +20,17 @@ export function DraftAgentClient() {
   const [keywords, setKeywords] = useState("")
   const [title, setTitle] = useState("Untitled Document")
 
+  const [token] = useState<string | undefined>(() => {
+    let t = getCookie("token") as string | undefined
+    if (!t && typeof window !== "undefined") {
+      t = localStorage.getItem("token") || undefined
+    }
+    return t
+  })
+
   const { completion, input, handleInputChange, handleSubmit, isLoading } = useCompletion({
-    api: `${process.env.NEXT_PUBLIC_API_URL}/draft`,
+    api: `${process.env.NEXT_PUBLIC_API_URL}/ai/draft`,
+    headers: token ? { Authorization: `Bearer ${token}` } : {},
     body: {
       tone,
       keywords,
@@ -41,9 +50,9 @@ export function DraftAgentClient() {
   const handleSave = async () => {
     if (!completion) return
     
-    let token = getCookie("token")
+    let token = getCookie("token") as string | undefined
     if (!token && typeof window !== "undefined") {
-      token = localStorage.getItem("token")
+      token = localStorage.getItem("token") || undefined
     }
 
     // Server action to save document

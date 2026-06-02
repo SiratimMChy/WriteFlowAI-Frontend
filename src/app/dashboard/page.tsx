@@ -37,7 +37,7 @@ export default function DashboardPage() {
         ])
         if (docsRes.data.success || docsRes.data.data) setRecentDocuments(docsRes.data.data || [])
         if (statsRes.data.success) {
-          const s = statsRes.data.data
+          const s = statsRes.data.data as any
           setStats({
             totalDocuments: s.totalDocuments ?? s.totalBookings ?? 0,
             totalWords: s.totalWords ?? 0,

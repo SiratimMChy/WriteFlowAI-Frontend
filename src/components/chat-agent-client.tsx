@@ -5,35 +5,97 @@ import { DefaultChatTransport } from "ai"
 import { MessageSquare, Send, User, Bot, Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import { toast } from "sonner"
-
-import { useState } from "react"
+import { getCookie } from "cookies-next"
+import { useAuth } from "@/components/auth-provider"
 
 export function ChatAgentClient() {
   const [input, setInput] = useState("")
-
-  const { messages, sendMessage, status } = useChat({
+  const { user } = useAuth()
+  
+  // Get headers function that will be called on each request
+  const getHeaders = () => {
+    let token = getCookie('token') as string | undefined
+    if (!token && typeof window !== 'undefined') {
+      token = localStorage.getItem('token') || undefined
+    }
+    
+    console.log('Chat headers - Token found:', !!token) // Debug log
+    
+    const headers: Record<string, string> = {}
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`
+    }
+    return headers
+  }
+  
+  const chat = useChat({
+    messages: [],
     transport: new DefaultChatTransport({
       api: `${process.env.NEXT_PUBLIC_API_URL || 'https://writeflowai-backend.onrender.com/api'}/ai/chat`,
+      headers: getHeaders,
+      // Prepare the request to match backend expectations
+      prepareSendMessagesRequest: ({ messages }) => {
+        // Convert UI messages to backend format
+        const formattedMessages = messages.map(msg => {
+          // Extract text content from parts
+          let content = ''
+          if (msg.parts && msg.parts.length > 0) {
+            content = msg.parts
+              .filter(part => part.type === 'text')
+              .map(part => (part as any).text)
+              .join('')
+          }
+          
+          return {
+            role: msg.role,
+            content: content
+          }
+        })
+        
+        console.log('Sending messages:', formattedMessages) // Debug log
+        
+        return {
+          body: {
+            messages: formattedMessages
+          }
+        }
+      }
     }),
-    onError: (err) => {
+    onFinish: ({ messages }) => {
+      console.log('Chat finished. All messages:', messages)
+    },
+    onError: (err: Error) => {
+      console.error('Chat error:', err) // Debug log
       toast.error(err.message || "Failed to connect to chat assistant.")
     }
   })
+  
+  const { messages, sendMessage, status } = chat
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInput(e.target.value)
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!input.trim()) return
-    sendMessage({ role: 'user', content: [{ type: 'text', text: input }] } as any)
+    
+    // Check if user is authenticated
+    const token = getCookie('token') || (typeof window !== 'undefined' ? localStorage.getItem('token') : null)
+    if (!token) {
+      toast.error("Please log in to use the chat assistant.")
+      return
+    }
+    
+    const userMessage = input
     setInput("")
+    
+    await sendMessage({ text: userMessage })
   }
 
-  const isLoading = status === 'submitted' || status === 'streaming'
+  const isLoadingChat = status === 'streaming' || status === 'submitted'
 
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
@@ -80,8 +142,12 @@ export function ChatAgentClient() {
                     : 'bg-white/[0.05] border border-white/10 text-gray-200 rounded-tl-sm'
                 }`}>
                   <div className="prose prose-invert prose-sm max-w-none whitespace-pre-wrap">
-                    {/* @ts-ignore - type mismatch due to SDK versions */}
-                    {m.parts ? m.parts.map((p, i) => p.type === 'text' ? p.text : null).join('') : m.content}
+                    {m.parts?.map((part, idx) => {
+                      if (part.type === 'text') {
+                        return <span key={idx}>{part.text}</span>
+                      }
+                      return null
+                    })}
                   </div>
                 </div>
 
@@ -94,7 +160,7 @@ export function ChatAgentClient() {
             ))
           )}
           
-          {isLoading && messages.length > 0 && messages[messages.length - 1].role === 'user' && (
+          {isLoadingChat && messages.length > 0 && messages[messages.length - 1].role === 'user' && (
             <div className="flex gap-4 max-w-[85%]">
               <div className="w-8 h-8 shrink-0 rounded-full bg-blue-600 flex items-center justify-center mt-1">
                 <Bot className="w-4 h-4 text-white" />
@@ -116,12 +182,12 @@ export function ChatAgentClient() {
               onChange={handleInputChange}
               placeholder="Message WriteFlow Assistant..."
               className="w-full h-14 pl-6 pr-16 rounded-full bg-white/[0.05] border-white/10 text-white placeholder:text-gray-500 focus-visible:ring-blue-500 text-base"
-              disabled={isLoading}
+              disabled={isLoadingChat}
             />
             <Button 
               type="submit" 
               size="icon" 
-              disabled={isLoading || !input.trim()}
+              disabled={isLoadingChat || !input.trim()}
               className="absolute right-2 w-10 h-10 rounded-full bg-blue-600 hover:bg-blue-700 text-white flex items-center justify-center transition-all disabled:opacity-50"
             >
               <Send className="w-4 h-4" />

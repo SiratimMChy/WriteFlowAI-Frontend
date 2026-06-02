@@ -20,7 +20,7 @@ export default function PrivacyPage() {
       id: "ai",
       icon: <Cpu className="w-5 h-5 text-violet-400" />,
       title: "3. AI Processing & Third Parties",
-      content: "The content you generate using WriteFlow AI is processed by third-party LLM providers (such as Google Gemini, OpenAI, etc.). We do not use your private data to train our own models without your explicit consent.",
+      content: "The content you generate using WriteFlow AI is processed by third-party LLM providers (such as Groq, OpenAI, etc.). We do not use your private data to train our own models without your explicit consent.",
     },
     {
       id: "security",

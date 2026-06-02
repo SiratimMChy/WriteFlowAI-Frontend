@@ -1,7 +1,6 @@
 "use server"
 
 import { revalidatePath } from "next/cache"
-import { genAI, DEFAULT_MODEL } from "@/lib/gemini"
 import { api } from "@/lib/api"
 
 export async function updateReviewStatus(reviewId: string, status: string) {
@@ -36,29 +35,16 @@ export async function summarizeReviews() {
       return { summary: "No approved reviews available to summarize." }
     }
 
-    const reviewTexts = reviews.map((r: any) => `Rating: ${r.rating}/5 - ${r.content}`).join("\n")
+    // Delegate AI summarization to the backend (Groq-powered)
+    const summaryRes = await api.post("/ai/review-summary", { reviews })
 
-    const model = genAI.getGenerativeModel({
-      model: DEFAULT_MODEL,
-      systemInstruction: `You are an expert product analyst. Your task is to analyze user reviews and:
-1. Detect overall sentiment (Positive, Neutral, or Negative).
-2. Return a concise, high-level 3-bullet summary of the reviews.
+    if (!summaryRes.data.success) {
+      return { error: summaryRes.data.message || "Failed to summarize reviews." }
+    }
 
-Format your response exactly like this:
-Sentiment: [Positive / Neutral / Negative]
-
-Summary:
-- [Bullet point 1]
-- [Bullet point 2]
-- [Bullet point 3]`
-    })
-
-    const result = await model.generateContent(`Here are the user reviews:\n\n${reviewTexts}\n\nPlease analyze sentiment and return the 3-bullet summary.`)
-    const text = result.response.text() || "Unable to generate summary."
-
-    return { summary: text }
+    return { summary: summaryRes.data.data?.summary || "Unable to generate summary." }
   } catch (error: any) {
     console.error("Reviews summarization error:", error)
-    return { error: error.message || "Failed to summarize reviews. Make sure GEMINI_API_KEY is configured." }
+    return { error: error.response?.data?.message || error.message || "Failed to summarize reviews. Make sure GROQ_API_KEY is configured on the backend." }
   }
 }

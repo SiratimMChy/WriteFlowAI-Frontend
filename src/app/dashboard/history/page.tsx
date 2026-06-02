@@ -14,7 +14,7 @@ export default function AIHistoryPage() {
     const fetchHistory = async () => {
       try {
         // Mocked response to prevent 404 console errors since ai/history endpoint is not built
-        const res = await Promise.resolve({ data: { success: true, data: [] } })
+        const res = await Promise.resolve({ data: { success: true, data: [] } }) as any
         if (res.data.success) {
           setLogs(res.data.data || [])
           if (res.data.meta) {
