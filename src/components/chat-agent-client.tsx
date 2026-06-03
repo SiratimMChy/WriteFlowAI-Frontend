@@ -26,7 +26,7 @@ export function ChatAgentClient() {
     }
   } as any)
   
-  const { messages, setMessages, append, status, stop } = chat
+  const { messages, setMessages, sendMessage, status, stop } = chat
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInput(e.target.value)
@@ -44,7 +44,7 @@ export function ChatAgentClient() {
     }
     
     setInput("")
-    await append({ role: 'user', content: messageToSend })
+    await sendMessage({ text: messageToSend })
   }
 
   const isLoadingChat = status === 'streaming' || status === 'submitted'
@@ -147,7 +147,12 @@ export function ChatAgentClient() {
                       : 'bg-white/[0.03] border border-white/10 text-gray-200 rounded-tl-sm backdrop-blur-md'
                   }`}>
                     <div className="prose prose-invert prose-sm max-w-none whitespace-pre-wrap leading-relaxed">
-                      {m.content}
+                      {m.parts ? m.parts.map((part, idx) => {
+                        if (part.type === 'text') {
+                          return <span key={idx}>{part.text}</span>
+                        }
+                        return null
+                      }) : <span>{(m as any).content}</span>}
                     </div>
                   </div>
                 </motion.div>
