@@ -597,71 +597,7 @@ export default function LandingPage() {
           </div>
         </section>
 
-        {/* Pricing Section */}
-        <section id="pricing" className="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-24">
-          <div className="text-center mb-10 sm:mb-16">
-            <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-4">Simple, transparent pricing</h2>
-            <p className="text-gray-400 max-w-2xl mx-auto text-lg">Choose the perfect plan for your content needs. No hidden fees.</p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            {/* Free Plan */}
-            <div className="p-8 rounded-3xl bg-white/[0.02] border border-white/5 flex flex-col">
-              <h3 className="text-xl font-bold mb-2">Free</h3>
-              <div className="flex items-baseline gap-2 mb-6">
-                <span className="text-4xl font-bold">$0</span>
-                <span className="text-gray-400">/month</span>
-              </div>
-              <p className="text-gray-400 mb-8 text-sm">Perfect for individuals just getting started with AI.</p>
-              <ul className="space-y-4 mb-8 flex-1">
-                <li className="flex items-center gap-3 text-gray-300 text-sm"><CheckCircle2 className="w-5 h-5 text-violet-500 shrink-0" /><span>10,000 words per month</span></li>
-                <li className="flex items-center gap-3 text-gray-300 text-sm"><CheckCircle2 className="w-5 h-5 text-violet-500 shrink-0" /><span>Basic templates</span></li>
-                <li className="flex items-center gap-3 text-gray-300 text-sm"><CheckCircle2 className="w-5 h-5 text-violet-500 shrink-0" /><span>Standard support</span></li>
-              </ul>
-              <Link href="/register">
-                <Button className="w-full bg-white/10 hover:bg-white/20 text-white rounded-full h-12">Start Free</Button>
-              </Link>
-            </div>
-            
-            {/* Pro Plan */}
-            <div className="p-8 rounded-3xl bg-gradient-to-b from-violet-900/30 to-[#0a0a0a] border border-violet-500/50 relative shadow-[0_0_40px_rgba(139,92,246,0.15)] flex flex-col scale-105 z-10">
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-violet-600 text-white text-xs font-bold uppercase tracking-wider py-1 px-4 rounded-full shadow-lg">Most Popular</div>
-              <h3 className="text-xl font-bold mb-2 text-violet-300">Pro</h3>
-              <div className="flex items-baseline gap-2 mb-6">
-                <span className="text-4xl font-bold">$29</span>
-                <span className="text-gray-400">/month</span>
-              </div>
-              <p className="text-gray-400 mb-8 text-sm">For professional creators needing high-volume output.</p>
-              <ul className="space-y-4 mb-8 flex-1">
-                <li className="flex items-center gap-3 text-white text-sm"><CheckCircle2 className="w-5 h-5 text-violet-400 shrink-0" /><span>Unlimited words</span></li>
-                <li className="flex items-center gap-3 text-white text-sm"><CheckCircle2 className="w-5 h-5 text-violet-400 shrink-0" /><span>All premium templates</span></li>
-                <li className="flex items-center gap-3 text-white text-sm"><CheckCircle2 className="w-5 h-5 text-violet-400 shrink-0" /><span>Priority support</span></li>
-                <li className="flex items-center gap-3 text-white text-sm"><CheckCircle2 className="w-5 h-5 text-violet-400 shrink-0" /><span>Tone matching</span></li>
-              </ul>
-              <Link href="/register">
-                <Button className="w-full bg-violet-600 hover:bg-violet-500 text-white rounded-full h-12 font-medium shadow-lg">Get Pro</Button>
-              </Link>
-            </div>
-            
-            {/* Team Plan */}
-            <div className="p-8 rounded-3xl bg-white/[0.02] border border-white/5 flex flex-col">
-              <h3 className="text-xl font-bold mb-2">Team</h3>
-              <div className="flex items-baseline gap-2 mb-6">
-                <span className="text-4xl font-bold">$99</span>
-                <span className="text-gray-400">/month</span>
-              </div>
-              <p className="text-gray-400 mb-8 text-sm">For teams and agencies managing multiple brands.</p>
-              <ul className="space-y-4 mb-8 flex-1">
-                <li className="flex items-center gap-3 text-gray-300 text-sm"><CheckCircle2 className="w-5 h-5 text-violet-500 shrink-0" /><span>Everything in Pro</span></li>
-                <li className="flex items-center gap-3 text-gray-300 text-sm"><CheckCircle2 className="w-5 h-5 text-violet-500 shrink-0" /><span>Up to 5 team members</span></li>
-                <li className="flex items-center gap-3 text-gray-300 text-sm"><CheckCircle2 className="w-5 h-5 text-violet-500 shrink-0" /><span>Collaboration tools</span></li>
-              </ul>
-              <Link href="/contact">
-                <Button className="w-full bg-white/10 hover:bg-white/20 text-white rounded-full h-12">Contact Sales</Button>
-              </Link>
-            </div>
-          </div>
-        </section>
+
 
         {/* Testimonials */}
         <section className="bg-white/[0.01] border-y border-white/5 py-16 sm:py-24">

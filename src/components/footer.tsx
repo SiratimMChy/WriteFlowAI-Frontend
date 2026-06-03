@@ -75,7 +75,6 @@ export function Footer() {
             <ul className="space-y-4 text-sm text-gray-400">
               <li><Link href="/explore" className="hover:text-violet-400 transition-colors">Explore Templates</Link></li>
               <li><Link href="/#features" className="hover:text-violet-400 transition-colors">Features</Link></li>
-              <li><Link href="/#pricing" className="hover:text-violet-400 transition-colors">Pricing</Link></li>
               <li><Link href="/blog" className="hover:text-violet-400 transition-colors">Blog</Link></li>
             </ul>
           </div>
