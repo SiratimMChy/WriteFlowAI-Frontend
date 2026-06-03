@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input"
 import { Sparkles, ArrowRight, CheckCircle2, Zap, PenTool, MessageSquare, Plus, ChevronDown, Mail, LayoutTemplate, Rocket, Bot, Wand2, RefreshCw, Star, Users, Activity } from "lucide-react"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
+import { PricingSection } from "@/components/pricing-section"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { useState, useEffect, useRef } from "react"
 import { toast } from "sonner"
@@ -597,7 +598,7 @@ export default function LandingPage() {
           </div>
         </section>
 
-
+        <PricingSection />
 
         {/* Testimonials */}
         <section className="bg-white/[0.01] border-y border-white/5 py-16 sm:py-24">

@@ -20,9 +20,13 @@ model User {
   image         String?
   role          String    @default("user")
   plan          String    @default("free")
-  status        String    @default("active")
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  status               String    @default("active")
+  stripeCustomerId     String?   @unique
+  stripeSubscriptionId String?   @unique
+  stripePriceId        String?
+  stripeCurrentPeriodEnd DateTime?
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @updatedAt
   accounts      Account[]
   sessions      Session[]
   documents     Document[]

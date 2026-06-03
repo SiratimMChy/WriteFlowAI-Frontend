@@ -104,13 +104,23 @@ export function ProfileClient({
         </form>
       </section>
 
-      {/* Usage Stats */}
+      {/* Subscription & Usage Stats */}
       <section className="bg-white/[0.02] border border-white/5 rounded-2xl p-6">
-        <div className="flex items-center justify-between mb-6">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
           <h2 className="text-xl font-bold flex items-center gap-2">
             <CreditCard className="w-5 h-5 text-blue-400" />
-            Usage Statistics
+            Subscription & Usage
           </h2>
+          <div className="flex items-center gap-3">
+            <span className="px-3 py-1 bg-violet-600/20 text-violet-400 border border-violet-500/30 rounded-full text-xs font-semibold uppercase tracking-wider">
+              {user?.plan || "FREE"} Plan
+            </span>
+            {user?.plan && user.plan !== "free" && (
+              <a href="/api/billing" className="text-xs text-white bg-white/10 hover:bg-white/20 border border-white/20 px-3 py-1.5 rounded-lg transition-colors">
+                Manage Billing
+              </a>
+            )}
+          </div>
         </div>
         
         <div className="grid sm:grid-cols-2 gap-4">
