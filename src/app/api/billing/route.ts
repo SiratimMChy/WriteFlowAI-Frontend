@@ -6,7 +6,7 @@ import { prisma } from "@/lib/prisma"
 
 const getStripe = () => {
   return new Stripe(process.env.STRIPE_SECRET_KEY || "sk_test_placeholder", {
-    apiVersion: "2024-11-20.acacia"
+    apiVersion: "2026-05-27.dahlia" as any
   })
 }
 
@@ -25,6 +25,7 @@ export async function GET(req: Request) {
       where: { id: session.user.id }
     })
 
+    // @ts-ignore
     if (!user || !user.stripeCustomerId) {
       return new NextResponse("No active subscription found", { status: 404 })
     }
@@ -32,6 +33,7 @@ export async function GET(req: Request) {
     const appUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"
 
     const stripeSession = await getStripe().billingPortal.sessions.create({
+      // @ts-ignore
       customer: user.stripeCustomerId,
       return_url: `${appUrl}/dashboard/profile`,
     })

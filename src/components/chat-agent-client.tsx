@@ -1,17 +1,19 @@
 "use client"
 
 import { useChat } from "@ai-sdk/react"
-import { MessageSquare, Send, User, Bot, Loader2, Wand2, Sparkles, PenLine, Lightbulb } from "lucide-react"
+import { MessageSquare, Send, User, Bot, Loader2, Wand2, Sparkles, PenLine, Lightbulb, X, Lock } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { useEffect, useRef, useState } from "react"
 import { toast } from "sonner"
 import { useAuth } from "@/components/auth-provider"
 import { motion, AnimatePresence } from "framer-motion"
+import Link from "next/link"
 
 export function ChatAgentClient() {
   const [input, setInput] = useState("")
   const { user } = useAuth()
+  const [showUpgradeModal, setShowUpgradeModal] = useState(false)
   
   // By passing `api` directly and bypassing strict type checks (which in some versions requires passing a full transport),
   // we instruct the SDK to use the default stream parser, perfectly handling our raw '0:"text"\n' chunks.
@@ -22,7 +24,11 @@ export function ChatAgentClient() {
     },
     onError: (err: Error) => {
       console.error('Chat error:', err)
-      toast.error(err.message || "Failed to connect to chat assistant.")
+      if (err.message.includes("Upgrade required") || err.message.includes("403")) {
+        setShowUpgradeModal(true)
+      } else {
+        toast.error(err.message || "Failed to connect to chat assistant.")
+      }
     }
   } as any)
   
@@ -221,6 +227,50 @@ export function ChatAgentClient() {
           </div>
         </div>
       </div>
+
+      {/* Upgrade Modal */}
+      <AnimatePresence>
+        {showUpgradeModal && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              className="bg-[#12121a] border border-white/10 rounded-2xl w-full max-w-md overflow-hidden shadow-2xl relative"
+            >
+              <button 
+                onClick={() => setShowUpgradeModal(false)}
+                className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+              
+              <div className="p-8 flex flex-col items-center text-center">
+                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-violet-600/20 to-fuchsia-600/20 border border-white/10 flex items-center justify-center mb-6 shadow-lg shadow-violet-500/20">
+                  <Lock className="w-8 h-8 text-violet-400" />
+                </div>
+                
+                <h3 className="text-2xl font-bold text-white mb-3">Limit Reached!</h3>
+                <p className="text-gray-400 mb-8 leading-relaxed">
+                  You've reached your free tier limit for AI generations this month. Upgrade to our Pro plan for unlimited access and advanced AI models.
+                </p>
+                
+                <Link href="/dashboard/profile" className="w-full">
+                  <Button className="w-full h-12 bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:opacity-90 text-white rounded-xl font-medium shadow-[0_0_20px_rgba(139,92,246,0.3)] transition-all">
+                    Upgrade to Pro
+                  </Button>
+                </Link>
+                <button 
+                  onClick={() => setShowUpgradeModal(false)}
+                  className="mt-4 text-sm text-gray-500 hover:text-white transition-colors"
+                >
+                  Maybe later
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
 
     </div>
   )

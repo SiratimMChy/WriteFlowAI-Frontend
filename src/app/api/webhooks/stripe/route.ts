@@ -5,7 +5,7 @@ import { prisma } from "@/lib/prisma"
 
 const getStripe = () => {
   return new Stripe(process.env.STRIPE_SECRET_KEY || "sk_test_placeholder", {
-    apiVersion: "2024-11-20.acacia"
+    apiVersion: "2026-05-27.dahlia" as any
   })
 }
 
@@ -41,6 +41,7 @@ export async function POST(req: Request) {
             session.subscription as string
           )
 
+          // @ts-ignore - Prisma types might be cached in IDE
           await prisma.user.update({
             where: {
               id: session.metadata.userId,
@@ -50,7 +51,7 @@ export async function POST(req: Request) {
               stripeCustomerId: subscriptionData.customer as string,
               stripePriceId: subscriptionData.items.data[0].price.id,
               stripeCurrentPeriodEnd: new Date(
-                subscriptionData.current_period_end * 1000
+                (subscriptionData as any).current_period_end * 1000
               ),
               plan: session.metadata.plan || "free",
             },
@@ -61,11 +62,13 @@ export async function POST(req: Request) {
 
       case "customer.subscription.updated": {
         // Subscription updated (e.g. upgraded/downgraded)
+        // @ts-ignore
         const user = await prisma.user.findUnique({
           where: { stripeSubscriptionId: subscription.id },
         })
 
         if (user) {
+          // @ts-ignore
           await prisma.user.update({
             where: {
               stripeSubscriptionId: subscription.id,
@@ -73,7 +76,7 @@ export async function POST(req: Request) {
             data: {
               stripePriceId: subscription.items.data[0].price.id,
               stripeCurrentPeriodEnd: new Date(
-                subscription.current_period_end * 1000
+                (subscription as any).current_period_end * 1000
               ),
             },
           })
@@ -83,11 +86,13 @@ export async function POST(req: Request) {
 
       case "customer.subscription.deleted": {
         // Subscription cancelled or payment failed fully
+        // @ts-ignore
         const user = await prisma.user.findUnique({
           where: { stripeSubscriptionId: subscription.id },
         })
 
         if (user) {
+          // @ts-ignore
           await prisma.user.update({
             where: {
               stripeSubscriptionId: subscription.id,

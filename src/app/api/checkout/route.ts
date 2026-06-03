@@ -6,7 +6,7 @@ import { prisma } from "@/lib/prisma"
 
 const getStripe = () => {
   return new Stripe(process.env.STRIPE_SECRET_KEY || "sk_test_placeholder", {
-    apiVersion: "2024-11-20.acacia"
+    apiVersion: "2026-05-27.dahlia" as any
   })
 }
 
