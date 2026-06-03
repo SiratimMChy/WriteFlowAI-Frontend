@@ -15,10 +15,18 @@ export async function POST(req: Request) {
 
     const systemPrompt = "You are a helpful AI writing assistant embedded in a document editor. Help the user brainstorm, outline, or edit their content. Keep answers concise."
 
-    const formattedMessages = messages.map((m: any) => ({
-      role: m.role,
-      content: m.content
-    }))
+    const formattedMessages = messages.map((m: any) => {
+      let textContent = m.content;
+      if (Array.isArray(m.content)) {
+        textContent = m.content.map((part: any) => part.text || '').join('');
+      } else if (typeof m.content === 'object' && m.content !== null) {
+        textContent = JSON.stringify(m.content);
+      }
+      return {
+        role: m.role,
+        content: textContent
+      }
+    })
 
     const response = await groq.chat.completions.create({
       model: "llama-3.3-70b-versatile",
