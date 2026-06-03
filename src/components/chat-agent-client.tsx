@@ -14,57 +14,15 @@ export function ChatAgentClient() {
   const [input, setInput] = useState("")
   const { user } = useAuth()
   
-  // Get headers function that will be called on each request
-  const getHeaders = () => {
-    let token = getCookie('token') as string | undefined
-    if (!token && typeof window !== 'undefined') {
-      token = localStorage.getItem('token') || undefined
-    }
-    
-    console.log('Chat headers - Token found:', !!token) // Debug log
-    
-    const headers: Record<string, string> = {}
-    if (token) {
-      headers['Authorization'] = `Bearer ${token}`
-    }
-    return headers
-  }
-  
   const chat = useChat({
     transport: new DefaultChatTransport({
-      api: `${process.env.NEXT_PUBLIC_API_URL || 'https://writeflowai-backend.onrender.com/api'}/ai/chat`,
-      headers: getHeaders,
-      // Prepare the request to match backend expectations
-      prepareSendMessagesRequest: ({ messages }) => {
-        const formattedMessages = messages.map(msg => {
-          let content = ''
-          if (msg.parts && msg.parts.length > 0) {
-            content = msg.parts
-              .filter(part => part.type === 'text')
-              .map(part => (part as any).text)
-              .join('')
-          } else {
-            content = (msg as any).content || ''
-          }
-          
-          return {
-            role: msg.role,
-            content: content
-          }
-        })
-        
-        return {
-          body: {
-            messages: formattedMessages
-          }
-        }
-      }
+      api: `/api/ai/chat`,
     }),
     onFinish: ({ messages }) => {
       console.log('Chat finished. All messages:', messages)
     },
     onError: (err: Error) => {
-      console.error('Chat error:', err) // Debug log
+      console.error('Chat error:', err)
       toast.error(err.message || "Failed to connect to chat assistant.")
     }
   })
@@ -80,8 +38,7 @@ export function ChatAgentClient() {
     if (!input.trim()) return
     
     // Check if user is authenticated
-    const token = getCookie('token') || (typeof window !== 'undefined' ? localStorage.getItem('token') : null)
-    if (!token) {
+    if (!user) {
       toast.error("Please log in to use the chat assistant.")
       return
     }

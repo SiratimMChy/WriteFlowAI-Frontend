@@ -22,7 +22,7 @@ export function MaintenanceGuard({ children }: { children: React.ReactNode }) {
     }
 
     // Default to false or fetch from settings endpoint if supported
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/settings`)
+    fetch(`/api/settings`)
       .then((res) => {
         if (!res.ok) throw new Error("Settings not available")
         return res.json()

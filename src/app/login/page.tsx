@@ -26,8 +26,7 @@ export default function LoginPage() {
   const [error, setError] = useState("")
 
   const loginWithGoogle = () => {
-    const backendUrl = process.env.NEXT_PUBLIC_API_URL?.replace('/api', '') || 'http://localhost:5000'
-    window.location.href = `${backendUrl}/api/auth/google`
+    login('google', { callbackUrl: '/dashboard' })
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -35,23 +34,19 @@ export default function LoginPage() {
     setIsLoading(true)
     setError("")
     try {
-      const res = await api.post("/auth/login", { email, password })
+      const res = await login('credentials', {
+        redirect: false,
+        email,
+        password,
+      });
 
-      if (res.data.success && res.data.data.token) {
-        const userData = {
-          id: res.data.data._id,
-          name: res.data.data.name,
-          email: res.data.data.email,
-          role: res.data.data.role,
-          image: res.data.data.image,
-        }
-        login(res.data.data.token, userData)
+      if (res?.error) {
+        setError(res.error)
+      } else if (res?.ok) {
         router.push("/dashboard")
-      } else {
-        setError(res.data.message || "Invalid email or password")
       }
     } catch (err: any) {
-      setError(err.response?.data?.message || "An unexpected error occurred")
+      setError(err.message || "An unexpected error occurred")
     } finally {
       setIsLoading(false)
     }
@@ -64,23 +59,19 @@ export default function LoginPage() {
     
     setIsLoading(true)
     try {
-      const res = await api.post("/auth/login", { email: demoEmail, password: "123456" })
+      const res = await login('credentials', {
+        redirect: false,
+        email: demoEmail,
+        password: "123456",
+      });
 
-      if (res.data.success && res.data.data.token) {
-        const userData = {
-          id: res.data.data._id,
-          name: res.data.data.name,
-          email: res.data.data.email,
-          role: res.data.data.role,
-          image: res.data.data.image,
-        }
-        login(res.data.data.token, userData)
+      if (res?.error) {
+        setError(res.error)
+      } else if (res?.ok) {
         router.push("/dashboard")
-      } else {
-        setError(res.data.message || "Invalid email or password")
       }
     } catch (err: any) {
-      setError(err.response?.data?.message || "An unexpected error occurred")
+      setError(err.message || "An unexpected error occurred")
     } finally {
       setIsLoading(false)
     }

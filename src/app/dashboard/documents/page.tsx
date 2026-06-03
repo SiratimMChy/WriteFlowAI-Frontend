@@ -15,8 +15,7 @@ export default function DocumentsPage() {
   useEffect(() => {
     const fetchDocs = async () => {
       try {
-        // Mocked response to prevent 404 console errors since documents module is not built
-        const res = await Promise.resolve({ data: { success: true, data: [] } }) as any
+        const res = await api.get("/documents", { params: { page: 1, limit: 12 } })
         if (res.data.success) {
           setDocuments(res.data.data || [])
           if (res.data.meta) {

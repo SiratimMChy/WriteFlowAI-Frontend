@@ -155,7 +155,7 @@ function md5(string: string): string {
 }
 
 // Generate secure Gravatar URL fallback for user email
-export function getAvatarUrl(email?: string, image?: string): string {
+export function getAvatarUrl(email?: string | null, image?: string | null): string {
   if (image && image.trim() !== "") {
     return image;
   }

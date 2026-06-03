@@ -39,7 +39,7 @@ export function Navbar() {
   ]
 
   const authLinks = [
-     { name: "Home", href: "/" },
+    { name: "Home", href: "/" },
     { name: "Explore", href: "/explore" },
     { name: "Blog", href: "/blog" },
     { name: "About", href: "/about" },
@@ -124,7 +124,7 @@ export function Navbar() {
               <DropdownMenuTrigger asChild>
                 <button className="flex items-center gap-2 rounded-full outline-none ring-offset-background focus:ring-2 focus:ring-ring focus:ring-offset-2">
                   <Avatar className="w-8 h-8 border border-border">
-                    <AvatarImage src={getAvatarUrl(user.email, user.image)} alt={user.name || "User"} />
+                    <AvatarImage src={getAvatarUrl(user.email, user.image || undefined)} alt={user.name || "User"} />
                     <AvatarFallback className="bg-violet-600 text-xs text-white">
                       {user.name?.charAt(0) || "U"}
                     </AvatarFallback>
@@ -195,7 +195,7 @@ export function Navbar() {
                 <>
                   <div className="px-3 py-2 mb-2 flex items-center gap-3">
                     <Avatar className="w-10 h-10 border border-border">
-                      <AvatarImage src={getAvatarUrl(user.email, user.image)} alt={user.name || "User"} />
+                      <AvatarImage src={getAvatarUrl(user.email, user.image || undefined)} alt={user.name || "User"} />
                       <AvatarFallback className="bg-violet-600 text-sm text-white">
                         {user.name?.charAt(0) || "U"}
                       </AvatarFallback>

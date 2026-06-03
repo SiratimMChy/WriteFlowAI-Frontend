@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Sparkles, Wand2, ArrowRight, Loader2, Mail, Lock, User as UserIcon } from "lucide-react"
 import { api } from "@/lib/api"
+import { signIn } from "next-auth/react"
 
 export default function RegisterPage() {
   const router = useRouter()
@@ -23,7 +24,7 @@ export default function RegisterPage() {
     setIsLoading(true)
     setError("")
     try {
-      const res = await api.post("/auth/register", { name, email, password })
+      const res = await api.post("/api/auth/register", { name, email, password })
 
       if (res.data.success) {
         // Successful registration, navigate to login
@@ -39,8 +40,7 @@ export default function RegisterPage() {
   }
 
   const loginWithGoogle = () => {
-    const backendUrl = process.env.NEXT_PUBLIC_API_URL?.replace('/api', '') || 'http://localhost:5000'
-    window.location.href = `${backendUrl}/api/auth/google`
+    signIn('google', { callbackUrl: '/dashboard' })
   }
 
   return (

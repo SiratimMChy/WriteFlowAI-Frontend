@@ -20,17 +20,8 @@ export function DraftAgentClient() {
   const [keywords, setKeywords] = useState("")
   const [title, setTitle] = useState("Untitled Document")
 
-  const [token] = useState<string | undefined>(() => {
-    let t = getCookie("token") as string | undefined
-    if (!t && typeof window !== "undefined") {
-      t = localStorage.getItem("token") || undefined
-    }
-    return t
-  })
-
   const { completion, input, handleInputChange, handleSubmit, isLoading } = useCompletion({
-    api: `${process.env.NEXT_PUBLIC_API_URL}/ai/draft`,
-    headers: token ? { Authorization: `Bearer ${token}` } : {},
+    api: `/api/ai/draft`,
     body: {
       tone,
       keywords,
@@ -38,7 +29,7 @@ export function DraftAgentClient() {
     },
     streamProtocol: 'text',
     onError: (err) => {
-      toast.error(err.message || "Failed to generate content. Please check OPENAI_API_KEY")
+      toast.error(err.message || "Failed to generate content.")
     }
   })
 
@@ -50,18 +41,12 @@ export function DraftAgentClient() {
 
   const handleSave = async () => {
     if (!completion) return
-    
-    let token = getCookie("token") as string | undefined
-    if (!token && typeof window !== "undefined") {
-      token = localStorage.getItem("token") || undefined
-    }
 
     // Server action to save document
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/documents/save`, {
+    const res = await fetch(`/api/documents/save`, {
       method: "POST",
       headers: { 
         "Content-Type": "application/json",
-        ...(token ? { "Authorization": `Bearer ${token}` } : {})
       },
       body: JSON.stringify({
         title,

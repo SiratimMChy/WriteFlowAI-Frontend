@@ -28,7 +28,7 @@ export function Footer() {
   }
 
   useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/settings`)
+    fetch(`/api/settings`)
       .then((res) => {
         if (!res.ok) throw new Error("Settings not available")
         return res.json()

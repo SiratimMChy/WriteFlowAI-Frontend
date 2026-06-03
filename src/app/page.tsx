@@ -146,7 +146,7 @@ export default function LandingPage() {
 
   useEffect(() => {
     setIsLoadingTemplates(true)
-    fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://writeflowai-backend.onrender.com/api'}/items?limit=4&sort=popular`)
+    fetch(`/api/items?limit=4&sort=popular`)
       .then((res) => {
         if (!res.ok) throw new Error("API failed")
         return res.json()
@@ -171,7 +171,7 @@ export default function LandingPage() {
 
   // Fetch public platform stats
   useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://writeflowai-backend.onrender.com/api'}/dashboard/public-stats`)
+    fetch(`/api/dashboard/public-stats`)
       .then((res) => {
         if (!res.ok) throw new Error('Failed')
         return res.json()

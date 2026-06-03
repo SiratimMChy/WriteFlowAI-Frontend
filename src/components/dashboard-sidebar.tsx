@@ -172,7 +172,7 @@ export function DashboardSidebar({ isOpen, onClose }: { isOpen?: boolean; onClos
       <div className="p-4 border-t border-white/5">
         <div className="flex items-center gap-3 mb-3">
           <Avatar className="w-8 h-8 border border-white/10">
-            <AvatarImage src={getAvatarUrl(user?.email, user?.image)} alt={user?.name || "User"} />
+            <AvatarImage src={getAvatarUrl(user?.email, user?.image || undefined)} alt={user?.name || "User"} />
             <AvatarFallback className="bg-violet-600 text-white text-xs">
               {initials}
             </AvatarFallback>
