@@ -100,7 +100,6 @@ export function AdminUsersClient({ users, totalPages }: { users: any[], totalPag
               <tr className="border-b border-white/5 bg-white/[0.01]">
                 <th className="p-4 font-medium text-gray-400">User</th>
                 <th className="p-4 font-medium text-gray-400">Role</th>
-                <th className="p-4 font-medium text-gray-400">Plan</th>
                 <th className="p-4 font-medium text-gray-400">Join Date</th>
                 <th className="p-4 font-medium text-gray-400">Status</th>
                 <th className="p-4 font-medium text-gray-400 text-right">Actions</th>
@@ -129,11 +128,6 @@ export function AdminUsersClient({ users, totalPages }: { users: any[], totalPag
                       <option value="user">User</option>
                       <option value="admin">Admin</option>
                     </select>
-                  </td>
-                  <td className="p-4">
-                    <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-white/5 text-gray-300 border border-white/10 uppercase tracking-wider">
-                      {user.plan}
-                    </span>
                   </td>
                   <td className="p-4 text-sm text-gray-400">
                     {new Date(user.createdAt).toLocaleDateString()}

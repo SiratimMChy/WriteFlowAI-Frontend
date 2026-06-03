@@ -348,7 +348,7 @@ export default function LandingPage() {
                       <div className="w-6 h-6 rounded-full bg-violet-600 flex items-center justify-center text-[10px] font-bold">U</div>
                       <div className="flex flex-col min-w-0">
                         <span className="text-[10px] font-medium text-white truncate">Demo Creator</span>
-                        <span className="text-[8px] text-gray-500 truncate">free plan</span>
+                        <span className="text-[8px] text-gray-500 truncate">Online</span>
                       </div>
                     </div>
                   </div>
@@ -634,10 +634,7 @@ export default function LandingPage() {
           </div>
           <div className="space-y-4">
             {[
-              { q: "Is there a free trial?", a: "Yes! You can use our Free plan forever, which gives you 10,000 words per month to test out our basic templates." },
-              { q: "Can I cancel my subscription?", a: "Absolutely. You can cancel your subscription at any time from your billing dashboard. No questions asked." },
               { q: "Does the AI plagiarize?", a: "No, WriteFlow AI generates unique, original content on the fly based on the massive datasets it was trained on." },
-              { q: "Can I invite my team?", a: "Yes, our Team plan allows you to invite up to 5 members to collaborate, share templates, and manage documents together." },
             ].map((faq, i) => (
               <div key={i} className="border border-white/10 rounded-xl bg-white/[0.02] overflow-hidden">
                 <button 

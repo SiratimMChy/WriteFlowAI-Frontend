@@ -96,7 +96,7 @@ export default function ContactPage() {
                   </span>
                 </h1>
                 <p className="text-gray-400 text-xs sm:text-sm leading-relaxed">
-                  Connect with our specialized teams to resolve billing questions, configure custom API endpoints, or request custom enterprise models.
+                  Connect with our specialized teams to resolve technical questions, configure custom API endpoints, or request custom enterprise models.
                 </p>
               </div>
 
@@ -105,7 +105,7 @@ export default function ContactPage() {
                 <div className="space-y-1 relative">
                   <div className="absolute -left-[29px] top-1.5 w-2.5 h-2.5 rounded-full bg-violet-500 ring-4 ring-violet-500/20" />
                   <h4 className="text-sm font-semibold text-white">Customer Support</h4>
-                  <p className="text-[11px] text-gray-400">Billing, account assistance, and technical troubleshooting.</p>
+                  <p className="text-[11px] text-gray-400">Account assistance and technical troubleshooting.</p>
                   <a href="mailto:support@writeflow.ai" className="text-xs text-violet-400 hover:text-violet-300 transition-colors font-medium">
                     support@writeflow.ai
                   </a>

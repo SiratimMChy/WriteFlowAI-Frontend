@@ -10,22 +10,17 @@ export default function TermsPage() {
       title: "1. Acceptance of Terms",
       content: "By accessing or using WriteFlow AI, you agree to be bound by these Terms. If you disagree with any part of the terms, then you may not access the service. We reserve the right to modify these terms at any time.",
     },
-    {
-      id: "subscriptions",
-      icon: <CreditCard className="w-5 h-5 text-fuchsia-400" />,
-      title: "2. Subscriptions & Billing",
-      content: "Some parts of the Service are billed on a subscription basis. You will be billed in advance on a recurring and periodic basis. You may cancel your subscription at any time, but we do not offer refunds for partial months of service.",
-    },
+
     {
       id: "ownership",
       icon: <Copyright className="w-5 h-5 text-blue-400" />,
-      title: "3. Content Ownership",
+      title: "2. Content Ownership",
       content: "You retain full ownership, copyright, and intellectual property rights to any content you generate using our AI tools. We do not claim copyright over AI-generated outputs.",
     },
     {
       id: "usage",
       icon: <AlertCircle className="w-5 h-5 text-emerald-400" />,
-      title: "4. Acceptable Use",
+      title: "3. Acceptable Use",
       content: "You agree not to use the Service to generate harmful, illegal, or abusive content. We reserve the right to terminate accounts that violate our usage policies without prior notice.",
     }
   ];

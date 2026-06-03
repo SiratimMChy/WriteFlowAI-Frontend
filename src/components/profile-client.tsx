@@ -104,16 +104,13 @@ export function ProfileClient({
         </form>
       </section>
 
-      {/* Subscription & Stats */}
+      {/* Usage Stats */}
       <section className="bg-white/[0.02] border border-white/5 rounded-2xl p-6">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-xl font-bold flex items-center gap-2">
             <CreditCard className="w-5 h-5 text-blue-400" />
-            Subscription & Usage
+            Usage Statistics
           </h2>
-          <span className="px-3 py-1 bg-violet-600/20 text-violet-400 border border-violet-500/30 rounded-full text-xs font-semibold uppercase tracking-wider">
-            {user?.plan || "FREE"} Plan
-          </span>
         </div>
         
         <div className="grid sm:grid-cols-2 gap-4">

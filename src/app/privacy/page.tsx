@@ -8,7 +8,7 @@ export default function PrivacyPage() {
       id: "collection",
       icon: <Database className="w-5 h-5 text-violet-400" />,
       title: "1. Information We Collect",
-      content: "We collect information you provide directly to us, such as when you create an account, manage your profile, process payments, or contact support. This includes your name, email address, and billing information.",
+      content: "We collect information you provide directly to us, such as when you create an account, manage your profile, or contact support. This includes your name and email address.",
     },
     {
       id: "usage",
