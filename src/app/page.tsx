@@ -12,7 +12,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { useState, useEffect, useRef } from "react"
 import { toast } from "sonner"
 import { TemplateCard, TemplateCardSkeleton } from "@/components/template-card"
-
+import { useSession } from "next-auth/react"
 function AnimatedCounter({ targetValue, suffix = "", decimals = 0 }: { targetValue: number, suffix?: string, decimals?: number }) {
   const [count, setCount] = useState(0)
   const [hasStarted, setHasStarted] = useState(false)
@@ -74,6 +74,7 @@ function AnimatedCounter({ targetValue, suffix = "", decimals = 0 }: { targetVal
 }
 
 export default function LandingPage() {
+  const { status } = useSession()
   const [openFaq, setOpenFaq] = useState<number | null>(0)
   const [email, setEmail] = useState("")
   const [isLoading, setIsLoading] = useState(false)
@@ -268,13 +269,23 @@ export default function LandingPage() {
               transition={{ delay: 0.5 }}
               className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-20 w-full sm:w-auto mx-auto"
             >
-              <Link href="/register" className="w-full sm:w-auto group relative">
-                <div className="absolute -inset-0.5 bg-gradient-to-r from-violet-600 to-fuchsia-600 rounded-full blur opacity-30 group-hover:opacity-60 transition duration-300"></div>
-                <Button size="lg" className="relative w-full sm:w-auto h-14 px-8 bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:from-violet-500 hover:to-fuchsia-500 text-white text-base font-bold rounded-full shadow-lg hover:shadow-xl hover:shadow-violet-500/5 transition-all duration-300 border-0">
-                  Start Writing Free
-                  <Sparkles className="ml-2 w-5 h-5 text-white/80 group-hover:rotate-12 transition-transform duration-300" />
-                </Button>
-              </Link>
+              {status === "authenticated" ? (
+                <Link href="/dashboard" className="w-full sm:w-auto group relative">
+                  <div className="absolute -inset-0.5 bg-gradient-to-r from-violet-600 to-fuchsia-600 rounded-full blur opacity-30 group-hover:opacity-60 transition duration-300"></div>
+                  <Button size="lg" className="relative w-full sm:w-auto h-14 px-8 bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:from-violet-500 hover:to-fuchsia-500 text-white text-base font-bold rounded-full shadow-lg hover:shadow-xl hover:shadow-violet-500/5 transition-all duration-300 border-0">
+                    Go to Dashboard
+                    <ArrowRight className="ml-2 w-5 h-5 text-white/80 group-hover:translate-x-1 transition-transform duration-300" />
+                  </Button>
+                </Link>
+              ) : (
+                <Link href="/register" className="w-full sm:w-auto group relative">
+                  <div className="absolute -inset-0.5 bg-gradient-to-r from-violet-600 to-fuchsia-600 rounded-full blur opacity-30 group-hover:opacity-60 transition duration-300"></div>
+                  <Button size="lg" className="relative w-full sm:w-auto h-14 px-8 bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:from-violet-500 hover:to-fuchsia-500 text-white text-base font-bold rounded-full shadow-lg hover:shadow-xl hover:shadow-violet-500/5 transition-all duration-300 border-0">
+                    Start Writing Free
+                    <Sparkles className="ml-2 w-5 h-5 text-white/80 group-hover:rotate-12 transition-transform duration-300" />
+                  </Button>
+                </Link>
+              )}
               <Link href="/explore" className="w-full sm:w-auto">
                 <Button size="lg" variant="outline" className="w-full sm:w-auto h-14 px-8 text-white border-white/20 bg-white/5 hover:bg-white/10 hover:border-white/40 rounded-full font-medium transition-all">
                   Explore Templates
@@ -687,12 +698,21 @@ export default function LandingPage() {
             <div className="h-px w-full max-w-xs mx-auto bg-gradient-to-r from-transparent via-white/20 to-transparent mb-12" />
 
             <h3 className="text-2xl font-bold mb-6">Ready to transform your workflow?</h3>
-            <Link href="/register">
-              <Button size="lg" className="h-14 px-10 bg-violet-600 text-white hover:bg-violet-700 text-lg rounded-full shadow-lg">
-                Start Writing Free
-                <ArrowRight className="ml-2 w-5 h-5" />
-              </Button>
-            </Link>
+            {status === "authenticated" ? (
+              <Link href="/dashboard">
+                <Button size="lg" className="h-14 px-10 bg-violet-600 text-white hover:bg-violet-700 text-lg rounded-full shadow-lg">
+                  Go to Dashboard
+                  <ArrowRight className="ml-2 w-5 h-5" />
+                </Button>
+              </Link>
+            ) : (
+              <Link href="/register">
+                <Button size="lg" className="h-14 px-10 bg-violet-600 text-white hover:bg-violet-700 text-lg rounded-full shadow-lg">
+                  Start Writing Free
+                  <ArrowRight className="ml-2 w-5 h-5" />
+                </Button>
+              </Link>
+            )}
           </div>
         </section>
       </main>

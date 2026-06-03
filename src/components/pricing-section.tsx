@@ -6,12 +6,25 @@ import { CheckCircle2, Zap, Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
+import { useSession } from "next-auth/react"
 
 export function PricingSection() {
+  const { status } = useSession()
   const [isLoading, setIsLoading] = useState<string | null>(null)
   const router = useRouter()
 
   const handleCheckout = async (plan: "pro" | "team") => {
+    if (status !== "authenticated") {
+      toast.error("Authentication required", {
+        description: "Please log in or create a free account to upgrade your plan.",
+        action: {
+          label: "Log In",
+          onClick: () => router.push("/login"),
+        },
+      })
+      return
+    }
+
     setIsLoading(plan)
     try {
       const res = await fetch("/api/checkout", {

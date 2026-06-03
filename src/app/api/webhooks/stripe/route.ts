@@ -3,6 +3,8 @@ import Stripe from "stripe"
 import { headers } from "next/headers"
 import { prisma } from "@/lib/prisma"
 
+export const dynamic = "force-dynamic";
+
 const getStripe = () => {
   return new Stripe(process.env.STRIPE_SECRET_KEY || "sk_test_placeholder", {
     apiVersion: "2026-05-27.dahlia" as any
