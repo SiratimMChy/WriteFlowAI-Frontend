@@ -26,22 +26,11 @@ export async function POST(request: Request) {
       userId: session.user.id
     };
 
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://writeflowai-backend.onrender.com/api'
-    
-    const res = await fetch(`${apiUrl}/documents`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(documentData)
+    const document = await prisma.document.create({
+      data: documentData
     });
 
-    if (!res.ok) {
-      throw new Error(`Backend returned ${res.status}`);
-    }
-
-    const data = await res.json();
-    return NextResponse.json({ success: true, document: data.data })
+    return NextResponse.json({ success: true, document })
   } catch (error) {
     console.error("Save document error:", error)
     return NextResponse.json({ error: "Failed to save document" }, { status: 500 })
