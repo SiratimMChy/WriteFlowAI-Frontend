@@ -7,6 +7,8 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { api } from "@/lib/api"
 import { toast } from "sonner"
+import { useDebounce } from "@/hooks/use-debounce"
+import { useEffect } from "react"
 
 export function AdminUsersClient({ users, totalPages }: { users: any[], totalPages: number }) {
   const router = useRouter()
@@ -15,6 +17,7 @@ export function AdminUsersClient({ users, totalPages }: { users: any[], totalPag
   const [isPending, startTransition] = useTransition()
 
   const [query, setQuery] = useState(searchParams.get("q") || "")
+  const debouncedQuery = useDebounce(query, 400)
 
   const currentPage = Number(searchParams.get("page")) || 1
 
@@ -45,6 +48,12 @@ export function AdminUsersClient({ users, totalPages }: { users: any[], totalPag
     e.preventDefault()
     updateUrl({ q: query })
   }
+
+  useEffect(() => {
+    if (debouncedQuery !== (searchParams.get("q") || "")) {
+      updateUrl({ q: debouncedQuery })
+    }
+  }, [debouncedQuery])
 
   const handleRoleChange = async (userId: string, newRole: string) => {
     startTransition(async () => {

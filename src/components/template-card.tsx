@@ -6,6 +6,7 @@ import { Star, Users, ArrowRight } from "lucide-react"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
+import Image from "next/image"
 
 export type Template = {
   id: string
@@ -39,7 +40,7 @@ export function TemplateCard({ template }: { template: Template }) {
       {/* Thumbnail */}
       <div className="h-40 bg-white/5 relative border-b border-white/5">
         {template.thumbnail ? (
-          <img src={template.thumbnail} alt={template.title} className="w-full h-full object-cover" />
+          <Image src={template.thumbnail} alt={template.title} fill className="object-cover" sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" />
         ) : (
           <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-violet-500/10 to-blue-500/10">
             <span className="text-4xl">📄</span>

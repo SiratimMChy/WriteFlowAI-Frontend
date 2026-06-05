@@ -17,18 +17,31 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Content is required" }, { status: 400 })
     }
 
-    const document = await prisma.document.create({
-      data: {
-        title: title || "Untitled Document",
-        content,
-        status: status || "draft",
-        type: type || "draft",
-        wordCount: wordCount || content.split(/\s+/).length,
-        userId: session.user.id
-      }
-    })
+    const documentData = {
+      title: title || "Untitled Document",
+      content,
+      status: status || "draft",
+      type: type || "draft",
+      wordCount: wordCount || content.split(/\s+/).length,
+      userId: session.user.id
+    };
 
-    return NextResponse.json({ success: true, document })
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://writeflowai-backend.onrender.com/api'
+    
+    const res = await fetch(`${apiUrl}/documents`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(documentData)
+    });
+
+    if (!res.ok) {
+      throw new Error(`Backend returned ${res.status}`);
+    }
+
+    const data = await res.json();
+    return NextResponse.json({ success: true, document: data.data })
   } catch (error) {
     console.error("Save document error:", error)
     return NextResponse.json({ error: "Failed to save document" }, { status: 500 })

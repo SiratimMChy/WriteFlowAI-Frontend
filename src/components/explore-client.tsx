@@ -5,6 +5,7 @@ import { useRouter, useSearchParams, usePathname } from "next/navigation"
 import { Input } from "@/components/ui/input"
 import { Search, Filter } from "lucide-react"
 import { TemplateCard, TemplateCardSkeleton, Template } from "@/components/template-card"
+import { useDebounce } from "@/hooks/use-debounce"
 
 export function ExploreClient({ initialTemplates, totalPages }: { initialTemplates: Template[], totalPages: number }) {
   const router = useRouter()
@@ -14,6 +15,7 @@ export function ExploreClient({ initialTemplates, totalPages }: { initialTemplat
 
   // Local state for UI
   const [query, setQuery] = useState(searchParams.get("q") || "")
+  const debouncedQuery = useDebounce(query, 400)
   const [category, setCategory] = useState(searchParams.get("category") || "")
   const [rating, setRating] = useState(searchParams.get("rating") || "")
   const [sort, setSort] = useState(searchParams.get("sort") || "popular")
@@ -49,6 +51,12 @@ export function ExploreClient({ initialTemplates, totalPages }: { initialTemplat
     e.preventDefault()
     updateUrl({ q: query })
   }
+
+  useEffect(() => {
+    if (debouncedQuery !== (searchParams.get("q") || "")) {
+      updateUrl({ q: debouncedQuery })
+    }
+  }, [debouncedQuery])
 
   return (
     <div className="flex flex-col md:flex-row gap-8">
