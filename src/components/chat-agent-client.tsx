@@ -1,6 +1,5 @@
 "use client"
 
-import { useChat } from "@ai-sdk/react"
 import { MessageSquare, Send, User, Bot, Loader2, Wand2, Sparkles, PenLine, Lightbulb, X, Lock } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -15,24 +14,11 @@ export function ChatAgentClient() {
   const { user } = useAuth()
   const [showUpgradeModal, setShowUpgradeModal] = useState(false)
   
-  // By passing `api` directly and bypassing strict type checks (which in some versions requires passing a full transport),
-  // we instruct the SDK to use the default stream parser, perfectly handling our raw '0:"text"\n' chunks.
-  const chat = useChat({
-    api: `/api/ai/chat`,
-    onFinish: () => {
-      console.log('Chat stream finished successfully.')
-    },
-    onError: (err: Error) => {
-      console.error('Chat error:', err)
-      if (err.message.includes("Upgrade required") || err.message.includes("403")) {
-        setShowUpgradeModal(true)
-      } else {
-        toast.error(err.message || "Failed to connect to chat assistant.")
-      }
-    }
-  } as any)
-  
-  const { messages, setMessages, sendMessage, status, stop } = chat
+  const [messages, setMessages] = useState<any[]>([])
+  const [isLoadingChat, setIsLoadingChat] = useState(false)
+  const stopRef = useRef(false)
+
+  const stop = () => { stopRef.current = true }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInput(e.target.value)
@@ -50,10 +36,51 @@ export function ChatAgentClient() {
     }
     
     setInput("")
-    await sendMessage({ text: messageToSend })
-  }
+    const userMessage = { id: Date.now().toString(), role: 'user', content: messageToSend }
+    setMessages(prev => [...prev, userMessage])
+    setIsLoadingChat(true)
+    stopRef.current = false
 
-  const isLoadingChat = status === 'streaming' || status === 'submitted'
+    try {
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages: [...messages, userMessage] })
+      })
+
+      if (!response.ok) {
+        throw new Error(await response.text())
+      }
+
+      const reader = response.body?.getReader()
+      const decoder = new TextDecoder()
+      
+      const assistantMessageId = Date.now().toString() + "-ai"
+      setMessages(prev => [...prev, { id: assistantMessageId, role: 'assistant', content: '' }])
+
+      if (reader) {
+        while (!stopRef.current) {
+          const { done, value } = await reader.read()
+          if (done) break
+          
+          const text = decoder.decode(value, { stream: true })
+          setMessages(prev => prev.map(m => 
+            m.id === assistantMessageId ? { ...m, content: m.content + text } : m
+          ))
+        }
+        if (stopRef.current) reader.cancel()
+      }
+    } catch (err: any) {
+      console.error('Chat error:', err)
+      if (err.message.includes("Upgrade required") || err.message.includes("403")) {
+        setShowUpgradeModal(true)
+      } else {
+        toast.error(err.message || "Failed to connect to chat assistant.")
+      }
+    } finally {
+      setIsLoadingChat(false)
+    }
+  }
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -153,7 +180,7 @@ export function ChatAgentClient() {
                       : 'bg-white/[0.03] border border-white/10 text-gray-200 rounded-tl-sm backdrop-blur-md'
                   }`}>
                     <div className="prose prose-invert prose-sm max-w-none whitespace-pre-wrap leading-relaxed">
-                      {m.parts ? m.parts.map((part, idx) => {
+                      {m.parts ? m.parts.map((part: any, idx: number) => {
                         if (part.type === 'text') {
                           return <span key={idx}>{part.text}</span>
                         }

@@ -81,7 +81,7 @@ export async function POST(req: Request) {
           for await (const chunk of response) {
             const text = chunk.choices[0]?.delta?.content || ""
             if (text) {
-              controller.enqueue(new TextEncoder().encode(`0:${JSON.stringify(text)}\n`))
+              controller.enqueue(new TextEncoder().encode(text))
             }
           }
           
@@ -99,7 +99,7 @@ export async function POST(req: Request) {
         controller.close()
       }
     })
-    return new Response(stream, { headers: { 'Content-Type': 'text/plain; charset=utf-8', 'x-vercel-ai-data-stream': 'v1' } })
+    return new Response(stream, { headers: { 'Content-Type': 'text/plain; charset=utf-8' } })
   } catch (error) {
     console.error("AI Chat Error:", error)
     return NextResponse.json({ error: error instanceof Error ? error.message : "Failed to generate chat response", stack: error instanceof Error ? error.stack : undefined, body: body }, { status: 500 })
