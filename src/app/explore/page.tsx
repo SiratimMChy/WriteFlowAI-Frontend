@@ -1,7 +1,7 @@
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import { ExploreClient } from "@/components/explore-client"
-import { api } from "@/lib/api"
+import { prisma } from "@/lib/prisma"
 
 export default async function ExplorePage({
   searchParams,
@@ -17,20 +17,44 @@ export default async function ExplorePage({
   const ITEMS_PER_PAGE = 12
 
   try {
-    const res = await api.get('/items', {
-      params: {
-        search: q,
-        category,
-        rating,
-        sort,
-        page,
-        limit: ITEMS_PER_PAGE
-      }
-    })
+    let where: any = { isActive: true }
 
-    const templates = res.data.data || []
-    const meta = res.data.meta || { total: 0 }
-    const totalCount = meta.total || 0
+    if (q) {
+      where.OR = [
+        { title: { contains: q, mode: "insensitive" } },
+        { description: { contains: q, mode: "insensitive" } },
+      ]
+    }
+
+    if (category && category !== "All" && category !== "all") {
+      where.category = category
+    }
+
+    if (rating && rating !== "All") {
+      where.rating = { gte: parseFloat(rating) }
+    }
+
+    let orderBy: any = { usageCount: 'desc' }
+    if (sort === "newest") {
+      orderBy = { createdAt: 'desc' }
+    } else if (sort === "rated") {
+      orderBy = { rating: 'desc' }
+    } else if (sort === "popular") {
+      orderBy = { usageCount: 'desc' }
+    }
+
+    const skip = (page - 1) * ITEMS_PER_PAGE
+
+    const [templates, totalCount] = await Promise.all([
+      prisma.template.findMany({
+        where,
+        orderBy,
+        skip,
+        take: ITEMS_PER_PAGE,
+      }),
+      prisma.template.count({ where })
+    ])
+
     const totalPages = Math.ceil(totalCount / ITEMS_PER_PAGE)
 
     return (
