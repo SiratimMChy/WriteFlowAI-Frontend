@@ -58,13 +58,18 @@ export default async function ExplorePage({
     const totalPages = Math.ceil(totalCount / ITEMS_PER_PAGE)
 
     return (
-    <div className="min-h-screen bg-[#050505] text-white flex flex-col">
+    <div className="min-h-screen bg-[#050505] text-white flex flex-col selection:bg-violet-500/30">
       <Navbar />
       
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-24 sm:py-32">
+      {/* Background gradients */}
+      <div className="absolute top-0 inset-x-0 h-[60vh] overflow-hidden pointer-events-none z-0">
+        <div className="absolute top-[-20%] left-[10%] w-[50%] h-[50%] rounded-full bg-violet-600/10 blur-[120px]" />
+      </div>
+
+      <main className="relative z-10 flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-24 sm:py-32">
         <div className="mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">Explore Templates</h1>
-          <p className="text-gray-400 text-lg max-w-2xl">
+          <h1 className="font-heading text-4xl md:text-5xl font-extrabold mb-4 tracking-tight">Explore Templates</h1>
+          <p className="text-gray-400 text-lg max-w-2xl font-light">
             Discover {totalCount}+ AI templates designed to help you write better, faster. Filter by category, rating, or search for exactly what you need.
           </p>
         </div>
@@ -85,7 +90,7 @@ export default async function ExplorePage({
       <Navbar />
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-24 sm:py-32 flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-bold mb-4 text-red-400">Failed to load templates</h1>
+          <h1 className="font-heading text-2xl font-bold mb-4 text-red-400">Failed to load templates</h1>
           <p className="text-gray-400">Please make sure the backend is running.</p>
         </div>
       </main>

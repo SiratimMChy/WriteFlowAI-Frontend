@@ -85,7 +85,6 @@ export function Navbar() {
                       : "hover:text-foreground"
                   }`}
                 >
-                  <link className="w-4 h-4" />
                   {link.name}
                   {isActive && (
                     <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-violet-500 to-purple-400 rounded-full" />
@@ -219,7 +218,6 @@ export function Navbar() {
                             : "text-muted-foreground hover:text-foreground hover:bg-accent"
                         }`}
                       >
-                        <link className={`w-4 h-4 ${isActive ? "text-violet-500" : ""}`} />
                         {link.name}
                       </Link>
                     )

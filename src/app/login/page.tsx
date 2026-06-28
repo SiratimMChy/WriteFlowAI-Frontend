@@ -88,7 +88,7 @@ export default function LoginPage() {
         <div className="relative z-10">
           <Link href="/" className="flex items-center gap-2 inline-flex transition-transform hover:scale-105">
             <Wand2 className="w-8 h-8 text-violet-500" />
-            <span className="text-2xl font-bold tracking-tight">WriteFlow</span>
+            <span className="font-heading text-2xl font-extrabold tracking-tight">WriteFlow</span>
           </Link>
         </div>
 
@@ -98,7 +98,7 @@ export default function LoginPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <h1 className="text-5xl font-bold tracking-tighter leading-[1.1] mb-6">
+            <h1 className="font-heading text-5xl font-extrabold tracking-tighter leading-[1.1] mb-6">
               Welcome back to your <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-blue-400">
                 content powerhouse
@@ -119,7 +119,7 @@ export default function LoginPage() {
               <div className="w-10 h-10 rounded-full bg-violet-500/20 flex items-center justify-center mb-4">
                 <Sparkles className="w-5 h-5 text-violet-400" />
               </div>
-              <h3 className="font-semibold mb-1 text-gray-200">AI Generation</h3>
+              <h3 className="font-heading font-semibold mb-1 text-gray-200">AI Generation</h3>
               <p className="text-sm text-gray-500">Pick up right where you left off.</p>
             </motion.div>
             <motion.div 
@@ -131,7 +131,7 @@ export default function LoginPage() {
               <div className="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center mb-4">
                 <User className="w-5 h-5 text-blue-400" />
               </div>
-              <h3 className="font-semibold mb-1 text-gray-200">Team Collab</h3>
+              <h3 className="font-heading font-semibold mb-1 text-gray-200">Team Collab</h3>
               <p className="text-sm text-gray-500">Your workspace is waiting for you.</p>
             </motion.div>
           </div>
@@ -147,7 +147,7 @@ export default function LoginPage() {
         <div className="absolute top-8 left-8 lg:hidden">
           <Link href="/" className="flex items-center gap-2">
             <Wand2 className="w-6 h-6 text-violet-500" />
-            <span className="font-bold tracking-tight">WriteFlow</span>
+            <span className="font-heading font-extrabold tracking-tight">WriteFlow</span>
           </Link>
         </div>
 
@@ -158,7 +158,7 @@ export default function LoginPage() {
           className="w-full max-w-md space-y-8"
         >
           <div className="text-center space-y-2">
-            <h2 className="text-3xl font-bold tracking-tight">Sign In</h2>
+            <h2 className="font-heading text-3xl font-extrabold tracking-tight">Sign In</h2>
             <p className="text-gray-400">Enter your credentials to access your account</p>
           </div>
 

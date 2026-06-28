@@ -32,6 +32,7 @@ model User {
   documents     Document[]
   reviews       Review[]
   aiUsageLogs   AIUsageLog[]
+  blogPosts     BlogPost[]
 }
 
 model Account {
@@ -145,4 +146,22 @@ model SiteSettings {
   draftAgent      Boolean @default(true)
   rewriteAgent    Boolean @default(true)
   updatedAt       DateTime @updatedAt @default(now())
+}
+
+model BlogPost {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  title       String
+  description String
+  content     String   @db.Text
+  category    String
+  authorId    String
+  readTime    String
+  imageGrad   String?
+  imageUrl    String?
+  published   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  author      User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
 }

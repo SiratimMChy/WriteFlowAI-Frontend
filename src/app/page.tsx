@@ -246,7 +246,7 @@ export default function LandingPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 0.7 }}
-              className="text-5xl sm:text-7xl md:text-8xl lg:text-[6rem] font-extrabold tracking-tighter mb-6 leading-[1.1] max-w-5xl mx-auto"
+              className="font-heading text-5xl sm:text-7xl md:text-8xl lg:text-[6rem] font-extrabold tracking-tighter mb-6 leading-[1.1] max-w-5xl mx-auto"
             >
               The AI Workspace for{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 via-fuchsia-400 to-blue-500 pb-2">
@@ -446,7 +446,7 @@ export default function LandingPage() {
         {/* Features Section */}
         <section id="features" className="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-24">
           <div className="text-center mb-10 sm:mb-16">
-            <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-4">Powerful Features</h2>
+            <h2 className="font-heading text-3xl md:text-5xl font-bold tracking-tight mb-4">Powerful Features</h2>
             <p className="text-gray-400 max-w-2xl mx-auto text-lg">Agents designed specifically for different content workflows.</p>
           </div>
           
@@ -477,7 +477,7 @@ export default function LandingPage() {
           <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
             <div className="text-center mb-20">
               <span className="text-violet-400 font-bold tracking-wider uppercase text-sm mb-4 block">Workflow</span>
-              <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight mb-4">How WriteFlow Works</h2>
+              <h2 className="font-heading text-3xl md:text-5xl font-extrabold tracking-tight mb-4">How WriteFlow Works</h2>
               <p className="text-gray-400 max-w-2xl mx-auto text-lg">Four intelligent steps to perfect content. Zero friction.</p>
             </div>
             
@@ -531,7 +531,7 @@ export default function LandingPage() {
             <div className="flex flex-col items-center text-center mb-12 gap-8">
               <div>
                 <span className="text-fuchsia-400 font-bold tracking-wider uppercase text-sm mb-4 block">Templates</span>
-                <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight mb-4">Start Instantly</h2>
+                <h2 className="font-heading text-3xl md:text-5xl font-extrabold tracking-tight mb-4">Start Instantly</h2>
                 <p className="text-gray-400 text-lg max-w-xl mx-auto">Our most loved AI frameworks, ready to deploy. Optimized for high conversion and engagement.</p>
               </div>
               <div className="flex flex-wrap justify-center gap-2 bg-white/5 p-1 rounded-xl border border-white/10 backdrop-blur-md">
@@ -614,7 +614,7 @@ export default function LandingPage() {
         {/* Testimonials */}
         <section className="bg-white/[0.01] border-y border-white/5 py-16 sm:py-24">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 text-center">
-            <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-12">Loved by creators</h2>
+            <h2 className="font-heading text-3xl md:text-5xl font-bold tracking-tight mb-12">Loved by creators</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
               {[
                 { name: "Sarah Jenkins", role: "Content Marketer", review: "WriteFlow completely changed how our team produces content. We went from publishing 2 blogs a week to 10, without dropping quality." },
@@ -642,7 +642,7 @@ export default function LandingPage() {
         {/* FAQ Section */}
         <section className="max-w-3xl mx-auto px-4 sm:px-6 py-16 sm:py-24">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-4">Frequently Asked Questions</h2>
+            <h2 className="font-heading text-3xl md:text-5xl font-bold tracking-tight mb-4">Frequently Asked Questions</h2>
           </div>
           <div className="space-y-4">
             {[
@@ -678,7 +678,7 @@ export default function LandingPage() {
         {/* Newsletter & CTA Section */}
         <section className="max-w-5xl mx-auto px-4 sm:px-6 py-16 mb-16 text-center">
           <div className="p-8 sm:p-16 rounded-3xl bg-gradient-to-b from-violet-900/20 to-[#050505] border border-violet-500/20 shadow-[0_0_80px_rgba(139,92,246,0.1)]">
-            <h2 className="text-3xl md:text-5xl font-bold mb-6">Stay ahead of the curve</h2>
+            <h2 className="font-heading text-3xl md:text-5xl font-bold mb-6">Stay ahead of the curve</h2>
             <p className="text-lg text-gray-400 mb-8 max-w-xl mx-auto">Subscribe to our newsletter for the latest AI writing tips, prompts, and WriteFlow updates.</p>
             
             <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row items-center gap-3 max-w-md mx-auto mb-12">
@@ -697,7 +697,7 @@ export default function LandingPage() {
 
             <div className="h-px w-full max-w-xs mx-auto bg-gradient-to-r from-transparent via-white/20 to-transparent mb-12" />
 
-            <h3 className="text-2xl font-bold mb-6">Ready to transform your workflow?</h3>
+            <h3 className="font-heading text-2xl font-bold mb-6">Ready to transform your workflow?</h3>
             {status === "authenticated" ? (
               <Link href="/dashboard">
                 <Button size="lg" className="h-14 px-10 bg-violet-600 text-white hover:bg-violet-700 text-lg rounded-full shadow-lg">

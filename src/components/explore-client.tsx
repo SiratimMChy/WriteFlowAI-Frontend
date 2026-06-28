@@ -73,54 +73,59 @@ export function ExploreClient({ initialTemplates, totalPages }: { initialTemplat
             />
           </form>
           
-          <h3 className="font-semibold mb-4 text-white flex items-center gap-2">
+          <h3 className="font-heading font-semibold mb-4 text-white flex items-center gap-2">
             <Filter className="w-4 h-4" /> Filters
           </h3>
           
           {/* Category Filter */}
           <div className="mb-6">
-            <div className="text-sm font-medium text-gray-400 mb-3">Category</div>
-            <div className="space-y-2">
+            <div className="text-sm font-semibold text-gray-400 mb-3 uppercase tracking-wider">Category</div>
+            <div className="flex flex-wrap gap-2">
               {["", "Blog", "Social Media", "Email", "Ad Copy"].map((cat) => (
-                <label key={cat} className="flex items-center gap-2 text-sm cursor-pointer hover:text-white">
-                  <input 
-                    type="radio" 
-                    name="category" 
-                    checked={category === cat}
-                    onChange={() => {
-                      setCategory(cat)
-                      updateUrl({ category: cat })
-                    }}
-                    className="accent-violet-600 bg-black/50"
-                  />
-                  {cat === "" ? "All Categories" : cat}
-                </label>
+                <button
+                  key={cat}
+                  type="button"
+                  onClick={() => {
+                    setCategory(cat)
+                    updateUrl({ category: cat })
+                  }}
+                  className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-300 ${
+                    category === cat
+                      ? "bg-violet-600 text-white shadow-lg shadow-violet-500/20 scale-105"
+                      : "bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white border border-white/5"
+                  }`}
+                >
+                  {cat === "" ? "All" : cat}
+                </button>
               ))}
             </div>
           </div>
 
           {/* Rating Filter */}
           <div className="mb-6">
-            <div className="text-sm font-medium text-gray-400 mb-3">Rating</div>
-            <div className="space-y-2">
+            <div className="text-sm font-semibold text-gray-400 mb-3 uppercase tracking-wider">Rating</div>
+            <div className="flex flex-col gap-2">
               {[
                 { val: "", label: "Any Rating" },
                 { val: "4", label: "4★ & above" },
                 { val: "3", label: "3★ & above" },
               ].map((r) => (
-                <label key={r.val} className="flex items-center gap-2 text-sm cursor-pointer hover:text-white">
-                  <input 
-                    type="radio" 
-                    name="rating" 
-                    checked={rating === r.val}
-                    onChange={() => {
-                      setRating(r.val)
-                      updateUrl({ rating: r.val })
-                    }}
-                    className="accent-violet-600 bg-black/50"
-                  />
-                  {r.label}
-                </label>
+                <button
+                  key={r.val}
+                  type="button"
+                  onClick={() => {
+                    setRating(r.val)
+                    updateUrl({ rating: r.val })
+                  }}
+                  className={`w-full text-left px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 flex items-center justify-between ${
+                    rating === r.val
+                      ? "bg-amber-500/10 text-amber-400 border border-amber-500/30"
+                      : "bg-white/[0.02] text-gray-400 hover:bg-white/[0.05] hover:text-white border border-white/5"
+                  }`}
+                >
+                  <span>{r.label}</span>
+                  {rating === r.val && <div className="w-1.5 h-1.5 rounded-full bg-amber-400" />}
+                </button>
               ))}
             </div>
           </div>
