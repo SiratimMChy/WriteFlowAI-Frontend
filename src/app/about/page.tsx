@@ -262,24 +262,25 @@ export default function AboutPage() {
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-violet-600/20 via-transparent to-transparent pointer-events-none" />
 
             <div className="relative z-10">
-              <h2 className="text-4xl md:text-6xl font-extrabold mb-6 tracking-tight">
-                Build with us.
+              <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6 tracking-tight">
+                Shape the future of <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 via-fuchsia-400 to-purple-400">writing.</span>
               </h2>
-              <p className="text-lg text-gray-400 max-w-xl mx-auto mb-10 leading-relaxed">
-                Join our growing community and help us shape the future of human-AI collaboration.
+              <p className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed font-light">
+                Whether you want to supercharge your content creation or help us build the ultimate AI assistant, there's a place for you here.
               </p>
               
-              <div className="flex flex-col sm:flex-row justify-center gap-4">
+              <div className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-6">
                 <Link href="/register" className="w-full sm:w-auto group relative">
-                  <div className="absolute -inset-0.5 bg-gradient-to-r from-violet-600 to-fuchsia-600 rounded-full blur opacity-50 group-hover:opacity-100 transition duration-500"></div>
-                  <Button size="lg" className="relative w-full sm:w-auto h-14 px-8 bg-black text-white border border-white/10 hover:bg-black/50 text-base font-bold rounded-full transition-all duration-300">
-                    Join the waitlist
-                    <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
+                  <div className="absolute -inset-0.5 bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded-full blur opacity-60 group-hover:opacity-100 transition duration-500"></div>
+                  <Button size="lg" className="relative w-full sm:w-auto h-14 px-8 bg-[#050505] text-white border border-white/10 hover:bg-black/50 text-base font-bold rounded-full transition-all duration-300">
+                    <Sparkles className="mr-2 w-5 h-5 text-violet-400" />
+                    Start Writing for Free
                   </Button>
                 </Link>
-                <Link href="/careers" className="w-full sm:w-auto">
-                  <Button size="lg" variant="ghost" className="w-full sm:w-auto h-14 px-8 text-gray-300 hover:text-white rounded-full font-medium transition-all">
-                    View Open Roles
+                <Link href="/explore" className="w-full sm:w-auto group">
+                  <Button size="lg" variant="outline" className="w-full sm:w-auto h-14 px-8 bg-white/5 border-white/10 hover:bg-white/10 hover:border-white/20 text-white rounded-full font-medium transition-all duration-300 backdrop-blur-sm">
+                    Explore Features
+                    <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform duration-300 text-gray-400 group-hover:text-white" />
                   </Button>
                 </Link>
               </div>
