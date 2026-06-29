@@ -38,7 +38,7 @@ export function AdminSettingsClient({ settings }: { settings: any }) {
     <form onSubmit={handleSave} className="space-y-8 max-w-3xl">
       <section className="bg-white/[0.02] border border-white/5 rounded-2xl p-6">
         <h2 className="text-xl font-bold mb-6 flex items-center gap-2">
-          <Globe className="w-5 h-5 text-blue-400" />
+          <Globe className="w-5 h-5 text-purple-400" />
           General Settings
         </h2>
         <div className="space-y-6">
@@ -65,7 +65,7 @@ export function AdminSettingsClient({ settings }: { settings: any }) {
 
       <section className="bg-white/[0.02] border border-white/5 rounded-2xl p-6">
         <h2 className="text-xl font-bold mb-6 flex items-center gap-2">
-          <Server className="w-5 h-5 text-violet-400" />
+          <Server className="w-5 h-5 text-pink-400" />
           AI Agent Toggles
         </h2>
         <div className="space-y-4">
@@ -104,7 +104,7 @@ export function AdminSettingsClient({ settings }: { settings: any }) {
         </div>
       </section>
 
-      <Button type="submit" disabled={isPending} className="bg-blue-600 hover:bg-blue-700 text-white w-full sm:w-auto h-12 px-8">
+      <Button type="submit" disabled={isPending} className="bg-purple-600 hover:bg-purple-700 text-white w-full sm:w-auto h-12 px-8">
         {isPending ? "Saving Settings..." : "Save Settings"}
       </Button>
     </form>

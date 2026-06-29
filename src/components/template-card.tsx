@@ -42,7 +42,7 @@ export function TemplateCard({ template }: { template: Template }) {
         {template.thumbnail ? (
           <Image src={template.thumbnail} alt={template.title} fill className="object-cover" sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" />
         ) : (
-          <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-violet-500/10 to-blue-500/10">
+          <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-pink-500/10 to-purple-500/10">
             <span className="text-4xl">📄</span>
           </div>
         )}
@@ -55,7 +55,7 @@ export function TemplateCard({ template }: { template: Template }) {
       {/* Content */}
       <div className="p-5 flex flex-col flex-1">
         <div className="mb-3">
-          <span className="text-xs font-medium px-2.5 py-1 bg-violet-500/20 text-violet-300 rounded-md">
+          <span className="text-xs font-medium px-2.5 py-1 bg-pink-500/20 text-pink-300 rounded-md">
             {template.category}
           </span>
         </div>
@@ -71,7 +71,7 @@ export function TemplateCard({ template }: { template: Template }) {
             {template.usageCount.toLocaleString()} uses
           </div>
           <Link href={`/dashboard/draft?templateId=${template.id}`} onClick={handleUseTemplate}>
-            <Button size="sm" className="h-8 text-xs bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:from-violet-500 hover:to-fuchsia-500 text-white rounded-lg transition-all group border-0 shadow-md hover:shadow-lg hover:shadow-violet-500/20">
+            <Button size="sm" className="h-8 text-xs bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-500 hover:to-rose-500 text-white rounded-full transition-all group border-0 shadow-md hover:shadow-lg hover:shadow-pink-500/20">
               Use Template
               <ArrowRight className="ml-1.5 w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
             </Button>

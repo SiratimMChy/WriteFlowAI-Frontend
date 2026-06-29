@@ -41,7 +41,7 @@ export default function AuthCallbackPage() {
   return (
     <div className="min-h-screen bg-[#050505] flex items-center justify-center text-white">
       <div className="flex flex-col items-center gap-4">
-        <div className="w-12 h-12 border-4 border-violet-500 border-t-transparent rounded-full animate-spin" />
+        <div className="w-12 h-12 border-4 border-pink-500 border-t-transparent rounded-full animate-spin" />
         <p className="text-gray-400 text-sm">Signing you in with Google...</p>
       </div>
     </div>

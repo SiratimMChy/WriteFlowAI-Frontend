@@ -39,7 +39,7 @@ export default function DocumentsPage() {
           <p className="text-gray-400 mt-1">Manage and organize all your generated content.</p>
         </div>
         <Link href="/explore">
-          <Button className="bg-violet-600 hover:bg-violet-700 text-white rounded-full px-6">
+          <Button className="bg-pink-600 hover:bg-pink-700 text-white rounded-full px-6">
             <Plus className="w-4 h-4 mr-2" />
             New Document
           </Button>

@@ -54,7 +54,7 @@ export function HistoryClient({ logs, totalPages }: { logs: any[], totalPages: n
             placeholder="Search prompt snippets..." 
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            className="pl-10 bg-white/[0.02] border-white/10 text-white h-12 rounded-xl focus-visible:ring-violet-500"
+            className="pl-10 bg-white/[0.02] border-white/10 text-white h-12 rounded-xl focus-visible:ring-pink-500"
           />
         </form>
         <select 
@@ -63,7 +63,7 @@ export function HistoryClient({ logs, totalPages }: { logs: any[], totalPages: n
             setAgentFilter(e.target.value)
             updateUrl({ agent: e.target.value })
           }}
-          className="h-12 px-4 rounded-xl border border-white/10 bg-white/[0.02] text-gray-300 outline-none focus:border-violet-500 w-full sm:w-auto"
+          className="h-12 px-4 rounded-xl border border-white/10 bg-white/[0.02] text-gray-300 outline-none focus:border-pink-500 w-full sm:w-auto"
         >
           <option value="">All Agents</option>
           <option value="draft">Draft Agent</option>
@@ -116,7 +116,7 @@ export function HistoryClient({ logs, totalPages }: { logs: any[], totalPages: n
           <button 
             disabled={currentPage <= 1 || isPending}
             onClick={() => updateUrl({ page: String(currentPage - 1) })}
-            className="px-3 py-1 rounded-md border border-white/10 bg-white/5 hover:bg-white/10 disabled:opacity-50 text-sm"
+            className="px-3 py-1 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 disabled:opacity-50 text-sm"
           >
             Prev
           </button>
@@ -126,7 +126,7 @@ export function HistoryClient({ logs, totalPages }: { logs: any[], totalPages: n
           <button 
             disabled={currentPage >= totalPages || isPending}
             onClick={() => updateUrl({ page: String(currentPage + 1) })}
-            className="px-3 py-1 rounded-md border border-white/10 bg-white/5 hover:bg-white/10 disabled:opacity-50 text-sm"
+            className="px-3 py-1 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 disabled:opacity-50 text-sm"
           >
             Next
           </button>

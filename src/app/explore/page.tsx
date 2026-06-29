@@ -58,12 +58,12 @@ export default async function ExplorePage({
     const totalPages = Math.ceil(totalCount / ITEMS_PER_PAGE)
 
     return (
-    <div className="min-h-screen bg-[#050505] text-white flex flex-col selection:bg-violet-500/30">
+    <div className="min-h-screen bg-[#050505] text-white flex flex-col selection:bg-pink-500/30">
       <Navbar />
       
       {/* Background gradients */}
       <div className="absolute top-0 inset-x-0 h-[60vh] overflow-hidden pointer-events-none z-0">
-        <div className="absolute top-[-20%] left-[10%] w-[50%] h-[50%] rounded-full bg-violet-600/10 blur-[120px]" />
+        <div className="absolute top-[-20%] left-[10%] w-[50%] h-[50%] rounded-full bg-pink-600/10 blur-[120px]" />
       </div>
 
       <main className="relative z-10 flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-24 sm:py-32">

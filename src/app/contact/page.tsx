@@ -61,11 +61,11 @@ export default function ContactPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#050505] text-white overflow-x-hidden selection:bg-violet-500/30">
+    <div className="min-h-screen bg-[#050505] text-white overflow-x-hidden selection:bg-pink-500/30">
       {/* Background gradients */}
       <div className="absolute top-0 inset-x-0 h-screen overflow-hidden pointer-events-none z-0">
-        <div className="absolute top-[-15%] left-[-10%] w-[55%] h-[55%] rounded-full bg-violet-600/10 blur-[140px]" />
-        <div className="absolute top-[20%] right-[-15%] w-[50%] h-[50%] rounded-full bg-blue-600/10 blur-[140px]" />
+        <div className="absolute top-[-15%] left-[-10%] w-[55%] h-[55%] rounded-full bg-pink-600/10 blur-[140px]" />
+        <div className="absolute top-[20%] right-[-15%] w-[50%] h-[50%] rounded-full bg-purple-600/10 blur-[140px]" />
       </div>
 
       <Navbar />
@@ -86,12 +86,12 @@ export default function ContactPage() {
               
               {/* Header */}
               <div className="space-y-4">
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-violet-500/10 border border-violet-500/20 text-xs font-semibold uppercase tracking-wider text-violet-400">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-pink-500/10 border border-pink-500/20 text-xs font-semibold uppercase tracking-wider text-pink-400">
                   <Sparkles className="w-3.5 h-3.5" /> Support Center
                 </div>
                 <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight leading-tight text-white">
                   Contact Our <br />
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 via-fuchsia-400 to-blue-400">
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-rose-400 to-purple-400">
                     Relations Team
                   </span>
                 </h1>
@@ -103,19 +103,19 @@ export default function ContactPage() {
               {/* Department Timeline */}
               <div className="space-y-8 border-l border-white/10 pl-6 my-auto">
                 <div className="space-y-1 relative">
-                  <div className="absolute -left-[29px] top-1.5 w-2.5 h-2.5 rounded-full bg-violet-500 ring-4 ring-violet-500/20" />
+                  <div className="absolute -left-[29px] top-1.5 w-2.5 h-2.5 rounded-full bg-pink-500 ring-4 ring-pink-500/20" />
                   <h4 className="text-sm font-semibold text-white">Customer Support</h4>
                   <p className="text-[11px] text-gray-400">Account assistance and technical troubleshooting.</p>
-                  <a href="mailto:support@writeflow.ai" className="text-xs text-violet-400 hover:text-violet-300 transition-colors font-medium">
+                  <a href="mailto:support@writeflow.ai" className="text-xs text-pink-400 hover:text-pink-300 transition-colors font-medium">
                     support@writeflow.ai
                   </a>
                 </div>
 
                 <div className="space-y-1 relative">
-                  <div className="absolute -left-[29px] top-1.5 w-2.5 h-2.5 rounded-full bg-fuchsia-500 ring-4 ring-fuchsia-500/20" />
+                  <div className="absolute -left-[29px] top-1.5 w-2.5 h-2.5 rounded-full bg-rose-500 ring-4 ring-rose-500/20" />
                   <h4 className="text-sm font-semibold text-white">General Inquiries</h4>
                   <p className="text-[11px] text-gray-400">Enterprise sales, partnerships, and corporate opportunities.</p>
-                  <a href="mailto:info@writeflow.ai" className="text-xs text-fuchsia-400 hover:text-fuchsia-300 transition-colors font-medium">
+                  <a href="mailto:info@writeflow.ai" className="text-xs text-rose-400 hover:text-rose-300 transition-colors font-medium">
                     info@writeflow.ai
                   </a>
                 </div>
@@ -153,7 +153,7 @@ export default function ContactPage() {
                           placeholder="Sarah Chen"
                           value={name}
                           onChange={(e) => setName(e.target.value)}
-                          className="bg-white/[0.02] border border-white/10 focus:border-violet-500 focus:bg-white/[0.04] transition-all text-white rounded-lg h-10"
+                          className="bg-white/[0.02] border border-white/10 focus:border-pink-500 focus:bg-white/[0.04] transition-all text-white rounded-lg h-10"
                           disabled={isSubmitting}
                         />
                       </div>
@@ -166,7 +166,7 @@ export default function ContactPage() {
                           placeholder="sarah@company.com"
                           value={email}
                           onChange={(e) => setEmail(e.target.value)}
-                          className="bg-white/[0.02] border border-white/10 focus:border-violet-500 focus:bg-white/[0.04] transition-all text-white rounded-lg h-10"
+                          className="bg-white/[0.02] border border-white/10 focus:border-pink-500 focus:bg-white/[0.04] transition-all text-white rounded-lg h-10"
                           disabled={isSubmitting}
                         />
                       </div>
@@ -185,9 +185,9 @@ export default function ContactPage() {
                               key={type}
                               type="button"
                               onClick={() => setSubject(type)}
-                              className={`py-2 rounded-lg text-xs font-bold transition-all duration-300 ${
+                              className={`py-2 rounded-full text-xs font-bold transition-all duration-300 ${
                                 isActive 
-                                  ? "bg-violet-600 text-white shadow-lg" 
+                                  ? "bg-pink-600 text-white shadow-lg" 
                                   : "text-gray-400 hover:text-white hover:bg-white/5"
                               }`}
                               disabled={isSubmitting}
@@ -207,7 +207,7 @@ export default function ContactPage() {
                         placeholder="Provide details about your query..."
                         value={message}
                         onChange={(e) => setMessage(e.target.value)}
-                        className="bg-white/[0.02] border border-white/10 focus:border-violet-500 focus:bg-white/[0.04] transition-all text-white rounded-lg min-h-36 resize-y"
+                        className="bg-white/[0.02] border border-white/10 focus:border-pink-500 focus:bg-white/[0.04] transition-all text-white rounded-lg min-h-36 resize-y"
                         disabled={isSubmitting}
                       />
                     </div>
@@ -215,7 +215,7 @@ export default function ContactPage() {
                     <Button
                       type="submit"
                       disabled={isSubmitting}
-                      className="w-full h-11 bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-700 hover:to-indigo-700 text-white rounded-lg transition-all duration-300 font-semibold flex items-center justify-center gap-2"
+                      className="w-full h-11 bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-700 hover:to-purple-700 text-white rounded-full transition-all duration-300 font-semibold flex items-center justify-center gap-2"
                     >
                       {isSubmitting ? (
                         <>
@@ -245,7 +245,7 @@ export default function ContactPage() {
                       <h2 className="text-2xl font-bold text-white">Message Sent</h2>
                       <p className="text-gray-400 max-w-sm mx-auto text-xs sm:text-sm leading-relaxed">
                         Thank you for reaching out. We have logged your request. Our{" "}
-                        <span className="text-violet-400 font-semibold capitalize">{subject === "support" ? "support" : "general inquiries"}</span> team will respond to your business email within 24 hours.
+                        <span className="text-pink-400 font-semibold capitalize">{subject === "support" ? "support" : "general inquiries"}</span> team will respond to your business email within 24 hours.
                       </p>
                     </div>
 

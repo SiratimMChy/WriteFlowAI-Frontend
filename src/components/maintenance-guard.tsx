@@ -65,7 +65,7 @@ export function MaintenanceGuard({ children }: { children: React.ReactNode }) {
   if (maintenanceMode && !isAdmin && !isLoginPage && !isMaintenancePage && !isExcluded) {
     return (
       <div className="min-h-screen bg-[#050505] flex items-center justify-center text-white">
-        <div className="w-16 h-16 border-4 border-violet-500 border-t-transparent rounded-full animate-spin"></div>
+        <div className="w-16 h-16 border-4 border-pink-500 border-t-transparent rounded-full animate-spin"></div>
       </div>
     )
   }

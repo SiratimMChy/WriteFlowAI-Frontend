@@ -5,61 +5,61 @@
 @layer base {
   :root {
     /* Dark Mode Design Tokens — permanent, theme is forced to dark */
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --radius: 0.5rem;
+    --background: 330 10% 4%;
+    --foreground: 0 0% 98%;
+    --card: 330 10% 8%;
+    --card-foreground: 0 0% 98%;
+    --popover: 330 10% 8%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 330 100% 60%; /* Pink / Magenta matching the new screenshot */
+    --primary-foreground: 0 0% 98%;
+    --secondary: 330 20% 15%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 330 20% 15%;
+    --muted-foreground: 330 5% 65%;
+    --accent: 330 20% 15%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 330 20% 20%;
+    --input: 330 20% 20%;
+    --ring: 330 100% 60%;
+    --radius: 0.75rem;
 
     /* Dark mode surface tokens */
-    --surface: 222 84% 5%;
-    --surface-hover: 217 33% 18%;
-    --text-primary: 210 40% 98%;
-    --text-secondary: 215 20% 65%;
-    --text-muted: 215 16% 47%;
+    --surface: 330 10% 8%;
+    --surface-hover: 330 20% 15%;
+    --text-primary: 0 0% 98%;
+    --text-secondary: 330 5% 75%;
+    --text-muted: 330 5% 55%;
   }
 
   /* Ensure dark class always applies the same tokens */
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --surface: 222 84% 5%;
-    --surface-hover: 217 33% 18%;
-    --text-primary: 210 40% 98%;
-    --text-secondary: 215 20% 65%;
-    --text-muted: 215 16% 47%;
+    --background: 330 10% 4%;
+    --foreground: 0 0% 98%;
+    --card: 330 10% 8%;
+    --card-foreground: 0 0% 98%;
+    --popover: 330 10% 8%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 330 100% 60%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 330 20% 15%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 330 20% 15%;
+    --muted-foreground: 330 5% 65%;
+    --accent: 330 20% 15%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 330 20% 20%;
+    --input: 330 20% 20%;
+    --ring: 330 100% 60%;
+    --surface: 330 10% 8%;
+    --surface-hover: 330 20% 15%;
+    --text-primary: 0 0% 98%;
+    --text-secondary: 330 5% 75%;
+    --text-muted: 330 5% 55%;
   }
 
   * {

@@ -66,7 +66,7 @@ export default function DashboardPage() {
           <p className="text-gray-400 mt-1">Here&apos;s what&apos;s happening in your workspace today.</p>
         </div>
         <Link href="/explore">
-          <Button className="bg-violet-600 hover:bg-violet-700 text-white rounded-full px-6">
+          <Button className="bg-pink-600 hover:bg-pink-700 text-white rounded-full px-6">
             <Plus className="w-4 h-4 mr-2" />
             New Document
           </Button>
@@ -79,13 +79,13 @@ export default function DashboardPage() {
           title="Documents Created"
           value={loading ? "..." : String(stats.totalDocuments)}
           trend={`+${stats.documentsThisWeek} this week`}
-          icon={<FileText className="w-5 h-5 text-violet-400" />}
+          icon={<FileText className="w-5 h-5 text-pink-400" />}
         />
         <StatCard
           title="Words Generated"
           value={loading ? "..." : stats.totalWords.toLocaleString()}
           trend={`+${stats.wordsThisWeek.toLocaleString()} this week`}
-          icon={<Zap className="w-5 h-5 text-blue-400" />}
+          icon={<Zap className="w-5 h-5 text-purple-400" />}
         />
         <StatCard
           title="Time Saved"
@@ -100,7 +100,7 @@ export default function DashboardPage() {
         <div className="lg:col-span-2 space-y-4">
           <div className="flex items-center justify-between">
             <h2 className="text-xl font-bold">Recent Documents</h2>
-            <Link href="/dashboard/documents" className="text-sm text-violet-400 hover:text-violet-300">
+            <Link href="/dashboard/documents" className="text-sm text-pink-400 hover:text-pink-300">
               View all
             </Link>
           </div>
@@ -124,7 +124,7 @@ export default function DashboardPage() {
                       <FileText className="w-5 h-5 text-gray-400" />
                     </div>
                     <div>
-                      <h3 className="font-medium text-gray-200 group-hover:text-violet-300 transition-colors">{doc.title || doc.service || "Untitled"}</h3>
+                      <h3 className="font-medium text-gray-200 group-hover:text-pink-300 transition-colors">{doc.title || doc.service || "Untitled"}</h3>
                       <p className="text-sm text-gray-500">{timeAgo(doc.updatedAt || doc.createdAt)}</p>
                     </div>
                   </div>
@@ -136,7 +136,7 @@ export default function DashboardPage() {
             ) : (
               <div className="p-8 text-center text-gray-500">
                 <p>No documents yet.</p>
-                <Link href="/explore" className="text-violet-400 hover:text-violet-300 text-sm mt-2 inline-block">
+                <Link href="/explore" className="text-pink-400 hover:text-pink-300 text-sm mt-2 inline-block">
                   Generate content using a template →
                 </Link>
               </div>
@@ -152,16 +152,16 @@ export default function DashboardPage() {
               <QuickActionCard
                 title="Blog Post Writer"
                 description="Generate a full SEO-optimized article."
-                icon={<Sparkles className="w-5 h-5 text-violet-400" />}
-                color="violet"
+                icon={<Sparkles className="w-5 h-5 text-pink-400" />}
+                color="pink"
               />
             </Link>
             <Link href="/dashboard/draft" className="block">
               <QuickActionCard
                 title="Social Media Ad"
                 description="Create engaging copy for FB/LinkedIn."
-                icon={<Zap className="w-5 h-5 text-blue-400" />}
-                color="blue"
+                icon={<Zap className="w-5 h-5 text-purple-400" />}
+                color="purple"
               />
             </Link>
             <Link href="/dashboard/rewrite" className="block">
@@ -196,8 +196,8 @@ function StatCard({ title, value, trend, icon }: { title: string, value: string,
 
 function QuickActionCard({ title, description, icon, color }: { title: string, description: string, icon: React.ReactNode, color: string }) {
   const bgColors = {
-    violet: "hover:bg-violet-500/10 hover:border-violet-500/30",
-    blue: "hover:bg-blue-500/10 hover:border-blue-500/30",
+    pink: "hover:bg-pink-500/10 hover:border-pink-500/30",
+    purple: "hover:bg-purple-500/10 hover:border-purple-500/30",
     emerald: "hover:bg-emerald-500/10 hover:border-emerald-500/30",
   }
 

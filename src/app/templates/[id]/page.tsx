@@ -62,7 +62,7 @@ export default async function TemplateDetailsPage({
         {/* Header Section */}
         <div className="max-w-5xl mx-auto px-4 sm:px-6 mb-16">
           <div className="flex items-center gap-3 mb-6">
-            <span className="text-sm font-medium px-3 py-1 bg-violet-500/20 text-violet-300 rounded-md">
+            <span className="text-sm font-medium px-3 py-1 bg-pink-500/20 text-pink-300 rounded-md">
               {template.category}
             </span>
             <div className="flex items-center gap-1.5 text-sm text-yellow-400 font-medium">
@@ -85,7 +85,7 @@ export default async function TemplateDetailsPage({
 
           <div className="flex items-center gap-4">
             <Link href={`/dashboard/draft?templateId=${template.id}`}>
-              <Button size="lg" className="h-14 px-8 bg-violet-600 hover:bg-violet-700 text-white text-base rounded-full shadow-lg">
+              <Button size="lg" className="h-14 px-8 bg-pink-600 hover:bg-pink-700 text-white text-base rounded-full shadow-lg">
                 Use Template
                 <ArrowRight className="ml-2 w-5 h-5" />
               </Button>
@@ -102,7 +102,7 @@ export default async function TemplateDetailsPage({
             {/* Overview */}
             <section>
               <h2 className="text-2xl font-bold mb-6 border-b border-white/10 pb-4">Overview</h2>
-              <div className="prose prose-invert prose-violet max-w-none text-gray-300">
+              <div className="prose prose-invert prose-pink max-w-none text-gray-300">
                 <p>This template is specifically designed to help you generate high-quality {template.category.toLowerCase()} content effortlessly. It utilizes the {template.aiModel} model to ensure the output is engaging, relevant, and optimized for your target audience.</p>
                 <h3>Who is this best suited for?</h3>
                 <ul>
@@ -118,7 +118,7 @@ export default async function TemplateDetailsPage({
               <h2 className="text-2xl font-bold mb-6 border-b border-white/10 pb-4">Sample Output</h2>
               <div className="bg-white/[0.02] border border-white/10 rounded-2xl p-6 md:p-8">
                 <div className="flex items-center gap-2 mb-6">
-                  <div className="w-8 h-8 rounded-full bg-violet-600 flex items-center justify-center">
+                  <div className="w-8 h-8 rounded-full bg-pink-600 flex items-center justify-center">
                     <Sparkles className="w-4 h-4 text-white" />
                   </div>
                   <span className="font-semibold">AI Generated Response</span>
@@ -141,7 +141,7 @@ export default async function TemplateDetailsPage({
                         <div className="flex items-center gap-3">
                           <Avatar className="w-10 h-10 border border-white/10">
                             <AvatarImage src={review.user?.image || ""} />
-                            <AvatarFallback className="bg-violet-900 text-xs">{review.user?.name?.charAt(0) || "U"}</AvatarFallback>
+                            <AvatarFallback className="bg-pink-900 text-xs">{review.user?.name?.charAt(0) || "U"}</AvatarFallback>
                           </Avatar>
                           <div>
                             <div className="font-medium">{review.user?.name || "Anonymous"}</div>
@@ -200,8 +200,8 @@ export default async function TemplateDetailsPage({
             </div>
 
             {/* Prompt Preview */}
-            <div className="bg-gradient-to-b from-violet-900/20 to-black border border-violet-500/20 rounded-2xl p-6 shadow-lg">
-              <h3 className="font-bold text-lg mb-4 text-violet-300">Prompt Structure</h3>
+            <div className="bg-gradient-to-b from-pink-900/20 to-black border border-pink-500/20 rounded-2xl p-6 shadow-lg">
+              <h3 className="font-bold text-lg mb-4 text-pink-300">Prompt Structure</h3>
               <p className="text-sm text-gray-400 leading-relaxed mb-6">
                 This template uses a highly optimized prompt structure to get the best results from the AI.
               </p>

@@ -127,7 +127,7 @@ export function AdminTemplatesClient({ templates, totalPages }: { templates: any
           </div>
           <div className="flex justify-end gap-4">
             <Button type="button" variant="outline" onClick={() => { setIsCreating(false); setEditingTemplate(null); }}>Cancel</Button>
-            <Button type="submit" disabled={isPending} className="bg-blue-600 hover:bg-blue-700">
+            <Button type="submit" disabled={isPending} className="bg-purple-600 hover:bg-purple-700">
               {isPending ? "Saving..." : "Save Template"}
             </Button>
           </div>
@@ -148,7 +148,7 @@ export function AdminTemplatesClient({ templates, totalPages }: { templates: any
             className="pl-10 bg-white/[0.02] border-white/10 text-white h-12 rounded-xl"
           />
         </form>
-        <Button onClick={() => setIsCreating(true)} className="bg-blue-600 hover:bg-blue-700 text-white w-full sm:w-auto h-12">
+        <Button onClick={() => setIsCreating(true)} className="bg-purple-600 hover:bg-purple-700 text-white w-full sm:w-auto h-12">
           <Plus className="w-4 h-4 mr-2" />
           Add Template
         </Button>

@@ -63,7 +63,7 @@ export function ProfileClient({
       {/* Personal Information */}
       <section className="bg-white/[0.02] border border-white/5 rounded-2xl p-6">
         <h2 className="text-xl font-bold mb-6 flex items-center gap-2">
-          <User className="w-5 h-5 text-violet-400" />
+          <User className="w-5 h-5 text-pink-400" />
           Personal Information
         </h2>
         <form onSubmit={handleSave} className="space-y-6">
@@ -71,7 +71,7 @@ export function ProfileClient({
             <div className="flex-shrink-0">
               <Avatar className="w-24 h-24 border border-white/10 text-xl">
                 <AvatarImage src={getAvatarUrl(user?.email, user?.image)} />
-                <AvatarFallback className="bg-violet-900">{user?.name?.charAt(0) || "U"}</AvatarFallback>
+                <AvatarFallback className="bg-pink-900">{user?.name?.charAt(0) || "U"}</AvatarFallback>
               </Avatar>
             </div>
             <div className="flex-1 space-y-4">
@@ -98,7 +98,7 @@ export function ProfileClient({
             <Textarea name="bio" defaultValue={user?.bio || ""} placeholder="Tell us about yourself..." className="bg-black/50 border-white/10 text-white min-h-[100px]" />
           </div>
           
-          <Button type="submit" disabled={isPending} className="bg-violet-600 hover:bg-violet-700 text-white">
+          <Button type="submit" disabled={isPending} className="bg-pink-600 hover:bg-pink-700 text-white">
             {isPending ? "Saving..." : "Save Changes"}
           </Button>
         </form>
@@ -108,15 +108,15 @@ export function ProfileClient({
       <section className="bg-white/[0.02] border border-white/5 rounded-2xl p-6">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
           <h2 className="text-xl font-bold flex items-center gap-2">
-            <CreditCard className="w-5 h-5 text-blue-400" />
+            <CreditCard className="w-5 h-5 text-purple-400" />
             Subscription & Usage
           </h2>
           <div className="flex items-center gap-3">
-            <span className="px-3 py-1 bg-violet-600/20 text-violet-400 border border-violet-500/30 rounded-full text-xs font-semibold uppercase tracking-wider">
+            <span className="px-3 py-1 bg-pink-600/20 text-pink-400 border border-pink-500/30 rounded-full text-xs font-semibold uppercase tracking-wider">
               {user?.plan || "FREE"} Plan
             </span>
             {user?.plan && user.plan !== "free" && (
-              <a href="/api/billing" className="text-xs text-white bg-white/10 hover:bg-white/20 border border-white/20 px-3 py-1.5 rounded-lg transition-colors">
+              <a href="/api/billing" className="text-xs text-white bg-white/10 hover:bg-white/20 border border-white/20 px-3 py-1.5 rounded-full transition-colors">
                 Manage Billing
               </a>
             )}

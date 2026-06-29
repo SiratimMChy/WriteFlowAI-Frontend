@@ -114,7 +114,7 @@ export function WriteReviewForm({ templateId }: { templateId: string }) {
                   placeholder="Share your experience using this template..."
                   value={content}
                   onChange={(e) => setContent(e.target.value)}
-                  className="bg-black/50 border-white/10 text-white placeholder:text-gray-600 min-h-[100px] rounded-xl focus-visible:ring-violet-500"
+                  className="bg-black/50 border-white/10 text-white placeholder:text-gray-600 min-h-[100px] rounded-xl focus-visible:ring-pink-500"
                   disabled={isPending}
                 />
               </div>
@@ -136,7 +136,7 @@ export function WriteReviewForm({ templateId }: { templateId: string }) {
               <Button
                 type="submit"
                 disabled={isPending}
-                className="bg-violet-600 hover:bg-violet-700 text-white h-11 px-6 rounded-xl font-semibold flex items-center gap-2 shadow-[0_0_20px_rgba(139,92,246,0.2)]"
+                className="bg-pink-600 hover:bg-pink-700 text-white h-11 px-6 rounded-full font-semibold flex items-center gap-2 shadow-[0_0_20px_rgba(236,72,153,0.2)]"
               >
                 {isPending ? (
                   <Loader2 className="w-4 h-4 animate-spin" />

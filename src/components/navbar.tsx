@@ -62,7 +62,7 @@ export function Navbar() {
                 className="object-contain" 
               />
             ) : (
-              <Wand2 className="w-6 h-6 text-violet-500" />
+              <Wand2 className="w-6 h-6 text-pink-500" />
             )}
             <span className="text-xl font-bold tracking-tight">{siteName}</span>
           </Link>
@@ -81,13 +81,13 @@ export function Navbar() {
                   href={link.href}
                   className={`relative flex items-center gap-2 transition-colors group ${
                     isActive
-                      ? "text-violet-500"
+                      ? "text-pink-500"
                       : "hover:text-foreground"
                   }`}
                 >
                   {link.name}
                   {isActive && (
-                    <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-violet-500 to-purple-400 rounded-full" />
+                    <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-pink-500 to-purple-400 rounded-full" />
                   )}
                 </Link>
               )
@@ -101,13 +101,13 @@ export function Navbar() {
                   href={link.href}
                   className={`relative transition-colors group ${
                     isActive
-                      ? "text-violet-500"
+                      ? "text-pink-500"
                       : "hover:text-foreground"
                   }`}
                 >
                   {link.name}
                   {isActive && (
-                    <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-violet-500 to-purple-400 rounded-full" />
+                    <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-pink-500 to-purple-400 rounded-full" />
                   )}
                 </Link>
               )
@@ -124,7 +124,7 @@ export function Navbar() {
                 <button className="flex items-center gap-2 rounded-full outline-none ring-offset-background focus:ring-2 focus:ring-ring focus:ring-offset-2">
                   <Avatar className="w-8 h-8 border border-border">
                     <AvatarImage src={getAvatarUrl(user.email, user.image || undefined)} alt={user.name || "User"} />
-                    <AvatarFallback className="bg-violet-600 text-xs text-white">
+                    <AvatarFallback className="bg-pink-600 text-xs text-white">
                       {user.name?.charAt(0) || "U"}
                     </AvatarFallback>
                   </Avatar>
@@ -161,7 +161,7 @@ export function Navbar() {
                 Sign In
               </Link>
               <Link href="/register">
-                <Button className="rounded-full px-5 bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:from-violet-500 hover:to-fuchsia-500 text-white border-0 shadow-md">
+                <Button className="rounded-full px-5 bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-500 hover:to-rose-500 text-white border-0 shadow-md">
                   Get Started
                 </Button>
               </Link>
@@ -172,7 +172,7 @@ export function Navbar() {
         {/* Mobile hamburger */}
         <div className="flex items-center gap-2 md:hidden">
           <button
-            className="p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+            className="p-2 rounded-full text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -195,7 +195,7 @@ export function Navbar() {
                   <div className="px-3 py-2 mb-2 flex items-center gap-3">
                     <Avatar className="w-10 h-10 border border-border">
                       <AvatarImage src={getAvatarUrl(user.email, user.image || undefined)} alt={user.name || "User"} />
-                      <AvatarFallback className="bg-violet-600 text-sm text-white">
+                      <AvatarFallback className="bg-pink-600 text-sm text-white">
                         {user.name?.charAt(0) || "U"}
                       </AvatarFallback>
                     </Avatar>
@@ -212,9 +212,9 @@ export function Navbar() {
                         key={link.href}
                         href={link.href}
                         onClick={() => setMobileMenuOpen(false)}
-                        className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+                        className={`flex items-center gap-3 px-3 py-2.5 rounded-full text-sm font-medium transition-colors ${
                           isActive
-                            ? "bg-violet-500/10 text-violet-500 font-semibold"
+                            ? "bg-pink-500/10 text-pink-500 font-semibold"
                             : "text-muted-foreground hover:text-foreground hover:bg-accent"
                         }`}
                       >
@@ -225,7 +225,7 @@ export function Navbar() {
                   <Link
                     href="/dashboard/profile"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-muted-foreground hover:text-foreground hover:bg-accent text-sm font-medium transition-colors"
+                    className="flex items-center gap-3 px-3 py-2.5 rounded-full text-muted-foreground hover:text-foreground hover:bg-accent text-sm font-medium transition-colors"
                   >
                     <User className="w-4 h-4" />
                     Profile
@@ -235,7 +235,7 @@ export function Navbar() {
                       setMobileMenuOpen(false)
                       logout()
                     }}
-                    className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-destructive hover:text-destructive-foreground hover:bg-destructive/90 text-sm font-medium transition-colors"
+                    className="w-full flex items-center gap-3 px-3 py-2.5 rounded-full text-destructive hover:text-destructive-foreground hover:bg-destructive/90 text-sm font-medium transition-colors"
                   >
                     <LogOut className="w-4 h-4" />
                     Log out
@@ -250,9 +250,9 @@ export function Navbar() {
                         key={link.href}
                         href={link.href}
                         onClick={() => setMobileMenuOpen(false)}
-                        className={`block px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+                        className={`block px-3 py-2.5 rounded-full text-sm font-medium transition-colors ${
                           isActive
-                            ? "bg-violet-500/10 text-violet-500 font-semibold"
+                            ? "bg-pink-500/10 text-pink-500 font-semibold"
                             : "text-muted-foreground hover:text-foreground hover:bg-accent"
                         }`}
                       >
@@ -265,7 +265,7 @@ export function Navbar() {
                       <Button variant="ghost" className="w-full text-muted-foreground hover:text-foreground justify-center">Sign In</Button>
                     </Link>
                     <Link href="/register" onClick={() => setMobileMenuOpen(false)}>
-                      <Button className="w-full rounded-full bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:from-violet-500 hover:to-fuchsia-500 text-white border-0 shadow-md">Get Started</Button>
+                      <Button className="w-full rounded-full bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-500 hover:to-rose-500 text-white border-0 shadow-md">Get Started</Button>
                     </Link>
                   </div>
                 </>

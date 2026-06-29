@@ -43,7 +43,7 @@ export default function AdminSettingsPage() {
     <div className="p-8 max-w-7xl mx-auto space-y-8 h-full">
       <div>
         <h1 className="text-3xl font-bold tracking-tight flex items-center gap-2">
-          <ShieldAlert className="w-8 h-8 text-blue-500" />
+          <ShieldAlert className="w-8 h-8 text-purple-500" />
           Site Settings
         </h1>
         <p className="text-gray-400 mt-1">Configure global platform settings and agent availability.</p>

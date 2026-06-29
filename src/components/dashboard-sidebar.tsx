@@ -108,7 +108,7 @@ export function DashboardSidebar({ isOpen, onClose }: { isOpen?: boolean; onClos
     )}>
       {/* Logo */}
       <Link href="/" className="h-16 flex items-center gap-2 px-6 border-b border-white/5 hover:opacity-80 transition-opacity">
-        <Wand2 className="w-5 h-5 text-violet-500" />
+        <Wand2 className="w-5 h-5 text-pink-500" />
         <span className="font-bold text-white">WriteFlow AI</span>
       </Link>
 
@@ -123,9 +123,9 @@ export function DashboardSidebar({ isOpen, onClose }: { isOpen?: boolean; onClos
                 href={item.href}
                 onClick={onClose}
                 className={cn(
-                  "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all",
+                  "flex items-center gap-3 px-3 py-2.5 rounded-full text-sm font-medium transition-all",
                   isActive
-                    ? "bg-violet-600 text-white shadow-lg shadow-violet-900/30"
+                    ? "bg-pink-600 text-white shadow-lg shadow-pink-900/30"
                     : "text-gray-400 hover:text-white hover:bg-white/5"
                 )}
               >
@@ -151,9 +151,9 @@ export function DashboardSidebar({ isOpen, onClose }: { isOpen?: boolean; onClos
                     href={item.href}
                     onClick={onClose}
                     className={cn(
-                      "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all",
+                      "flex items-center gap-3 px-3 py-2.5 rounded-full text-sm font-medium transition-all",
                       isActive
-                        ? "bg-blue-600 text-white shadow-lg shadow-blue-900/30"
+                        ? "bg-purple-600 text-white shadow-lg shadow-purple-900/30"
                         : "text-gray-400 hover:text-white hover:bg-white/5"
                     )}
                   >
@@ -173,7 +173,7 @@ export function DashboardSidebar({ isOpen, onClose }: { isOpen?: boolean; onClos
         <div className="flex items-center gap-3 mb-3">
           <Avatar className="w-8 h-8 border border-white/10">
             <AvatarImage src={getAvatarUrl(user?.email, user?.image || undefined)} alt={user?.name || "User"} />
-            <AvatarFallback className="bg-violet-600 text-white text-xs">
+            <AvatarFallback className="bg-pink-600 text-white text-xs">
               {initials}
             </AvatarFallback>
           </Avatar>

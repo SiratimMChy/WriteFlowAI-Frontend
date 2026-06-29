@@ -22,14 +22,14 @@ export function AdminAnalytics({
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-6">
           <div className="flex items-center gap-3 text-gray-400 mb-4">
-            <Users className="w-5 h-5 text-blue-400" />
+            <Users className="w-5 h-5 text-purple-400" />
             <h3 className="font-medium text-sm">Total Users</h3>
           </div>
           <div className="text-3xl font-bold">{overview.totalUsers.toLocaleString()}</div>
         </div>
         <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-6">
           <div className="flex items-center gap-3 text-gray-400 mb-4">
-            <FileText className="w-5 h-5 text-violet-400" />
+            <FileText className="w-5 h-5 text-pink-400" />
             <h3 className="font-medium text-sm">Total Documents</h3>
           </div>
           <div className="text-3xl font-bold">{overview.totalDocuments.toLocaleString()}</div>

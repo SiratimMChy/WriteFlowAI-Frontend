@@ -45,13 +45,13 @@ export default function ForgotPasswordPage() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#050505] text-white overflow-x-hidden selection:bg-violet-500/30">
+    <div className="min-h-screen flex flex-col bg-[#050505] text-white overflow-x-hidden selection:bg-pink-500/30">
       <Navbar />
 
       <main className="flex-1 flex flex-col justify-center items-center px-4 py-32 relative">
         {/* Decorative background blobs */}
-        <div className="absolute top-[20%] left-[-10%] w-[50%] h-[50%] rounded-full bg-violet-600/5 blur-[120px] pointer-events-none" />
-        <div className="absolute bottom-[20%] right-[-10%] w-[50%] h-[50%] rounded-full bg-blue-600/5 blur-[120px] pointer-events-none" />
+        <div className="absolute top-[20%] left-[-10%] w-[50%] h-[50%] rounded-full bg-pink-600/5 blur-[120px] pointer-events-none" />
+        <div className="absolute bottom-[20%] right-[-10%] w-[50%] h-[50%] rounded-full bg-purple-600/5 blur-[120px] pointer-events-none" />
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -70,13 +70,13 @@ export default function ForgotPasswordPage() {
             <div className="space-y-2 relative group">
               <label className="text-sm text-gray-300 font-medium">Email Address</label>
               <div className="relative">
-                <Mail className="absolute left-3 top-3 h-5 w-5 text-gray-500 group-focus-within:text-violet-400 transition-colors" />
+                <Mail className="absolute left-3 top-3 h-5 w-5 text-gray-500 group-focus-within:text-pink-400 transition-colors" />
                 <Input
                   type="email"
                   placeholder="name@example.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="pl-10 h-12 bg-black/50 border-white/10 text-white focus-visible:ring-violet-500"
+                  className="pl-10 h-12 bg-black/50 border-white/10 text-white focus-visible:ring-pink-500"
                   required
                   disabled={isLoading}
                 />
@@ -111,7 +111,7 @@ export default function ForgotPasswordPage() {
 
             <Button
               type="submit"
-              className="w-full h-12 rounded-xl bg-violet-600 hover:bg-violet-700 text-white font-semibold transition-all duration-300 shadow-[0_0_20px_rgba(139,92,246,0.2)]"
+              className="w-full h-12 rounded-full bg-pink-600 hover:bg-pink-700 text-white font-semibold transition-all duration-300 shadow-[0_0_20px_rgba(236,72,153,0.2)]"
               disabled={isLoading}
             >
               {isLoading ? (
@@ -127,7 +127,7 @@ export default function ForgotPasswordPage() {
 
           <div className="mt-8 text-center text-sm text-gray-400">
             Remember your password?{" "}
-            <Link href="/login" className="text-violet-400 hover:text-violet-300 transition-colors font-medium">
+            <Link href="/login" className="text-pink-400 hover:text-pink-300 transition-colors font-medium">
               Sign in
             </Link>
           </div>

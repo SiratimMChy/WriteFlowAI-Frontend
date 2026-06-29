@@ -55,7 +55,7 @@ export function DocumentsClient({ documents, totalPages }: { documents: any[], t
             placeholder="Search documents by title..." 
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            className="pl-10 bg-white/[0.02] border-white/10 text-white h-12 rounded-xl focus-visible:ring-violet-500"
+            className="pl-10 bg-white/[0.02] border-white/10 text-white h-12 rounded-xl focus-visible:ring-pink-500"
           />
         </form>
         <select 
@@ -64,7 +64,7 @@ export function DocumentsClient({ documents, totalPages }: { documents: any[], t
             setStatusFilter(e.target.value)
             updateUrl({ status: e.target.value })
           }}
-          className="h-12 px-4 rounded-xl border border-white/10 bg-white/[0.02] text-gray-300 outline-none focus:border-violet-500 w-full sm:w-auto"
+          className="h-12 px-4 rounded-xl border border-white/10 bg-white/[0.02] text-gray-300 outline-none focus:border-pink-500 w-full sm:w-auto"
         >
           <option value="">All Statuses</option>
           <option value="draft">Drafts</option>
@@ -78,12 +78,12 @@ export function DocumentsClient({ documents, totalPages }: { documents: any[], t
           {documents.map((doc, i) => (
             <div key={doc.id} className="p-6 rounded-2xl bg-white/[0.02] border border-white/5 hover:bg-white/[0.04] transition-all group flex flex-col justify-between min-h-[160px] relative overflow-hidden">
               <div className="absolute top-0 right-0 p-4 opacity-0 group-hover:opacity-10 transition-opacity pointer-events-none">
-                <FileText className="w-24 h-24 text-violet-400 -rotate-12 translate-x-4 -translate-y-4" />
+                <FileText className="w-24 h-24 text-pink-400 -rotate-12 translate-x-4 -translate-y-4" />
               </div>
               
               <div className="flex items-start justify-between relative z-10">
                 <div className="w-10 h-10 rounded-xl bg-white/[0.05] flex items-center justify-center">
-                  <FileText className="w-5 h-5 text-violet-400" />
+                  <FileText className="w-5 h-5 text-pink-400" />
                 </div>
                 <div className="flex gap-2">
                   <span className="text-xs font-medium px-2 py-1 bg-white/5 rounded-md text-gray-400 capitalize">
@@ -97,7 +97,7 @@ export function DocumentsClient({ documents, totalPages }: { documents: any[], t
                 </div>
               </div>
               <div className="mt-4 relative z-10">
-                <h3 className="font-semibold text-gray-200 group-hover:text-violet-300 transition-colors line-clamp-1">{doc.title}</h3>
+                <h3 className="font-semibold text-gray-200 group-hover:text-pink-300 transition-colors line-clamp-1">{doc.title}</h3>
                 <div className="flex items-center gap-2 mt-2 text-xs text-gray-500">
                   <span className="capitalize">{doc.type}</span>
                   <span>•</span>
@@ -115,7 +115,7 @@ export function DocumentsClient({ documents, totalPages }: { documents: any[], t
           <h3 className="text-lg font-medium text-gray-300 mb-2">No documents found</h3>
           <p className="text-sm text-gray-500 mb-6">You have no documents yet, or none match your filters.</p>
           <Link href="/explore">
-            <Button className="bg-violet-600 hover:bg-violet-700">Start Writing →</Button>
+            <Button className="bg-pink-600 hover:bg-pink-700">Start Writing →</Button>
           </Link>
         </div>
       )}
@@ -125,7 +125,7 @@ export function DocumentsClient({ documents, totalPages }: { documents: any[], t
           <button 
             disabled={currentPage <= 1 || isPending}
             onClick={() => updateUrl({ page: String(currentPage - 1) })}
-            className="px-3 py-1 rounded-md border border-white/10 bg-white/5 hover:bg-white/10 disabled:opacity-50 text-sm"
+            className="px-3 py-1 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 disabled:opacity-50 text-sm"
           >
             Prev
           </button>
@@ -133,9 +133,9 @@ export function DocumentsClient({ documents, totalPages }: { documents: any[], t
             <button 
               key={i}
               onClick={() => updateUrl({ page: String(i + 1) })}
-              className={`w-8 h-8 rounded-md border text-sm flex items-center justify-center ${
+              className={`w-8 h-8 rounded-full border text-sm flex items-center justify-center ${
                 currentPage === i + 1 
-                  ? "border-violet-500 bg-violet-500/20 text-violet-300" 
+                  ? "border-pink-500 bg-pink-500/20 text-pink-300" 
                   : "border-white/10 bg-white/5 hover:bg-white/10"
               }`}
             >
@@ -145,7 +145,7 @@ export function DocumentsClient({ documents, totalPages }: { documents: any[], t
           <button 
             disabled={currentPage >= totalPages || isPending}
             onClick={() => updateUrl({ page: String(currentPage + 1) })}
-            className="px-3 py-1 rounded-md border border-white/10 bg-white/5 hover:bg-white/10 disabled:opacity-50 text-sm"
+            className="px-3 py-1 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 disabled:opacity-50 text-sm"
           >
             Next
           </button>

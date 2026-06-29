@@ -23,14 +23,14 @@ export default function MaintenancePage() {
   return (
     <div className="min-h-screen bg-[#050505] text-white flex flex-col justify-between p-8 relative overflow-hidden">
       {/* Background gradients */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-violet-900/10 via-[#050505] to-[#050505] pointer-events-none z-0" />
-      <div className="absolute -top-40 -left-40 w-96 h-96 rounded-full bg-violet-600/10 blur-[120px] pointer-events-none" />
-      <div className="absolute -bottom-40 -right-40 w-96 h-96 rounded-full bg-blue-600/10 blur-[120px] pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-pink-900/10 via-[#050505] to-[#050505] pointer-events-none z-0" />
+      <div className="absolute -top-40 -left-40 w-96 h-96 rounded-full bg-pink-600/10 blur-[120px] pointer-events-none" />
+      <div className="absolute -bottom-40 -right-40 w-96 h-96 rounded-full bg-purple-600/10 blur-[120px] pointer-events-none" />
 
       {/* Header */}
       <header className="relative z-10 flex justify-center lg:justify-start">
         <div className="flex items-center gap-2">
-          <Wand2 className="w-8 h-8 text-violet-500 animate-pulse" />
+          <Wand2 className="w-8 h-8 text-pink-500 animate-pulse" />
           <span className="text-2xl font-bold tracking-tight">{siteName}</span>
         </div>
       </header>
@@ -38,9 +38,9 @@ export default function MaintenancePage() {
       {/* Main Content */}
       <main className="relative z-10 max-w-2xl mx-auto text-center flex flex-col items-center justify-center my-auto space-y-8">
         <div className="relative">
-          <div className="absolute inset-0 bg-violet-500/20 rounded-full blur-2xl animate-pulse" />
+          <div className="absolute inset-0 bg-pink-500/20 rounded-full blur-2xl animate-pulse" />
           <div className="w-24 h-24 rounded-3xl bg-white/[0.02] border border-white/10 flex items-center justify-center relative z-10 shadow-2xl backdrop-blur-xl">
-            <Construction className="w-12 h-12 text-violet-400" />
+            <Construction className="w-12 h-12 text-pink-400" />
           </div>
         </div>
 
@@ -60,7 +60,7 @@ export default function MaintenancePage() {
 
         <div className="flex flex-col sm:flex-row items-center gap-4">
           <Link href="/login">
-            <Button variant="outline" className="h-12 border-white/10 text-gray-300 hover:text-white rounded-xl bg-white/[0.02]">
+            <Button variant="outline" className="h-12 border-white/10 text-gray-300 hover:text-white rounded-full bg-white/[0.02]">
               Admin Login Bypass
               <ArrowRight className="w-4 h-4 ml-2" />
             </Button>

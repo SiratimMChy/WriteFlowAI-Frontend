@@ -79,7 +79,7 @@ export function DraftAgentClient() {
       <div className="w-full lg:w-[400px] flex-shrink-0 flex flex-col h-full overflow-hidden">
         <div className="mb-6 shrink-0">
           <h1 className="text-2xl font-bold tracking-tight flex items-center gap-2">
-            <Sparkles className="w-6 h-6 text-violet-500" />
+            <Sparkles className="w-6 h-6 text-pink-500" />
             Draft Agent
           </h1>
           <p className="text-gray-400 text-sm mt-1">Configure your AI writing assistant.</p>
@@ -93,7 +93,7 @@ export function DraftAgentClient() {
                 value={input}
                 onChange={handleInputChange}
                 required
-                className="w-full h-32 p-3 rounded-xl bg-black border border-white/10 text-white placeholder:text-gray-600 focus:outline-none focus:ring-2 focus:ring-violet-500 resize-none"
+                className="w-full h-32 p-3 rounded-xl bg-black border border-white/10 text-white placeholder:text-gray-600 focus:outline-none focus:ring-2 focus:ring-pink-500 resize-none"
                 placeholder="What do you want to write about?"
               />
             </div>
@@ -103,7 +103,7 @@ export function DraftAgentClient() {
               <select 
                 value={tone}
                 onChange={(e) => setTone(e.target.value)}
-                className="w-full h-12 px-3 rounded-xl bg-black border border-white/10 text-white focus:outline-none focus:ring-2 focus:ring-violet-500 appearance-none outline-none"
+                className="w-full h-12 px-3 rounded-xl bg-black border border-white/10 text-white focus:outline-none focus:ring-2 focus:ring-pink-500 appearance-none outline-none"
               >
                 <option>Professional</option>
                 <option>Casual</option>
@@ -119,11 +119,11 @@ export function DraftAgentClient() {
                 value={keywords}
                 onChange={(e) => setKeywords(e.target.value)}
                 placeholder="e.g. AI, writing, productivity" 
-                className="bg-black border-white/10 h-12 rounded-xl focus-visible:ring-violet-500"
+                className="bg-black border-white/10 h-12 rounded-xl focus-visible:ring-pink-500"
               />
             </div>
 
-            <Button disabled={isLoading} type="submit" className="w-full h-12 bg-violet-600 hover:bg-violet-700 text-white rounded-xl shadow-[0_0_20px_rgba(139,92,246,0.2)] hover:shadow-[0_0_30px_rgba(139,92,246,0.4)] transition-all">
+            <Button disabled={isLoading} type="submit" className="w-full h-12 bg-pink-600 hover:bg-pink-700 text-white rounded-full shadow-[0_0_20px_rgba(236,72,153,0.2)] hover:shadow-[0_0_30px_rgba(236,72,153,0.4)] transition-all">
               {isLoading ? <Loader2 className="w-5 h-5 animate-spin" /> : (
                 <>
                   Generate Content
@@ -158,13 +158,13 @@ export function DraftAgentClient() {
         
         <div className="flex-1 p-8 overflow-y-auto bg-black/20">
           {completion ? (
-            <div className="prose prose-invert prose-violet max-w-none whitespace-pre-wrap font-sans leading-relaxed">
+            <div className="prose prose-invert prose-pink max-w-none whitespace-pre-wrap font-sans leading-relaxed">
               {completion}
             </div>
           ) : (
             <div className="max-w-2xl mx-auto text-gray-500 text-center flex flex-col items-center justify-center h-full space-y-4">
               <div className="w-16 h-16 rounded-2xl bg-white/[0.02] border border-white/5 flex items-center justify-center">
-                <Sparkles className="w-8 h-8 text-violet-500/50" />
+                <Sparkles className="w-8 h-8 text-pink-500/50" />
               </div>
               <p>Your generated content will appear here.</p>
             </div>
@@ -190,8 +190,8 @@ export function DraftAgentClient() {
               </button>
               
               <div className="p-8 flex flex-col items-center text-center">
-                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-violet-600/20 to-fuchsia-600/20 border border-white/10 flex items-center justify-center mb-6 shadow-lg shadow-violet-500/20">
-                  <Lock className="w-8 h-8 text-violet-400" />
+                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-pink-600/20 to-rose-600/20 border border-white/10 flex items-center justify-center mb-6 shadow-lg shadow-pink-500/20">
+                  <Lock className="w-8 h-8 text-pink-400" />
                 </div>
                 
                 <h3 className="text-2xl font-bold text-white mb-3">Limit Reached!</h3>
@@ -200,7 +200,7 @@ export function DraftAgentClient() {
                 </p>
                 
                 <Link href="/dashboard/profile" className="w-full">
-                  <Button className="w-full h-12 bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:opacity-90 text-white rounded-xl font-medium shadow-[0_0_20px_rgba(139,92,246,0.3)] transition-all">
+                  <Button className="w-full h-12 bg-gradient-to-r from-pink-600 to-rose-600 hover:opacity-90 text-white rounded-full font-medium shadow-[0_0_20px_rgba(236,72,153,0.3)] transition-all">
                     Upgrade to Pro
                   </Button>
                 </Link>

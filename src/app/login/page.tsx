@@ -79,15 +79,15 @@ export default function LoginPage() {
 
 
   return (
-    <div className="min-h-screen w-full flex bg-[#050505] text-white selection:bg-violet-500/30">
+    <div className="min-h-screen w-full flex bg-[#050505] text-white selection:bg-pink-500/30">
       {/* Left Panel - Visuals */}
       <div className="hidden lg:flex flex-1 relative overflow-hidden bg-black flex-col justify-between p-12 border-r border-white/5">
-        <div className="absolute top-[-20%] left-[-10%] w-[70%] h-[70%] rounded-full bg-violet-600/10 blur-[120px] mix-blend-screen pointer-events-none" />
-        <div className="absolute bottom-[-20%] right-[-10%] w-[70%] h-[70%] rounded-full bg-blue-600/10 blur-[120px] mix-blend-screen pointer-events-none" />
+        <div className="absolute top-[-20%] left-[-10%] w-[70%] h-[70%] rounded-full bg-pink-600/10 blur-[120px] mix-blend-screen pointer-events-none" />
+        <div className="absolute bottom-[-20%] right-[-10%] w-[70%] h-[70%] rounded-full bg-purple-600/10 blur-[120px] mix-blend-screen pointer-events-none" />
         
         <div className="relative z-10">
           <Link href="/" className="flex items-center gap-2 inline-flex transition-transform hover:scale-105">
-            <Wand2 className="w-8 h-8 text-violet-500" />
+            <Wand2 className="w-8 h-8 text-pink-500" />
             <span className="font-heading text-2xl font-extrabold tracking-tight">WriteFlow</span>
           </Link>
         </div>
@@ -100,7 +100,7 @@ export default function LoginPage() {
           >
             <h1 className="font-heading text-5xl font-extrabold tracking-tighter leading-[1.1] mb-6">
               Welcome back to your <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-blue-400">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-400">
                 content powerhouse
               </span>
             </h1>
@@ -116,8 +116,8 @@ export default function LoginPage() {
               transition={{ duration: 0.8, delay: 0.4 }}
               className="h-full p-6 rounded-2xl bg-white/[0.02] border border-white/5 backdrop-blur-sm hover:bg-white/[0.04] transition-colors"
             >
-              <div className="w-10 h-10 rounded-full bg-violet-500/20 flex items-center justify-center mb-4">
-                <Sparkles className="w-5 h-5 text-violet-400" />
+              <div className="w-10 h-10 rounded-full bg-pink-500/20 flex items-center justify-center mb-4">
+                <Sparkles className="w-5 h-5 text-pink-400" />
               </div>
               <h3 className="font-heading font-semibold mb-1 text-gray-200">AI Generation</h3>
               <p className="text-sm text-gray-500">Pick up right where you left off.</p>
@@ -128,8 +128,8 @@ export default function LoginPage() {
               transition={{ duration: 0.8, delay: 0.6 }}
               className="h-full p-6 rounded-2xl bg-white/[0.02] border border-white/5 backdrop-blur-sm hover:bg-white/[0.04] transition-colors"
             >
-              <div className="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center mb-4">
-                <User className="w-5 h-5 text-blue-400" />
+              <div className="w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center mb-4">
+                <User className="w-5 h-5 text-purple-400" />
               </div>
               <h3 className="font-heading font-semibold mb-1 text-gray-200">Team Collab</h3>
               <p className="text-sm text-gray-500">Your workspace is waiting for you.</p>
@@ -146,7 +146,7 @@ export default function LoginPage() {
       <div className="flex-1 flex flex-col justify-center items-center p-8 relative">
         <div className="absolute top-8 left-8 lg:hidden">
           <Link href="/" className="flex items-center gap-2">
-            <Wand2 className="w-6 h-6 text-violet-500" />
+            <Wand2 className="w-6 h-6 text-pink-500" />
             <span className="font-heading font-extrabold tracking-tight">WriteFlow</span>
           </Link>
         </div>
@@ -167,14 +167,14 @@ export default function LoginPage() {
               <div className="space-y-2 relative group">
                 <Label htmlFor="email" className="text-gray-300">Email</Label>
                 <div className="relative">
-                  <Mail className="absolute left-3 top-3 h-5 w-5 text-gray-500 group-focus-within:text-violet-400 transition-colors" />
+                  <Mail className="absolute left-3 top-3 h-5 w-5 text-gray-500 group-focus-within:text-pink-400 transition-colors" />
                   <Input 
                     id="email" 
                     type="email" 
                     placeholder="name@example.com" 
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="pl-10 bg-white/[0.03] border-white/10 text-white placeholder:text-gray-600 focus-visible:ring-violet-500 focus-visible:bg-white/[0.05] h-12 transition-all"
+                    className="pl-10 bg-white/[0.03] border-white/10 text-white placeholder:text-gray-600 focus-visible:ring-pink-500 focus-visible:bg-white/[0.05] h-12 transition-all"
                     required
                   />
                 </div>
@@ -183,19 +183,19 @@ export default function LoginPage() {
               <div className="space-y-2 relative group">
                 <div className="flex items-center justify-between">
                   <Label htmlFor="password" className="text-gray-300">Password</Label>
-                  <Link href="/forgot-password" className="text-sm text-violet-400 hover:text-violet-300 transition-colors">
+                  <Link href="/forgot-password" className="text-sm text-pink-400 hover:text-pink-300 transition-colors">
                     Forgot password?
                   </Link>
                 </div>
                 <div className="relative">
-                  <Lock className="absolute left-3 top-3 h-5 w-5 text-gray-500 group-focus-within:text-violet-400 transition-colors" />
+                  <Lock className="absolute left-3 top-3 h-5 w-5 text-gray-500 group-focus-within:text-pink-400 transition-colors" />
                   <Input 
                     id="password" 
                     type="password" 
                     placeholder="••••••••"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="pl-10 bg-white/[0.03] border-white/10 text-white placeholder:text-gray-600 focus-visible:ring-violet-500 focus-visible:bg-white/[0.05] h-12 transition-all"
+                    className="pl-10 bg-white/[0.03] border-white/10 text-white placeholder:text-gray-600 focus-visible:ring-pink-500 focus-visible:bg-white/[0.05] h-12 transition-all"
                     required
                   />
                 </div>
@@ -214,7 +214,7 @@ export default function LoginPage() {
 
             <Button 
               type="submit" 
-              className="w-full bg-violet-600 hover:bg-violet-700 text-white h-12 text-lg rounded-xl shadow-[0_0_20px_rgba(139,92,246,0.2)] hover:shadow-[0_0_30px_rgba(139,92,246,0.4)] transition-all duration-300" 
+              className="w-full bg-pink-600 hover:bg-pink-700 text-white h-12 text-lg rounded-full shadow-[0_0_20px_rgba(236,72,153,0.2)] hover:shadow-[0_0_30px_rgba(236,72,153,0.4)] transition-all duration-300" 
               disabled={isLoading}
             >
               {isLoading ? (
@@ -243,7 +243,7 @@ export default function LoginPage() {
             {/* Google Sign In */}
             <Button
               variant="outline"
-              className="w-full h-12 bg-white/[0.02] border-white/10 text-gray-300 hover:bg-white/[0.05] hover:text-white rounded-xl transition-all"
+              className="w-full h-12 bg-white/[0.02] border-white/10 text-gray-300 hover:bg-white/[0.05] hover:text-white rounded-full transition-all"
               onClick={loginWithGoogle}
               type="button"
             >
@@ -259,7 +259,7 @@ export default function LoginPage() {
             <div className="grid grid-cols-2 gap-4">
               <Button 
                 variant="outline" 
-                className="h-12 bg-violet-500/10 border-violet-500/30 text-violet-300 hover:bg-violet-500/20 hover:text-white rounded-xl transition-all"
+                className="h-12 bg-pink-500/10 border-pink-500/30 text-pink-300 hover:bg-pink-500/20 hover:text-white rounded-full transition-all"
                 onClick={() => loginAsDemo("user")}
                 type="button"
                 disabled={isLoading}
@@ -269,7 +269,7 @@ export default function LoginPage() {
               </Button>
               <Button 
                 variant="outline" 
-                className="h-12 bg-blue-500/10 border-blue-500/30 text-blue-300 hover:bg-blue-500/20 hover:text-white rounded-xl transition-all"
+                className="h-12 bg-purple-500/10 border-purple-500/30 text-purple-300 hover:bg-purple-500/20 hover:text-white rounded-full transition-all"
                 onClick={() => loginAsDemo("admin")}
                 type="button"
                 disabled={isLoading}
@@ -282,7 +282,7 @@ export default function LoginPage() {
 
           <p className="text-center text-sm text-gray-400 mt-8">
             Don't have an account?{" "}
-            <Link href="/register" className="text-violet-400 hover:text-violet-300 font-medium transition-colors">
+            <Link href="/register" className="text-pink-400 hover:text-pink-300 font-medium transition-colors">
               Sign up for free
             </Link>
           </p>

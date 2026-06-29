@@ -41,7 +41,7 @@ export default function AdminUsersPage() {
     <div className="p-8 max-w-7xl mx-auto space-y-8 h-full">
       <div>
         <h1 className="text-3xl font-bold tracking-tight flex items-center gap-2">
-          <Users className="w-8 h-8 text-blue-500" />
+          <Users className="w-8 h-8 text-purple-500" />
           Manage Users
         </h1>
         <p className="text-gray-400 mt-1">View, edit, and manage all users on the platform.</p>

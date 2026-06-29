@@ -109,7 +109,7 @@ export function RewriteAgentClient() {
                     type="button"
                     onClick={() => setAction(a.id)}
                     className={cn(
-                      "flex items-center gap-2 p-3 rounded-xl border text-sm font-medium transition-all text-left",
+                      "flex items-center gap-2 p-3 rounded-full border text-sm font-medium transition-all text-left",
                       action === a.id 
                         ? "bg-emerald-500/20 border-emerald-500/50 text-emerald-300" 
                         : "bg-black border-white/10 text-gray-400 hover:text-white hover:border-white/30"
@@ -135,7 +135,7 @@ export function RewriteAgentClient() {
               </select>
             </div>
 
-            <Button disabled={isLoading || !input} type="submit" className="w-full h-12 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl shadow-[0_0_20px_rgba(16,185,129,0.2)] hover:shadow-[0_0_30px_rgba(16,185,129,0.4)] transition-all">
+            <Button disabled={isLoading || !input} type="submit" className="w-full h-12 bg-pink-600 hover:bg-pink-700 text-white rounded-full shadow-[0_0_20px_rgba(236,72,153,0.2)] hover:shadow-[0_0_30px_rgba(236,72,153,0.4)] transition-all">
               {isLoading ? <Loader2 className="w-5 h-5 animate-spin" /> : (
                 <>
                   Rewrite Text
@@ -202,8 +202,8 @@ export function RewriteAgentClient() {
               </button>
               
               <div className="p-8 flex flex-col items-center text-center">
-                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-violet-600/20 to-fuchsia-600/20 border border-white/10 flex items-center justify-center mb-6 shadow-lg shadow-violet-500/20">
-                  <Lock className="w-8 h-8 text-violet-400" />
+                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-pink-600/20 to-rose-600/20 border border-white/10 flex items-center justify-center mb-6 shadow-lg shadow-pink-500/20">
+                  <Lock className="w-8 h-8 text-pink-400" />
                 </div>
                 
                 <h3 className="text-2xl font-bold text-white mb-3">Limit Reached!</h3>
@@ -212,7 +212,7 @@ export function RewriteAgentClient() {
                 </p>
                 
                 <Link href="/dashboard/profile" className="w-full">
-                  <Button className="w-full h-12 bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:opacity-90 text-white rounded-xl font-medium shadow-[0_0_20px_rgba(139,92,246,0.3)] transition-all">
+                  <Button className="w-full h-12 bg-gradient-to-r from-pink-600 to-rose-600 hover:opacity-90 text-white rounded-full font-medium shadow-[0_0_20px_rgba(236,72,153,0.3)] transition-all">
                     Upgrade to Pro
                   </Button>
                 </Link>

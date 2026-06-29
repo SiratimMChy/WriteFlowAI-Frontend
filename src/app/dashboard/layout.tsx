@@ -26,7 +26,7 @@ export default function DashboardLayout({
   if (loading) {
     return (
       <div className="min-h-screen bg-[#050505] flex items-center justify-center">
-        <div className="w-8 h-8 rounded-full border-2 border-violet-500 border-t-transparent animate-spin" />
+        <div className="w-8 h-8 rounded-full border-2 border-pink-500 border-t-transparent animate-spin" />
       </div>
     )
   }
@@ -38,7 +38,7 @@ export default function DashboardLayout({
       {/* Mobile Top Header */}
       <div className="md:hidden h-16 border-b border-white/5 px-6 flex items-center justify-between bg-[#0a0a0a] shrink-0 sticky top-0 z-30">
         <Link href="/" className="font-bold text-white flex items-center gap-2 hover:opacity-80 transition-opacity">
-          <span className="w-2.5 h-2.5 rounded-full bg-violet-500 animate-pulse" />
+          <span className="w-2.5 h-2.5 rounded-full bg-pink-500 animate-pulse" />
           WriteFlow AI
         </Link>
         <Button

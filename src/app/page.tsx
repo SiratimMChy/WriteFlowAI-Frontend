@@ -206,13 +206,13 @@ export default function LandingPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#050505] text-white overflow-x-hidden selection:bg-violet-500/30">
+    <div className="min-h-screen bg-[#050505] text-white overflow-x-hidden selection:bg-pink-500/30">
       {/* Background gradients */}
       <div className="absolute top-0 inset-x-0 h-[120vh] overflow-hidden pointer-events-none z-0">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-violet-900/20 via-[#050505] to-[#050505]" />
-        <div className="absolute top-[-20%] left-[-10%] w-[60%] h-[60%] rounded-full bg-violet-600/20 blur-[140px]" />
-        <div className="absolute top-[10%] right-[-15%] w-[60%] h-[60%] rounded-full bg-blue-600/15 blur-[140px]" />
-        <div className="absolute top-[30%] left-[20%] w-[40%] h-[40%] rounded-full bg-fuchsia-600/10 blur-[120px]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-pink-900/20 via-[#050505] to-[#050505]" />
+        <div className="absolute top-[-20%] left-[-10%] w-[60%] h-[60%] rounded-full bg-pink-600/20 blur-[140px]" />
+        <div className="absolute top-[10%] right-[-15%] w-[60%] h-[60%] rounded-full bg-purple-600/15 blur-[140px]" />
+        <div className="absolute top-[30%] left-[20%] w-[40%] h-[40%] rounded-full bg-rose-600/10 blur-[120px]" />
       </div>
 
       <Navbar />
@@ -231,14 +231,14 @@ export default function LandingPage() {
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.2, type: "spring" }}
-              className="group inline-flex items-center gap-3 px-5 py-2 rounded-full bg-[#111] border border-white/10 text-sm text-gray-300 mb-8 cursor-pointer hover:bg-white/5 hover:border-violet-500/50 transition-all shadow-xl shadow-black/50 mx-auto"
+              className="group inline-flex items-center gap-3 px-5 py-2 rounded-full bg-[#111] border border-white/10 text-sm text-gray-300 mb-8 cursor-pointer hover:bg-white/5 hover:border-pink-500/50 transition-all shadow-xl shadow-black/50 mx-auto"
             >
               <span className="relative flex h-2.5 w-2.5">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-violet-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-violet-500 shadow-[0_0_10px_rgba(139,92,246,0.8)]"></span>
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-pink-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-pink-500 shadow-[0_0_10px_rgba(236,72,153,0.8)]"></span>
               </span>
               <span className="font-medium">WriteFlow AI 2.0 is live</span>
-              <ArrowRight className="w-4 h-4 text-gray-500 group-hover:text-violet-400 group-hover:translate-x-1 transition-all" />
+              <ArrowRight className="w-4 h-4 text-gray-500 group-hover:text-pink-400 group-hover:translate-x-1 transition-all" />
             </motion.div>
 
             {/* Headline */}
@@ -249,7 +249,7 @@ export default function LandingPage() {
               className="font-heading text-5xl sm:text-7xl md:text-8xl lg:text-[6rem] font-extrabold tracking-tighter mb-6 leading-[1.1] max-w-5xl mx-auto"
             >
               The AI Workspace for{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 via-fuchsia-400 to-blue-500 pb-2">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-rose-400 to-purple-500 pb-2">
                 Limitless Creation
               </span>
             </motion.h1>
@@ -271,16 +271,16 @@ export default function LandingPage() {
             >
               {status === "authenticated" ? (
                 <Link href="/dashboard" className="w-full sm:w-auto group relative">
-                  <div className="absolute -inset-0.5 bg-gradient-to-r from-violet-600 to-fuchsia-600 rounded-full blur opacity-30 group-hover:opacity-60 transition duration-300"></div>
-                  <Button size="lg" className="relative w-full sm:w-auto h-14 px-8 bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:from-violet-500 hover:to-fuchsia-500 text-white text-base font-bold rounded-full shadow-lg hover:shadow-xl hover:shadow-violet-500/5 transition-all duration-300 border-0">
+                  <div className="absolute -inset-0.5 bg-gradient-to-r from-pink-600 to-rose-600 rounded-full blur opacity-30 group-hover:opacity-60 transition duration-300"></div>
+                  <Button size="lg" className="relative w-full sm:w-auto h-14 px-8 bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-500 hover:to-rose-500 text-white text-base font-bold rounded-full shadow-lg hover:shadow-xl hover:shadow-pink-500/5 transition-all duration-300 border-0">
                     Go to Dashboard
                     <ArrowRight className="ml-2 w-5 h-5 text-white/80 group-hover:translate-x-1 transition-transform duration-300" />
                   </Button>
                 </Link>
               ) : (
                 <Link href="/register" className="w-full sm:w-auto group relative">
-                  <div className="absolute -inset-0.5 bg-gradient-to-r from-violet-600 to-fuchsia-600 rounded-full blur opacity-30 group-hover:opacity-60 transition duration-300"></div>
-                  <Button size="lg" className="relative w-full sm:w-auto h-14 px-8 bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:from-violet-500 hover:to-fuchsia-500 text-white text-base font-bold rounded-full shadow-lg hover:shadow-xl hover:shadow-violet-500/5 transition-all duration-300 border-0">
+                  <div className="absolute -inset-0.5 bg-gradient-to-r from-pink-600 to-rose-600 rounded-full blur opacity-30 group-hover:opacity-60 transition duration-300"></div>
+                  <Button size="lg" className="relative w-full sm:w-auto h-14 px-8 bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-500 hover:to-rose-500 text-white text-base font-bold rounded-full shadow-lg hover:shadow-xl hover:shadow-pink-500/5 transition-all duration-300 border-0">
                     Start Writing Free
                     <Sparkles className="ml-2 w-5 h-5 text-white/80 group-hover:rotate-12 transition-transform duration-300" />
                   </Button>
@@ -300,7 +300,7 @@ export default function LandingPage() {
               transition={{ delay: 0.7, duration: 1, type: "spring", bounce: 0.2 }}
               className="relative w-full max-w-5xl mx-auto hidden md:block"
             >
-              <div className="absolute -inset-1 bg-gradient-to-t from-violet-900/50 via-transparent to-transparent blur-3xl" />
+              <div className="absolute -inset-1 bg-gradient-to-t from-pink-900/50 via-transparent to-transparent blur-3xl" />
               <motion.div 
                 animate={{ y: [0, -15, 0] }}
                 transition={{ repeat: Infinity, duration: 8, ease: "easeInOut" }}
@@ -314,7 +314,7 @@ export default function LandingPage() {
                     <div className="w-3 h-3 rounded-full bg-[#27c93f]" />
                   </div>
                   <div className="flex items-center gap-2 px-3 py-1 bg-white/5 rounded-md border border-white/5 text-xs text-gray-400 font-mono">
-                    <Wand2 className="w-3 h-3 text-violet-400" />
+                    <Wand2 className="w-3 h-3 text-pink-400" />
                     app.writeflow.ai/draft
                   </div>
                   <div className="w-16" /> {/* Spacer for balance */}
@@ -327,7 +327,7 @@ export default function LandingPage() {
                     <div className="space-y-4 font-sans">
                       {/* Brand Title / Header */}
                       <div className="flex items-center gap-2 px-2 py-1.5 rounded-lg bg-white/[0.03] border border-white/5">
-                        <Wand2 className="w-4 h-4 text-violet-400" />
+                        <Wand2 className="w-4 h-4 text-pink-400" />
                         <span className="text-xs font-bold text-white tracking-wider">WriteFlow AI</span>
                       </div>
                       
@@ -337,7 +337,7 @@ export default function LandingPage() {
                           <LayoutTemplate className="w-3.5 h-3.5" />
                           Overview
                         </div>
-                        <div className="flex items-center gap-2.5 px-2 py-2 rounded-lg text-[10px] font-medium text-violet-400 bg-violet-500/10 border-l-2 border-violet-500">
+                        <div className="flex items-center gap-2.5 px-2 py-2 rounded-lg text-[10px] font-medium text-pink-400 bg-pink-500/10 border-l-2 border-pink-500">
                           <Wand2 className="w-3.5 h-3.5" />
                           Draft Agent
                         </div>
@@ -357,7 +357,7 @@ export default function LandingPage() {
                     </div>
 
                     <div className="flex items-center gap-2 px-2 py-1 border-t border-white/5 pt-3 font-sans">
-                      <div className="w-6 h-6 rounded-full bg-violet-600 flex items-center justify-center text-[10px] font-bold">U</div>
+                      <div className="w-6 h-6 rounded-full bg-pink-600 flex items-center justify-center text-[10px] font-bold">U</div>
                       <div className="flex flex-col min-w-0">
                         <span className="text-[10px] font-medium text-white truncate">Demo Creator</span>
                         <span className="text-[8px] text-gray-500 truncate">Online</span>
@@ -367,7 +367,7 @@ export default function LandingPage() {
                   
                   {/* Fake Editor */}
                   <div className="col-span-9 p-6 flex flex-col relative overflow-hidden bg-black/40">
-                    <div className="absolute top-0 right-0 w-64 h-64 bg-violet-600/5 blur-[80px] rounded-full pointer-events-none" />
+                    <div className="absolute top-0 right-0 w-64 h-64 bg-pink-600/5 blur-[80px] rounded-full pointer-events-none" />
                     
                     {/* Fake Editor Tabs Bar */}
                     <div className="flex items-center justify-between mb-4 border-b border-white/5 pb-3 font-sans">
@@ -380,8 +380,8 @@ export default function LandingPage() {
                       {/* Generation Status Badge */}
                       <div className="flex items-center gap-2">
                         {fakeStep === 0 && (
-                          <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[9px] font-medium bg-blue-500/10 text-blue-400 border border-blue-500/20 animate-pulse">
-                            <span className="w-1.5 h-1.5 rounded-full bg-blue-500" />
+                          <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[9px] font-medium bg-purple-500/10 text-purple-400 border border-purple-500/20 animate-pulse">
+                            <span className="w-1.5 h-1.5 rounded-full bg-purple-500" />
                             Typing Prompt...
                           </span>
                         )}
@@ -392,8 +392,8 @@ export default function LandingPage() {
                           </span>
                         )}
                         {fakeStep === 2 && (
-                          <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[9px] font-medium bg-violet-500/10 text-violet-400 border border-violet-500/20">
-                            <span className="w-1.5 h-1.5 rounded-full bg-violet-500 animate-ping" />
+                          <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[9px] font-medium bg-pink-500/10 text-pink-400 border border-pink-500/20">
+                            <span className="w-1.5 h-1.5 rounded-full bg-pink-500 animate-ping" />
                             Writing draft...
                           </span>
                         )}
@@ -422,13 +422,13 @@ export default function LandingPage() {
                     <div className="flex-1 p-4 rounded-xl bg-[#030303]/60 border border-white/5 overflow-y-auto font-mono text-[11px] text-gray-400 leading-relaxed min-h-0 select-none">
                       {fakeStep === 1 ? (
                         <div className="h-full flex flex-col items-center justify-center gap-2 text-gray-600">
-                          <Bot className="w-8 h-8 text-violet-500/40 animate-bounce" />
+                          <Bot className="w-8 h-8 text-pink-500/40 animate-bounce" />
                           <span className="text-[10px] animate-pulse">Formulating creative copy...</span>
                         </div>
                       ) : fakeOutput ? (
                         <div className="whitespace-pre-wrap text-left text-gray-300">
                           {fakeOutput}
-                          {fakeStep === 2 && <span className="animate-ping text-violet-400">█</span>}
+                          {fakeStep === 2 && <span className="animate-ping text-pink-400">█</span>}
                         </div>
                       ) : (
                         <div className="h-full flex items-center justify-center text-gray-600 text-[10px]">
@@ -457,12 +457,12 @@ export default function LandingPage() {
               description="Generate high-converting blog posts, emails, and ad copy in seconds using proven frameworks."
             />
             <FeatureCard 
-              icon={<PenTool className="w-6 h-6 text-violet-400" />}
+              icon={<PenTool className="w-6 h-6 text-pink-400" />}
               title="Tone Rewriting"
               description="Adjust the tone, expand, summarize, or completely rewrite existing text to match your brand voice."
             />
             <FeatureCard 
-              icon={<MessageSquare className="w-6 h-6 text-blue-400" />}
+              icon={<MessageSquare className="w-6 h-6 text-purple-400" />}
               title="Team Collaboration"
               description="Work together with your team, share templates, and maintain a consistent brand voice across all users."
             />
@@ -472,11 +472,11 @@ export default function LandingPage() {
         {/* How It Works Section */}
         <section id="how-it-works" className="relative py-24 sm:py-32 overflow-hidden border-y border-white/5">
           <div className="absolute inset-0 bg-gradient-to-b from-[#050505] via-[#0a0a0c] to-[#050505] pointer-events-none" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-violet-600/10 blur-[120px] rounded-full pointer-events-none" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-pink-600/10 blur-[120px] rounded-full pointer-events-none" />
           
           <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
             <div className="text-center mb-20">
-              <span className="text-violet-400 font-bold tracking-wider uppercase text-sm mb-4 block">Workflow</span>
+              <span className="text-pink-400 font-bold tracking-wider uppercase text-sm mb-4 block">Workflow</span>
               <h2 className="font-heading text-3xl md:text-5xl font-extrabold tracking-tight mb-4">How WriteFlow Works</h2>
               <p className="text-gray-400 max-w-2xl mx-auto text-lg">Four intelligent steps to perfect content. Zero friction.</p>
             </div>
@@ -489,15 +489,15 @@ export default function LandingPage() {
                   whileInView={{ width: "100%" }}
                   viewport={{ once: true }}
                   transition={{ duration: 1.5, ease: "easeInOut" }}
-                  className="h-full bg-gradient-to-r from-violet-600 via-fuchsia-500 to-blue-500 shadow-[0_0_15px_rgba(139,92,246,0.5)]"
+                  className="h-full bg-gradient-to-r from-pink-600 via-rose-500 to-purple-500 shadow-[0_0_15px_rgba(236,72,153,0.5)]"
                 />
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
                 {[
-                  { step: "1", title: "Select Template", desc: "Choose from 50+ optimized presets.", icon: LayoutTemplate, color: "text-violet-400", bg: "bg-violet-400/10", border: "border-violet-500/20" },
-                  { step: "2", title: "Define Context", desc: "Provide a brief prompt or keywords.", icon: MessageSquare, color: "text-fuchsia-400", bg: "bg-fuchsia-400/10", border: "border-fuchsia-500/20" },
-                  { step: "3", title: "AI Generation", desc: "Watch the AI craft your content instantly.", icon: Bot, color: "text-blue-400", bg: "bg-blue-400/10", border: "border-blue-500/20" },
+                  { step: "1", title: "Select Template", desc: "Choose from 50+ optimized presets.", icon: LayoutTemplate, color: "text-pink-400", bg: "bg-pink-400/10", border: "border-pink-500/20" },
+                  { step: "2", title: "Define Context", desc: "Provide a brief prompt or keywords.", icon: MessageSquare, color: "text-rose-400", bg: "bg-rose-400/10", border: "border-rose-500/20" },
+                  { step: "3", title: "AI Generation", desc: "Watch the AI craft your content instantly.", icon: Bot, color: "text-purple-400", bg: "bg-purple-400/10", border: "border-purple-500/20" },
                   { step: "4", title: "Refine & Export", desc: "Polish in the editor and deploy.", icon: Rocket, color: "text-emerald-400", bg: "bg-emerald-400/10", border: "border-emerald-500/20" },
                 ].map((item, i) => (
                   <motion.div 
@@ -512,7 +512,7 @@ export default function LandingPage() {
                       <div className={`w-16 h-16 rounded-2xl ${item.bg} ${item.border} border flex items-center justify-center mx-auto mb-6 transform group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-lg`}>
                         <item.icon className={`w-8 h-8 ${item.color}`} />
                       </div>
-                      <div className="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-[#111] border border-white/10 flex items-center justify-center text-xs font-bold text-gray-400 group-hover:text-white group-hover:bg-violet-600 transition-colors shadow-lg">
+                      <div className="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-[#111] border border-white/10 flex items-center justify-center text-xs font-bold text-gray-400 group-hover:text-white group-hover:bg-pink-600 transition-colors shadow-lg">
                         {item.step}
                       </div>
                       <h3 className="text-xl font-bold mb-3 text-white group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-gray-400 transition-all">{item.title}</h3>
@@ -530,7 +530,7 @@ export default function LandingPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6">
             <div className="flex flex-col items-center text-center mb-12 gap-8">
               <div>
-                <span className="text-fuchsia-400 font-bold tracking-wider uppercase text-sm mb-4 block">Templates</span>
+                <span className="text-rose-400 font-bold tracking-wider uppercase text-sm mb-4 block">Templates</span>
                 <h2 className="font-heading text-3xl md:text-5xl font-extrabold tracking-tight mb-4">Start Instantly</h2>
                 <p className="text-gray-400 text-lg max-w-xl mx-auto">Our most loved AI frameworks, ready to deploy. Optimized for high conversion and engagement.</p>
               </div>
@@ -539,7 +539,7 @@ export default function LandingPage() {
                   <button 
                     key={cat}
                     onClick={() => setActiveTemplateCategory(cat)}
-                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${activeTemplateCategory === cat ? 'bg-violet-600 text-white shadow-lg' : 'text-gray-400 hover:text-white hover:bg-white/5'}`}
+                    className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${activeTemplateCategory === cat ? 'bg-pink-600 text-white shadow-lg' : 'text-gray-400 hover:text-white hover:bg-white/5'}`}
                   >
                     {cat}
                   </button>
@@ -576,14 +576,14 @@ export default function LandingPage() {
         {/* Stats Section */}
         <section className="relative py-20 sm:py-28 overflow-hidden border-y border-white/5">
           <div className="absolute inset-0 bg-[#050505]" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-[500px] bg-gradient-to-r from-violet-600/10 via-fuchsia-600/10 to-blue-600/10 blur-[100px] rounded-full pointer-events-none" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-[500px] bg-gradient-to-r from-pink-600/10 via-rose-600/10 to-purple-600/10 blur-[100px] rounded-full pointer-events-none" />
           
           <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
               {[
-                { target: publicStats.totalUsers || 10000, suffix: "+", decimals: 0, label: "Active Users", icon: Users, color: "text-violet-400", border: "hover:border-violet-500/50" },
-                { target: publicStats.wordsGenerated || 500000, suffix: "+", decimals: 0, label: "Words Generated", icon: PenTool, color: "text-fuchsia-400", border: "hover:border-fuchsia-500/50" },
-                { target: publicStats.totalTemplates || 50, suffix: "+", decimals: 0, label: "AI Templates", icon: LayoutTemplate, color: "text-blue-400", border: "hover:border-blue-500/50" },
+                { target: publicStats.totalUsers || 10000, suffix: "+", decimals: 0, label: "Active Users", icon: Users, color: "text-pink-400", border: "hover:border-pink-500/50" },
+                { target: publicStats.wordsGenerated || 500000, suffix: "+", decimals: 0, label: "Words Generated", icon: PenTool, color: "text-rose-400", border: "hover:border-rose-500/50" },
+                { target: publicStats.totalTemplates || 50, suffix: "+", decimals: 0, label: "AI Templates", icon: LayoutTemplate, color: "text-purple-400", border: "hover:border-purple-500/50" },
                 { target: publicStats.uptimeGuarantee || 99.9, suffix: "%", decimals: 1, label: "Uptime Guarantee", icon: Activity, color: "text-emerald-400", border: "hover:border-emerald-500/50" },
               ].map((stat, i) => (
                 <motion.div 
@@ -626,7 +626,7 @@ export default function LandingPage() {
                   <p className="text-gray-300 text-sm leading-relaxed mb-6">"{t.review}"</p>
                   <div className="flex items-center gap-3">
                     <Avatar className="w-10 h-10 border border-white/10">
-                      <AvatarFallback className="bg-violet-900 text-white text-xs">{t.name.charAt(0)}</AvatarFallback>
+                      <AvatarFallback className="bg-pink-900 text-white text-xs">{t.name.charAt(0)}</AvatarFallback>
                     </Avatar>
                     <div>
                       <div className="text-sm font-bold text-white">{t.name}</div>
@@ -647,6 +647,10 @@ export default function LandingPage() {
           <div className="space-y-4">
             {[
               { q: "Does the AI plagiarize?", a: "No, WriteFlow AI generates unique, original content on the fly based on the massive datasets it was trained on." },
+              { q: "Can I integrate WriteFlow AI with my existing tools?", a: "Yes, we offer a robust API and seamless integrations with popular CMS platforms, CRMs, and marketing tools to streamline your workflow." },
+              { q: "Is my data secure and private?", a: "Absolutely. We employ enterprise-grade encryption and strictly adhere to data privacy regulations. Your proprietary content is never used to train our public models." },
+              { q: "How does the AI adapt to our brand voice?", a: "WriteFlow AI features advanced custom tone matching. You can provide brand guidelines and sample texts to train the AI to perfectly mimic your unique voice." },
+              { q: "What kind of support is included?", a: "All plans include access to our comprehensive knowledge base and email support. Team and Enterprise plans feature priority 24/7 routing and dedicated account managers." },
             ].map((faq, i) => (
               <div key={i} className="border border-white/10 rounded-xl bg-white/[0.02] overflow-hidden">
                 <button 
@@ -677,7 +681,7 @@ export default function LandingPage() {
 
         {/* Newsletter & CTA Section */}
         <section className="max-w-5xl mx-auto px-4 sm:px-6 py-16 mb-16 text-center">
-          <div className="p-8 sm:p-16 rounded-3xl bg-gradient-to-b from-violet-900/20 to-[#050505] border border-violet-500/20 shadow-[0_0_80px_rgba(139,92,246,0.1)]">
+          <div className="p-8 sm:p-16 rounded-3xl bg-gradient-to-b from-pink-900/20 to-[#050505] border border-pink-500/20 shadow-[0_0_80px_rgba(236,72,153,0.1)]">
             <h2 className="font-heading text-3xl md:text-5xl font-bold mb-6">Stay ahead of the curve</h2>
             <p className="text-lg text-gray-400 mb-8 max-w-xl mx-auto">Subscribe to our newsletter for the latest AI writing tips, prompts, and WriteFlow updates.</p>
             
@@ -685,7 +689,7 @@ export default function LandingPage() {
               <Input 
                 type="email" 
                 placeholder="Enter your email" 
-                className="bg-black/50 border-white/20 h-12 rounded-full px-6 focus-visible:ring-violet-500" 
+                className="bg-black/50 border-white/20 h-12 rounded-full px-6 focus-visible:ring-pink-500" 
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -700,14 +704,14 @@ export default function LandingPage() {
             <h3 className="font-heading text-2xl font-bold mb-6">Ready to transform your workflow?</h3>
             {status === "authenticated" ? (
               <Link href="/dashboard">
-                <Button size="lg" className="h-14 px-10 bg-violet-600 text-white hover:bg-violet-700 text-lg rounded-full shadow-lg">
+                <Button size="lg" className="h-14 px-10 bg-pink-600 text-white hover:bg-pink-700 text-lg rounded-full shadow-lg">
                   Go to Dashboard
                   <ArrowRight className="ml-2 w-5 h-5" />
                 </Button>
               </Link>
             ) : (
               <Link href="/register">
-                <Button size="lg" className="h-14 px-10 bg-violet-600 text-white hover:bg-violet-700 text-lg rounded-full shadow-lg">
+                <Button size="lg" className="h-14 px-10 bg-pink-600 text-white hover:bg-pink-700 text-lg rounded-full shadow-lg">
                   Start Writing Free
                   <ArrowRight className="ml-2 w-5 h-5" />
                 </Button>
@@ -728,7 +732,7 @@ function FeatureCard({ icon, title, description }: { icon: React.ReactNode, titl
       <div className="absolute top-0 right-0 p-8 opacity-0 group-hover:opacity-5 transition-opacity duration-500 pointer-events-none scale-150 transform translate-x-4 -translate-y-4">
         {icon}
       </div>
-      <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center mb-4 sm:mb-6 border border-white/10 relative z-10 text-violet-400">
+      <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center mb-4 sm:mb-6 border border-white/10 relative z-10 text-pink-400">
         {icon}
       </div>
       <h3 className="text-xl font-bold mb-3 relative z-10">{title}</h3>

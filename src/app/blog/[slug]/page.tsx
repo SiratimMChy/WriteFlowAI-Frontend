@@ -19,12 +19,12 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
   }
 
   return (
-    <div className="min-h-screen bg-[#050505] text-white selection:bg-violet-500/30">
+    <div className="min-h-screen bg-[#050505] text-white selection:bg-pink-500/30">
       <Navbar />
       
       {/* Background glow */}
       <div className="absolute top-0 inset-x-0 h-[60vh] overflow-hidden pointer-events-none z-0">
-        <div className="absolute top-[-20%] left-[20%] w-[50%] h-[50%] rounded-full bg-violet-600/10 blur-[120px]" />
+        <div className="absolute top-[-20%] left-[20%] w-[50%] h-[50%] rounded-full bg-pink-600/10 blur-[120px]" />
       </div>
 
       <main className="relative z-10 pt-32 pb-32">
@@ -35,7 +35,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
           </Link>
           
           <div className="flex items-center gap-4 mb-6">
-            <span className="px-3 py-1 text-xs font-semibold uppercase tracking-wider rounded-full bg-violet-500/20 text-violet-300 border border-violet-500/30">
+            <span className="px-3 py-1 text-xs font-semibold uppercase tracking-wider rounded-full bg-pink-500/20 text-pink-300 border border-pink-500/30">
               {post.category}
             </span>
             <span className="flex items-center gap-1.5 text-sm text-gray-400">
@@ -75,12 +75,12 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
               className="w-full aspect-video object-cover rounded-2xl shadow-2xl border border-white/10"
             />
           ) : (
-            <div className={`w-full aspect-video rounded-2xl bg-gradient-to-br ${post.imageGrad || 'from-violet-600 to-blue-600'} shadow-2xl border border-white/10`} />
+            <div className={`w-full aspect-video rounded-2xl bg-gradient-to-br ${post.imageGrad || 'from-pink-600 to-purple-600'} shadow-2xl border border-white/10`} />
           )}
         </div>
 
         {/* Content */}
-        <article className="max-w-3xl mx-auto px-4 sm:px-6 text-xl prose prose-xl prose-invert prose-violet">
+        <article className="max-w-3xl mx-auto px-4 sm:px-6 text-xl prose prose-xl prose-invert prose-pink">
           <div dangerouslySetInnerHTML={{ __html: post.content }} />
         </article>
       </main>

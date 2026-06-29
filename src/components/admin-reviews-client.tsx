@@ -67,18 +67,18 @@ export function AdminReviewsClient({ reviews, totalPages }: { reviews: any[], to
             className="pl-10 bg-white/[0.02] border-white/10 text-white h-12 rounded-xl"
           />
         </form>
-        <Button onClick={handleSummarize} disabled={isSummarizing} className="bg-violet-600 hover:bg-violet-700 text-white h-12">
+        <Button onClick={handleSummarize} disabled={isSummarizing} className="bg-pink-600 hover:bg-pink-700 text-white h-12">
           <Sparkles className="w-4 h-4 mr-2" />
           {isSummarizing ? "Summarising..." : "AI Review Summariser"}
         </Button>
       </div>
 
       {summary && (
-        <div className="bg-violet-900/20 border border-violet-500/30 rounded-2xl p-6 relative">
+        <div className="bg-pink-900/20 border border-pink-500/30 rounded-2xl p-6 relative">
           <Button variant="ghost" size="icon" className="absolute top-4 right-4 text-gray-400 hover:text-white" onClick={() => setSummary(null)}>
             <XCircle className="w-5 h-5" />
           </Button>
-          <h3 className="font-bold text-violet-300 flex items-center gap-2 mb-4">
+          <h3 className="font-bold text-pink-300 flex items-center gap-2 mb-4">
             <Sparkles className="w-5 h-5" /> AI Summary of Approved Reviews
           </h3>
           <div className="whitespace-pre-wrap text-gray-300 text-sm leading-relaxed">

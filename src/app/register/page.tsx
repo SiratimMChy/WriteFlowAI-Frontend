@@ -44,14 +44,14 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="min-h-screen w-full flex bg-[#050505] text-white selection:bg-violet-500/30">
+    <div className="min-h-screen w-full flex bg-[#050505] text-white selection:bg-pink-500/30">
       
       {/* Left Panel - Form */}
       <div className="flex-1 flex flex-col justify-center items-center p-8 relative">
         {/* Mobile Header */}
         <div className="absolute top-8 left-8 lg:hidden">
           <Link href="/" className="flex items-center gap-2">
-            <Wand2 className="w-6 h-6 text-violet-500" />
+            <Wand2 className="w-6 h-6 text-pink-500" />
             <span className="font-bold tracking-tight">WriteFlow</span>
           </Link>
         </div>
@@ -72,14 +72,14 @@ export default function RegisterPage() {
               <div className="space-y-2 relative group">
                 <Label htmlFor="name" className="text-gray-300">Full Name</Label>
                 <div className="relative">
-                  <UserIcon className="absolute left-3 top-3 h-5 w-5 text-gray-500 group-focus-within:text-violet-400 transition-colors" />
+                  <UserIcon className="absolute left-3 top-3 h-5 w-5 text-gray-500 group-focus-within:text-pink-400 transition-colors" />
                   <Input 
                     id="name" 
                     type="text" 
                     placeholder="John Doe" 
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="pl-10 bg-white/[0.03] border-white/10 text-white placeholder:text-gray-600 focus-visible:ring-violet-500 focus-visible:bg-white/[0.05] h-12 transition-all"
+                    className="pl-10 bg-white/[0.03] border-white/10 text-white placeholder:text-gray-600 focus-visible:ring-pink-500 focus-visible:bg-white/[0.05] h-12 transition-all"
                     required
                   />
                 </div>
@@ -88,14 +88,14 @@ export default function RegisterPage() {
               <div className="space-y-2 relative group">
                 <Label htmlFor="email" className="text-gray-300">Email</Label>
                 <div className="relative">
-                  <Mail className="absolute left-3 top-3 h-5 w-5 text-gray-500 group-focus-within:text-violet-400 transition-colors" />
+                  <Mail className="absolute left-3 top-3 h-5 w-5 text-gray-500 group-focus-within:text-pink-400 transition-colors" />
                   <Input 
                     id="email" 
                     type="email" 
                     placeholder="name@example.com" 
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="pl-10 bg-white/[0.03] border-white/10 text-white placeholder:text-gray-600 focus-visible:ring-violet-500 focus-visible:bg-white/[0.05] h-12 transition-all"
+                    className="pl-10 bg-white/[0.03] border-white/10 text-white placeholder:text-gray-600 focus-visible:ring-pink-500 focus-visible:bg-white/[0.05] h-12 transition-all"
                     required
                   />
                 </div>
@@ -104,14 +104,14 @@ export default function RegisterPage() {
               <div className="space-y-2 relative group">
                 <Label htmlFor="password" className="text-gray-300">Password</Label>
                 <div className="relative">
-                  <Lock className="absolute left-3 top-3 h-5 w-5 text-gray-500 group-focus-within:text-violet-400 transition-colors" />
+                  <Lock className="absolute left-3 top-3 h-5 w-5 text-gray-500 group-focus-within:text-pink-400 transition-colors" />
                   <Input 
                     id="password" 
                     type="password" 
                     placeholder="Create a strong password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="pl-10 bg-white/[0.03] border-white/10 text-white placeholder:text-gray-600 focus-visible:ring-violet-500 focus-visible:bg-white/[0.05] h-12 transition-all"
+                    className="pl-10 bg-white/[0.03] border-white/10 text-white placeholder:text-gray-600 focus-visible:ring-pink-500 focus-visible:bg-white/[0.05] h-12 transition-all"
                     required
                     minLength={6}
                   />
@@ -131,7 +131,7 @@ export default function RegisterPage() {
 
             <Button 
               type="submit" 
-              className="w-full bg-violet-600 hover:bg-violet-700 text-white h-12 text-lg rounded-xl shadow-[0_0_20px_rgba(139,92,246,0.2)] hover:shadow-[0_0_30px_rgba(139,92,246,0.4)] transition-all duration-300" 
+              className="w-full bg-pink-600 hover:bg-pink-700 text-white h-12 text-lg rounded-full shadow-[0_0_20px_rgba(236,72,153,0.2)] hover:shadow-[0_0_30px_rgba(236,72,153,0.4)] transition-all duration-300" 
               disabled={isLoading}
             >
               {isLoading ? (
@@ -160,7 +160,7 @@ export default function RegisterPage() {
             {/* Google Sign In/Up */}
             <Button
               variant="outline"
-              className="w-full h-12 bg-white/[0.02] border-white/10 text-gray-300 hover:bg-white/[0.05] hover:text-white rounded-xl transition-all"
+              className="w-full h-12 bg-white/[0.02] border-white/10 text-gray-300 hover:bg-white/[0.05] hover:text-white rounded-full transition-all"
               onClick={loginWithGoogle}
               type="button"
             >
@@ -176,7 +176,7 @@ export default function RegisterPage() {
 
           <p className="text-center text-sm text-gray-400 mt-8">
             Already have an account?{" "}
-            <Link href="/login" className="text-violet-400 hover:text-violet-300 font-medium transition-colors">
+            <Link href="/login" className="text-pink-400 hover:text-pink-300 font-medium transition-colors">
               Sign in
             </Link>
           </p>
@@ -187,13 +187,13 @@ export default function RegisterPage() {
       {/* Right Panel - Visuals */}
       <div className="hidden lg:flex flex-1 relative overflow-hidden bg-black flex-col justify-between p-12 border-l border-white/5">
         {/* Animated Background */}
-        <div className="absolute top-[-20%] right-[-10%] w-[70%] h-[70%] rounded-full bg-blue-600/10 blur-[120px] mix-blend-screen pointer-events-none" />
-        <div className="absolute bottom-[-20%] left-[-10%] w-[70%] h-[70%] rounded-full bg-violet-600/10 blur-[120px] mix-blend-screen pointer-events-none" />
+        <div className="absolute top-[-20%] right-[-10%] w-[70%] h-[70%] rounded-full bg-purple-600/10 blur-[120px] mix-blend-screen pointer-events-none" />
+        <div className="absolute bottom-[-20%] left-[-10%] w-[70%] h-[70%] rounded-full bg-pink-600/10 blur-[120px] mix-blend-screen pointer-events-none" />
         
         <div className="relative z-10 flex justify-end">
           <Link href="/" className="flex items-center gap-2 inline-flex transition-transform hover:scale-105">
             <span className="text-2xl font-bold tracking-tight">WriteFlow</span>
-            <Wand2 className="w-8 h-8 text-violet-500" />
+            <Wand2 className="w-8 h-8 text-pink-500" />
           </Link>
         </div>
 
@@ -205,7 +205,7 @@ export default function RegisterPage() {
           >
             <h1 className="text-5xl font-bold tracking-tighter leading-[1.1] mb-6">
               Start creating <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-l from-violet-400 to-blue-400">
+              <span className="text-transparent bg-clip-text bg-gradient-to-l from-pink-400 to-purple-400">
                 content that converts
               </span>
             </h1>
@@ -221,8 +221,8 @@ export default function RegisterPage() {
               transition={{ duration: 0.8, delay: 0.4 }}
               className="h-full p-6 rounded-2xl bg-white/[0.02] border border-white/5 backdrop-blur-sm hover:bg-white/[0.04] transition-colors text-left"
             >
-              <div className="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center mb-4">
-                <Sparkles className="w-5 h-5 text-blue-400" />
+              <div className="w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center mb-4">
+                <Sparkles className="w-5 h-5 text-purple-400" />
               </div>
               <h3 className="font-semibold mb-1 text-gray-200">14-Day Free Trial</h3>
               <p className="text-sm text-gray-500">No credit card required to start.</p>
@@ -233,8 +233,8 @@ export default function RegisterPage() {
               transition={{ duration: 0.8, delay: 0.6 }}
               className="h-full p-6 rounded-2xl bg-white/[0.02] border border-white/5 backdrop-blur-sm hover:bg-white/[0.04] transition-colors text-left"
             >
-              <div className="w-10 h-10 rounded-full bg-violet-500/20 flex items-center justify-center mb-4">
-                <UserIcon className="w-5 h-5 text-violet-400" />
+              <div className="w-10 h-10 rounded-full bg-pink-500/20 flex items-center justify-center mb-4">
+                <UserIcon className="w-5 h-5 text-pink-400" />
               </div>
               <h3 className="font-semibold mb-1 text-gray-200">10k Free Words</h3>
               <p className="text-sm text-gray-500">Enough to write your first book chapter.</p>

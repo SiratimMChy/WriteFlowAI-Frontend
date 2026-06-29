@@ -16,7 +16,7 @@ export default async function BlogPage() {
 
   if (allPosts.length === 0) {
     return (
-      <div className="min-h-screen bg-[#050505] text-white selection:bg-violet-500/30">
+      <div className="min-h-screen bg-[#050505] text-white selection:bg-pink-500/30">
         <Navbar />
         <main className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 py-32 text-center">
            <h1 className="font-heading text-5xl md:text-7xl font-extrabold tracking-tighter mb-6">No Posts Found</h1>
@@ -30,19 +30,19 @@ export default async function BlogPage() {
   const posts = allPosts.slice(1)
 
   return (
-    <div className="min-h-screen bg-[#050505] text-white selection:bg-violet-500/30">
+    <div className="min-h-screen bg-[#050505] text-white selection:bg-pink-500/30">
       <Navbar />
       
       {/* Background gradients */}
       <div className="absolute top-0 inset-x-0 h-[80vh] overflow-hidden pointer-events-none z-0">
-        <div className="absolute top-[-20%] right-[-10%] w-[50%] h-[50%] rounded-full bg-violet-600/10 blur-[120px]" />
-        <div className="absolute top-[20%] left-[-10%] w-[40%] h-[40%] rounded-full bg-blue-600/10 blur-[120px]" />
+        <div className="absolute top-[-20%] right-[-10%] w-[50%] h-[50%] rounded-full bg-pink-600/10 blur-[120px]" />
+        <div className="absolute top-[20%] left-[-10%] w-[40%] h-[40%] rounded-full bg-purple-600/10 blur-[120px]" />
       </div>
 
       <main className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 py-32">
         <div className="text-center max-w-3xl mx-auto mb-20">
           <h1 className="font-heading text-5xl md:text-7xl font-extrabold tracking-tighter mb-6">
-            The WriteFlow <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-blue-400">Blog</span>
+            The WriteFlow <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-400">Blog</span>
           </h1>
           <p className="text-xl text-gray-400 font-light leading-relaxed">
             Insights, guides, and strategies to help you master AI writing and scale your content engine.
@@ -58,12 +58,12 @@ export default async function BlogPage() {
                 {featuredPost.imageUrl ? (
                    <img src={featuredPost.imageUrl} alt={featuredPost.title} className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-500" />
                 ) : (
-                   <div className={`w-full h-full bg-gradient-to-br ${featuredPost.imageGrad || 'from-violet-600 to-blue-600'} opacity-80 group-hover:opacity-100 group-hover:scale-[1.02] transition-all duration-500`} />
+                   <div className={`w-full h-full bg-gradient-to-br ${featuredPost.imageGrad || 'from-pink-600 to-purple-600'} opacity-80 group-hover:opacity-100 group-hover:scale-[1.02] transition-all duration-500`} />
                 )}
               </div>
               <div className="flex flex-col justify-center">
                 <div className="flex items-center gap-3 mb-6">
-                  <span className="px-3 py-1 text-xs font-semibold uppercase tracking-wider rounded-full bg-violet-500/20 text-violet-300 border border-violet-500/30">
+                  <span className="px-3 py-1 text-xs font-semibold uppercase tracking-wider rounded-full bg-pink-500/20 text-pink-300 border border-pink-500/30">
                     {featuredPost.category}
                   </span>
                   <span className="flex items-center gap-1.5 text-xs text-gray-400">
@@ -88,7 +88,7 @@ export default async function BlogPage() {
                       </div>
                     </div>
                   </div>
-                  <div className="w-10 h-10 rounded-full bg-violet-600 flex items-center justify-center group-hover:bg-white group-hover:text-black transition-colors duration-300">
+                  <div className="w-10 h-10 rounded-full bg-pink-600 flex items-center justify-center group-hover:bg-white group-hover:text-black transition-colors duration-300">
                     <ArrowRight className="w-5 h-5" />
                   </div>
                 </div>
@@ -111,12 +111,12 @@ export default async function BlogPage() {
                     {post.imageUrl ? (
                        <img src={post.imageUrl} alt={post.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
                     ) : (
-                       <div className={`w-full h-full bg-gradient-to-br ${post.imageGrad || 'from-violet-600 to-blue-600'} opacity-70 group-hover:opacity-100 transition-opacity duration-300`} />
+                       <div className={`w-full h-full bg-gradient-to-br ${post.imageGrad || 'from-pink-600 to-purple-600'} opacity-70 group-hover:opacity-100 transition-opacity duration-300`} />
                     )}
                   </div>
                   <div className="flex-1 flex flex-col">
                     <div className="flex items-center justify-between mb-4">
-                      <span className="text-xs font-semibold text-violet-400">
+                      <span className="text-xs font-semibold text-pink-400">
                         {post.category}
                       </span>
                       <span className="text-xs text-gray-500 flex items-center gap-1">

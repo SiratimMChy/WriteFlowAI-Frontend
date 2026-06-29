@@ -97,7 +97,7 @@ export function AdminUsersClient({ users, totalPages }: { users: any[], totalPag
             placeholder="Search users by name or email..." 
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            className="pl-10 bg-white/[0.02] border-white/10 text-white h-12 rounded-xl focus-visible:ring-violet-500"
+            className="pl-10 bg-white/[0.02] border-white/10 text-white h-12 rounded-xl focus-visible:ring-pink-500"
           />
         </form>
       </div>
@@ -119,7 +119,7 @@ export function AdminUsersClient({ users, totalPages }: { users: any[], totalPag
                 <tr key={user.id} className="border-b border-white/5 hover:bg-white/[0.02] transition-colors last:border-0">
                   <td className="p-4">
                     <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-full bg-violet-600 flex items-center justify-center text-xs font-bold">
+                      <div className="w-8 h-8 rounded-full bg-pink-600 flex items-center justify-center text-xs font-bold">
                         {user.name?.charAt(0) || "U"}
                       </div>
                       <div>
@@ -132,7 +132,7 @@ export function AdminUsersClient({ users, totalPages }: { users: any[], totalPag
                     <select
                       value={user.role}
                       onChange={(e) => handleRoleChange(user.id, e.target.value)}
-                      className="bg-black border border-white/10 rounded px-2 py-1 text-xs outline-none focus:border-violet-500"
+                      className="bg-black border border-white/10 rounded px-2 py-1 text-xs outline-none focus:border-pink-500"
                     >
                       <option value="user">User</option>
                       <option value="admin">Admin</option>
@@ -183,14 +183,14 @@ export function AdminUsersClient({ users, totalPages }: { users: any[], totalPag
           <button 
             disabled={currentPage <= 1 || isPending}
             onClick={() => updateUrl({ page: String(currentPage - 1) })}
-            className="px-3 py-1 rounded-md border border-white/10 bg-white/5 hover:bg-white/10 disabled:opacity-50 text-sm"
+            className="px-3 py-1 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 disabled:opacity-50 text-sm"
           >
             Prev
           </button>
           <button 
             disabled={currentPage >= totalPages || isPending}
             onClick={() => updateUrl({ page: String(currentPage + 1) })}
-            className="px-3 py-1 rounded-md border border-white/10 bg-white/5 hover:bg-white/10 disabled:opacity-50 text-sm"
+            className="px-3 py-1 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 disabled:opacity-50 text-sm"
           >
             Next
           </button>

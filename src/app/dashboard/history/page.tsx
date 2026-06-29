@@ -36,7 +36,7 @@ export default function AIHistoryPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold tracking-tight flex items-center gap-2">
-            <History className="w-8 h-8 text-violet-500" />
+            <History className="w-8 h-8 text-pink-500" />
             AI History
           </h1>
           <p className="text-gray-400 mt-1">Review your past AI interactions and token usage.</p>

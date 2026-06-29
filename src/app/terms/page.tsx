@@ -6,14 +6,14 @@ export default function TermsPage() {
   const sections = [
     {
       id: "acceptance",
-      icon: <CheckCircle2 className="w-5 h-5 text-violet-400" />,
+      icon: <CheckCircle2 className="w-5 h-5 text-pink-400" />,
       title: "1. Acceptance of Terms",
       content: "By accessing or using WriteFlow AI, you agree to be bound by these Terms. If you disagree with any part of the terms, then you may not access the service. We reserve the right to modify these terms at any time.",
     },
 
     {
       id: "ownership",
-      icon: <Copyright className="w-5 h-5 text-blue-400" />,
+      icon: <Copyright className="w-5 h-5 text-purple-400" />,
       title: "2. Content Ownership",
       content: "You retain full ownership, copyright, and intellectual property rights to any content you generate using our AI tools. We do not claim copyright over AI-generated outputs.",
     },
@@ -26,11 +26,11 @@ export default function TermsPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#050505] text-white selection:bg-violet-500/30">
+    <div className="min-h-screen bg-[#050505] text-white selection:bg-pink-500/30">
       {/* Background gradients */}
       <div className="absolute top-0 inset-x-0 h-[80vh] overflow-hidden pointer-events-none z-0">
-        <div className="absolute top-[-20%] left-[10%] w-[50%] h-[50%] rounded-full bg-violet-600/10 blur-[120px]" />
-        <div className="absolute top-[20%] right-[10%] w-[40%] h-[40%] rounded-full bg-fuchsia-600/10 blur-[100px]" />
+        <div className="absolute top-[-20%] left-[10%] w-[50%] h-[50%] rounded-full bg-pink-600/10 blur-[120px]" />
+        <div className="absolute top-[20%] right-[10%] w-[40%] h-[40%] rounded-full bg-rose-600/10 blur-[100px]" />
       </div>
 
       <Navbar />
@@ -38,9 +38,9 @@ export default function TermsPage() {
       <main className="relative z-10 max-w-4xl mx-auto px-6 py-32 sm:py-40">
         <div className="text-center mb-16">
           <div className="inline-flex items-center justify-center p-3 bg-white/5 border border-white/10 rounded-2xl mb-6 shadow-xl">
-            <Scale className="w-8 h-8 text-violet-400" />
+            <Scale className="w-8 h-8 text-pink-400" />
           </div>
-          <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight mb-6">Terms of <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-fuchsia-400">Service</span></h1>
+          <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight mb-6">Terms of <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-rose-400">Service</span></h1>
           <p className="text-gray-400 text-lg">Last updated: May 28, 2026</p>
         </div>
 
@@ -52,7 +52,7 @@ export default function TermsPage() {
                   {section.icon}
                 </div>
                 <div>
-                  <h2 className="text-2xl font-bold mb-3 text-white group-hover:text-violet-200 transition-colors">{section.title}</h2>
+                  <h2 className="text-2xl font-bold mb-3 text-white group-hover:text-pink-200 transition-colors">{section.title}</h2>
                   <p className="text-gray-400 leading-relaxed">{section.content}</p>
                 </div>
               </div>
