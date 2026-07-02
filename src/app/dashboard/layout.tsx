@@ -7,6 +7,7 @@ import Link from "next/link"
 import { DashboardSidebar } from "@/components/dashboard-sidebar"
 import { Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { TextSelectionPopup } from "@/components/vocabulary/text-selection-popup"
 
 export default function DashboardLayout({
   children,
@@ -66,6 +67,8 @@ export default function DashboardLayout({
       <main className="flex-1 min-h-screen md:ml-64 w-full transition-all duration-300">
         {children}
       </main>
+      
+      <TextSelectionPopup />
     </div>
   )
 }

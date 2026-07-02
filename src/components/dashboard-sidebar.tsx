@@ -19,7 +19,8 @@ import {
   BarChart,
   Grid,
   Star,
-  ShieldAlert
+  ShieldAlert,
+  BookOpen
 } from "lucide-react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { getAvatarUrl } from "@/lib/avatar"
@@ -55,6 +56,11 @@ const navItems = [
     label: "AI History",
     href: "/dashboard/history",
     icon: History,
+  },
+  {
+    label: "Vocabulary Vault",
+    href: "/dashboard/vocabulary",
+    icon: BookOpen,
   },
   {
     label: "Profile",
